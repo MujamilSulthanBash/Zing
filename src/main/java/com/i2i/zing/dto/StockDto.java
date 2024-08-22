@@ -1,7 +1,5 @@
 package com.i2i.zing.dto;
 
-import java.util.Set;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,8 +9,7 @@ import lombok.Setter;
 /**
  * <p>
  *     This class represents the Dto for
- *     Cart details like Cart ID, Customer ID
- *     and Set of {@link CartItemDto}.
+ *     Stock details like Stock ID, DarkStore ID, item id, quantity.
  * </p>
  */
 @Builder
@@ -20,8 +17,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartDto {
-    private String cartId;
-    private String customerId;
-    private Set<CartItemDto> cartItems;
+public class StockDto {
+    private String stockId;
+    private String darkStoreId;
+    private String itemId;
+    private int quantity;
 }

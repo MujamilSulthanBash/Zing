@@ -11,17 +11,16 @@ import lombok.Setter;
 /**
  * <p>
  *     This class represents the Dto for
- *     Cart details like Cart ID, Customer ID
- *     and Set of {@link CartItemDto}.
+ *     Role details like Role ID, Role name, set of {@link UserDto} details
  * </p>
  */
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class CartDto {
-    private String cartId;
-    private String customerId;
-    private Set<CartItemDto> cartItems;
+@AllArgsConstructor
+public class RoleDto {
+    private String roleId;
+    private String roleName;
+    private Set<UserDto> users;
 }

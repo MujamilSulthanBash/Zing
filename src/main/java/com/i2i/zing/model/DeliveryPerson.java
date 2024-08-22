@@ -35,7 +35,7 @@ public class DeliveryPerson {
     @Column(name = "vehicle_number", nullable = false, length = 10)
     private String vehicleNumber;
 
-    @Column(name = "aadhar_number", nullable = false, length = 14)
+    @Column(name = "aadhar_number", nullable = false, length = 12)
     private String aadharNumber;
 
     @Column(name = "license_number", nullable = false, length = 15)

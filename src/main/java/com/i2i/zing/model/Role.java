@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Set;
-
+import com.i2i.zing.common.UserRole;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +20,10 @@ public class Role {
     @Column(name = "id")
     private String roleId;
 
-    @Column(name = "name")
-    private String roleName;
+    @Column(name = "role_name", columnDefinition = "varchar(32) default 'CUSTOMER'",
+            nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRole roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Set<User> users;

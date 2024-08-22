@@ -1,5 +1,6 @@
 package com.i2i.zing.model;
 
+import com.i2i.zing.common.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,5 +33,8 @@ public class Order {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    private String paymentStatus;
+    @Column(name = "payment_status", columnDefinition = "varchar(32) default 'UNPAID'",
+            nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private PaymentStatus paymentStatus;
 }

@@ -1,5 +1,6 @@
 package com.i2i.zing.model;
 
+import com.i2i.zing.common.DeliveryStatus;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -7,8 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Set;
 
 /**
  * <p> Represents blueprint for the orderAssign datatype.
@@ -38,6 +37,8 @@ public class OrderAssign {
     @JoinColumn(name = "delivery_person_id")
     private DeliveryPerson deliveryPerson;
 
-    @Column(name = "delivery_status")
-    private String deliveryStatus;
+    @Column(name = "delivery_status", columnDefinition = "varchar(32) default 'PENDING'",
+            nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private DeliveryStatus deliveryStatus;
 }

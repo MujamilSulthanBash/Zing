@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -24,5 +24,5 @@ public class Role {
     private String roleName;
 
     @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
-    private List<User> users;
+    private Set<User> users;
 }

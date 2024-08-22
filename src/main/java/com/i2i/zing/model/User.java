@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @AllArgsConstructor
@@ -36,5 +36,5 @@ public class User {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    private List<Role> roles;
+    private Set<Role> roles;
 }

@@ -1,18 +1,6 @@
 package com.i2i.zing.model;
 
-import java.util.Set;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -40,16 +28,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String orderId;
 
-    @OneToMany(mappedBy = "order",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
-    public Set<CartItem> cartItems;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "cart_id")
+    private Cart cart;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "delivery_person_id")
-    private DeliveryPerson deliveryPerson;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
+    private String paymentStatus;
 }

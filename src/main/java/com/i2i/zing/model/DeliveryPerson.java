@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 /**
  * <p> Represents blueprint for the Delivery person datatype.
  * Contains details of delivery person such as Id, name, vehicle Number.
@@ -42,4 +44,6 @@ public class DeliveryPerson {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "deliveryPerson", fetch = FetchType.EAGER)
+    private Set<OrderAssign> orderAssign;
 }

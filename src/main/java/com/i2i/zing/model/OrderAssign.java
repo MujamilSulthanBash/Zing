@@ -30,13 +30,13 @@ public class OrderAssign {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String assignId;
 
-    @OneToOne(targetEntity = Order.class,
-             cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
     @JoinColumn(name = "delivery_person_id")
-    private Set<DeliveryPerson> deliveryPerson;
+    private DeliveryPerson deliveryPerson;
 
     @Column(name = "delivery_status")
     private String deliveryStatus;

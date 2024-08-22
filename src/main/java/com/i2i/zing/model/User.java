@@ -35,7 +35,7 @@ public class User {
     private String emailId;
 
     @Column(name = "contact_number")
-    private long contactNumber;
+    private String contactNumber;
 
     @Column(name = "location")
     private String location;

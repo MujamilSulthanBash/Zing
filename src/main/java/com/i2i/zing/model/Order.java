@@ -10,10 +10,11 @@ import lombok.Setter;
 
 
 /**
- * <p> Represents blueprint for the order datatype.
- * Contains details of order such as Id, customer Id, amount.
- * It is used to link the order placed by the customer at order
- * assigning record.
+ * <p>
+ *     Represents blueprint for the order datatype.
+ *     Contains details of order such as Id, customer Id, amount.
+ *     It is used to link the order placed by the customer at order
+ *     assigning record.
  * </p>
  */
 @Entity

@@ -10,10 +10,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
- * <p> Represents blueprint for the orderAssign datatype.
- * Contains details of order such as Id, delivery person' Id.
- * It is used to link the order placed by the customer at order
- * assigning record.
+ * <p>
+ *      Represents blueprint for the orderAssign datatype.
+ *      Contains details of order such as Id, delivery person' Id.
+ *      It is used to link the order placed by the customer at order
+ *      assigning record.
  * </p>
  */
 @Entity

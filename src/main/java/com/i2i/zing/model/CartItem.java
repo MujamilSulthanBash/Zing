@@ -6,6 +6,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+/**
+ * <p>
+ *     This Entity Represents the Details of
+ *     Items in the Cart such as Item ID, Quantity
+ *     Total prize of the items and payment Status
+ * </p>
+ */
 @Entity
 @Builder
 @Getter

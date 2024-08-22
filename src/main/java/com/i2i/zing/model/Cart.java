@@ -5,6 +5,13 @@ import lombok.*;
 
 import java.util.Set;
 
+/**
+ * <p>
+ *     This Entity Represents the Cart Details.
+ *     It Contains details of cart such as Id, customer' Id and Cart Items Details
+ *     It is used to add the Items to the cart by User
+ * </p>
+ */
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor

@@ -3,6 +3,12 @@ package com.i2i.zing.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * <p>
+ *     This class represents the Stock Details
+ *     for Various Store like Quantity of the Item
+ * </p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

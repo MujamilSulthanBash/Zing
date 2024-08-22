@@ -8,6 +8,13 @@ import lombok.Setter;
 
 import java.util.Set;
 import com.i2i.zing.common.UserRole;
+
+/**
+ * <p>
+ *     This class represents the Role Details of the User
+ *     like Role Name and an user has Many roles as well
+ * </p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

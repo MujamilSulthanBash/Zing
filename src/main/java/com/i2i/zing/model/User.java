@@ -8,6 +8,14 @@ import lombok.Setter;
 
 import java.util.Set;
 
+/**
+ * <p>
+ *     This class represents the Roles of the Users
+ *     in the Applications such as Customer and Delivery Person
+ *     It contains the Details like Name, Email ID, Contact Number
+ *     Location
+ * </p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

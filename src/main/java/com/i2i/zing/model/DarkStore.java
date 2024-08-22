@@ -5,6 +5,13 @@ import lombok.*;
 
 import java.util.Set;
 
+/**
+ * <p>
+ *     This class represents the Store of Hub Details
+ *     like Store ID, Location of the Store and Stock Details
+ *     for this Store
+ * </p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,6 +1,5 @@
 package com.i2i.zing.model;
 
-import java.util.Set;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 
 /**
  * <p> Represents blueprint for the Delivery person datatype.
@@ -23,7 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryPerson {
+public class DeliveryPerson extends User {
     @Id
     @Column(name = "id")
     @GeneratedValue(
@@ -40,18 +38,8 @@ public class DeliveryPerson {
     @Column(name = "license_number", nullable = false, length = 15)
     private String licenseNumber;
 
-    @OneToOne(targetEntity = User.class,
-            cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "deliveryPerson",
-               cascade = CascadeType.ALL,
-               fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "order_assign",
-            joinColumns = {@JoinColumn(name = "delivery_person_id")},
-            inverseJoinColumns = {@JoinColumn(name = "order_id")}
-    )
-    private Set<Order> orders;
 }

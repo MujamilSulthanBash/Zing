@@ -21,7 +21,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "customers")
-public class Customer {
+public class Customer extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -31,7 +31,6 @@ public class Customer {
     private String memberShip;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @GeneratedValue(strategy = GenerationType.UUID)
     @JoinColumn(name = "user_id")
     private User user;
 }

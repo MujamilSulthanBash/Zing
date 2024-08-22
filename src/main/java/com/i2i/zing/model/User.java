@@ -34,6 +34,5 @@ public class User {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    private Role roles;
 }

@@ -16,9 +16,11 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    @ManyToMany(mappedBy = "roleId", fetch = FetchType.EAGER)
     private String roleId;
 
     @Column(name = "name")
     private String roleName;
+
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
+    private User users;
 }

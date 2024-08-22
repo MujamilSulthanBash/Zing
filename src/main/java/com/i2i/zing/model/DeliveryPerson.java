@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DeliveryPerson extends User {
+public class DeliveryPerson {
     @Id
     @Column(name = "id")
     @GeneratedValue(

@@ -3,6 +3,13 @@ package com.i2i.zing.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+/**
+ * <p>
+ *     Represents blueprint for the Item datatype.
+ *     Contains details of item such as Id, delivery person' Id.
+ *     It comes under category datatype.
+ * </p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,20 +1,22 @@
 package com.i2i.zing.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.i2i.zing.common.Membership;
+
+/**
+ * <p>
+ *     Represents blueprint for the Customer datatype.
+ *     Contains details of customer such as Id, customer's membership.
+ *     It is subtype of User type and contains all the fields in the
+ *     User datatype
+ * </p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,8 +29,10 @@ public class Customer {
     @Column(name = "id")
     private String customerId;
 
-    @Column(name = "member_ship")
-    private String memberShip;
+    @Column(name = "membership", columnDefinition = "varchar(32) default 'SILVER'",
+            nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private Membership memberShip;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")

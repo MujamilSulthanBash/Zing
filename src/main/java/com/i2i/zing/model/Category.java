@@ -5,6 +5,13 @@ import lombok.*;
 
 import java.util.Set;
 
+/**
+ * <p>
+ *     Represents blueprint for the Category datatype.
+ *     Contains details of category such as Id, category name.
+ *     It defines type of items to be stored in a dark store.
+ * </p>
+ */
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor

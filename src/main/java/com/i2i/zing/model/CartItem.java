@@ -1,5 +1,6 @@
 package com.i2i.zing.model;
 
+import com.i2i.zing.common.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,7 @@ public class CartItem {
     private Double totalPrice;
 
     @Column(name = "payment_status")
-    private String paymentStatus;
+    private PaymentStatus paymentStatus;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "card_id")

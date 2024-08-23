@@ -1,5 +1,6 @@
 package com.i2i.zing.service;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CategoryDto;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public interface CategoryService {
      * @param categoryDto {@link CategoryDto} - Category as Dto Object
      * @return CategoryDto as Dto Object
      */
-    CategoryDto addCategory(CategoryDto categoryDto);
+    APIResponse addCategory(CategoryDto categoryDto);
 
     /**
      * <p>
@@ -30,7 +31,7 @@ public interface CategoryService {
      * </p>
      * @return List of CategoryDtos {@link CategoryDto}
      */
-    List<CategoryDto> getCategories();
+    APIResponse getCategories();
 
     /**
      * <p>
@@ -39,7 +40,7 @@ public interface CategoryService {
      * @param categoryId - To Identify the Category
      * @return CategoryDto {@link CategoryDto} - as Dto Object
      */
-    CategoryDto getCategoryById(String categoryId);
+    APIResponse getCategoryById(String categoryId);
 
     /**
      * <p>
@@ -47,5 +48,5 @@ public interface CategoryService {
      * </p>
      * @param categoryId - To Identify the Category
      */
-    void deleteCategory(String categoryId);
+    APIResponse deleteCategory(String categoryId);
 }

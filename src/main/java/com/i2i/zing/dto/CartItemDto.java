@@ -22,9 +22,7 @@ import lombok.Setter;
 public class CartItemDto {
     private String cartItemId;
     private Double quantity;
-    private Double price;
     private Double totalPrice;
-    private String paymentStatus;
     private String cartId;
     private String itemId;
 }

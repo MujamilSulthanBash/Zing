@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CategoryDto;
 import com.i2i.zing.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * <p>
@@ -31,9 +31,10 @@ public class CategoryController {
      * @return CategoryDto {@link CategoryDto} Dto Object
      */
     @PostMapping
-    public ResponseEntity<CategoryDto> addCategory(@RequestBody CategoryDto categoryDto) {
-        CategoryDto createdCategoryDto = categoryService.addCategory(categoryDto);
-        return new ResponseEntity<>(createdCategoryDto, HttpStatus.CREATED);
+    public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryDto categoryDto) {
+        APIResponse apiResponse = categoryService.addCategory(categoryDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -43,8 +44,10 @@ public class CategoryController {
      * @return List of Categories as Dto Object {@link CategoryDto}
      */
     @GetMapping
-    public ResponseEntity<List<CategoryDto>> getCategories() {
-        return new ResponseEntity<>(categoryService.getCategories(), HttpStatus.OK);
+    public ResponseEntity<APIResponse> getCategories() {
+        APIResponse apiResponse = categoryService.getCategories();
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -55,9 +58,10 @@ public class CategoryController {
      * @return CategoryDto {@link CategoryDto} - Dto Object
      */
     @GetMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> getCategoryById(String categoryId) {
-        CategoryDto retrievedCategory = categoryService.getCategoryById(categoryId);
-        return new ResponseEntity<>(retrievedCategory, HttpStatus.OK);
+    public ResponseEntity<APIResponse> getCategoryById(String categoryId) {
+        APIResponse apiResponse = categoryService.getCategoryById(categoryId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -68,8 +72,9 @@ public class CategoryController {
      * @return ResponseEntity Status OK
      */
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Void> deleteCategory(String categoryId) {
-        categoryService.deleteCategory(categoryId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<APIResponse> deleteCategory(String categoryId) {
+        APIResponse apiResponse = categoryService.deleteCategory(categoryId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 }

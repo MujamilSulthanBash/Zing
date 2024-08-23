@@ -1,13 +1,25 @@
 package com.i2i.zing.model;
 
-import com.i2i.zing.common.PaymentStatus;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.i2i.zing.common.PaymentStatus;
 
 /**
  * <p>
@@ -37,4 +49,7 @@ public class Order {
     @Column(name = "payment_status")
     @Enumerated(value = EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
 }

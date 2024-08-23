@@ -1,5 +1,6 @@
 package com.i2i.zing.model;
 
+import com.i2i.zing.common.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,6 +18,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Getter
+@Setter
 @Table(name = "carts")
 public class Cart {
     @Id
@@ -27,6 +29,13 @@ public class Cart {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "cart", fetch = FetchType.EAGER)
-    private Set<CartItem> cartItems;
+    @Column(name = "payment_Method")
+    @Enumerated(value = EnumType.STRING)
+    private PaymentMethod paymentMethod;
+
+    @Column(name = "total_amount")
+    private Double totalAmount;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
 }

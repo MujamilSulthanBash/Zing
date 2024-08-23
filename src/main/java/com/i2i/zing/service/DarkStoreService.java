@@ -41,7 +41,7 @@ public interface DarkStoreService {
      * @param darkStoreId - To Identify the Store
      * @return DarkStore Details {@link DarkStoreDto} as Dto Object
      */
-    DarkStoreDto getDarkStoreById(String darkStoreId);
+    APIResponse getDarkStoreById(String darkStoreId);
 
     /**
      * <p>
@@ -49,5 +49,5 @@ public interface DarkStoreService {
      * </p>
      * @param darkStoreId - To Identify the Store
      */
-    void deleteDarkStore(String darkStoreId);
+    APIResponse deleteDarkStore(String darkStoreId);
 }

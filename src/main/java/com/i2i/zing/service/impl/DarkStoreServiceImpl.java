@@ -42,16 +42,24 @@ public class DarkStoreServiceImpl implements DarkStoreService {
     }
 
     @Override
-    public DarkStoreDto getDarkStoreById(String darkStoreId) {
+    public APIResponse getDarkStoreById(String darkStoreId) {
+        APIResponse apiResponse = new APIResponse();
         DarkStore darkStore = darkStoreRepository.findByIsDeletedFalseAndDarkStoreId(darkStoreId);
-        return DarkStoreMapper.convertEntityToDto(darkStore);
+        DarkStoreMapper.convertEntityToDto(darkStore);
+        apiResponse.setData(darkStore);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public void deleteDarkStore(String darkStoreId) {
+    public APIResponse deleteDarkStore(String darkStoreId) {
+        APIResponse apiResponse = new APIResponse();
         DarkStore darkStore = darkStoreRepository.findByIsDeletedFalseAndDarkStoreId(darkStoreId);
         darkStore.setDeleted(true);
         darkStoreRepository.save(darkStore);
+        apiResponse.setData("Dark store Deleted Successfully..");
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
 }

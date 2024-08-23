@@ -4,12 +4,10 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.DarkStoreDto;
 import com.i2i.zing.service.DarkStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 /**
  * <p>
@@ -58,9 +56,10 @@ public class DarkStoreController {
      * @return DarkStoreDto {@link DarkStoreDto}
      */
     @GetMapping("/{darkStoreId}")
-    public ResponseEntity<DarkStoreDto> getDarkStoreById(String darkStoreId) {
-        DarkStoreDto retrievedDarkStore = darkStoreService.getDarkStoreById(darkStoreId);
-        return new ResponseEntity<>(retrievedDarkStore, HttpStatus.OK);
+    public ResponseEntity<APIResponse> getDarkStoreById(String darkStoreId) {
+        APIResponse apiResponse = darkStoreService.getDarkStoreById(darkStoreId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -72,9 +71,10 @@ public class DarkStoreController {
      * @return ResponseEntity Status OK
      */
     @DeleteMapping("/{darkStoreId}")
-    public ResponseEntity<Void> deleteDarkStore(String darkStoreId) {
-        darkStoreService.deleteDarkStore(darkStoreId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<APIResponse> deleteDarkStore(String darkStoreId) {
+        APIResponse apiResponse = darkStoreService.deleteDarkStore(darkStoreId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
 }

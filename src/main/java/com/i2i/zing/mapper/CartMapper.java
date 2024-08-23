@@ -5,7 +5,14 @@ import com.i2i.zing.dto.CartDto;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.Customer;
 
+/**
+ * <p>
+ *     Converts the json objects according to application operations.
+ *     e.g., (dto object -> json object, json object -> dto object)
+ * </p>
+ */
 public class CartMapper {
+
     /**
      * <p>
      *     Converts the entity to displayable dto format.

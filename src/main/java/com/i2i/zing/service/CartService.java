@@ -1,9 +1,11 @@
 package com.i2i.zing.service;
 
-import com.i2i.zing.dto.CartDto;
+import java.util.List;
+
+import com.i2i.zing.common.APIResponse;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.i2i.zing.dto.CartDto;
 
 /**
  * <p>
@@ -19,18 +21,18 @@ public interface CartService {
      * </p>
      *
      * @param cartDto - {@link CartDto} value to set Cart Id.
-     * @return CartDto value to indicate insertion status.
+     * @return APIResponse value to indicate insertion status.
      */
-    CartDto addCart(CartDto cartDto);
+    APIResponse addCart(CartDto cartDto);
 
     /**
      * <p>
      *    Retrieves get the Carts allotted for all customers
      * </p>
      *
-     * @return List<CartDto> value to display Cart list.
+     * @return APIResponse value to display Cart list.
      */
-    List<CartDto> getCarts();
+    APIResponse getCarts();
 
     /**
      * <p>
@@ -38,15 +40,16 @@ public interface CartService {
      * </p>
      *
      * @param cartId - String value to display the Cart.
-     * @return CartDto value to display the Cart.
+     * @return APIResponse value to display the Cart.
      */
-    CartDto getCart(String cartId);
+    APIResponse getCart(String cartId);
 
     /**
      * <p>
      *     Removes the Cart from user view by changing boolean value.
      * </p>
      * @param cartId - String to remove Cart.
+     * @return @APIResponse value to acknowledge deletion.
      */
-    void deleteCart(String cartId);
+    APIResponse deleteCart(String cartId);
 }

@@ -6,10 +6,12 @@ import com.i2i.zing.model.Item;
 import com.i2i.zing.repository.ItemRepository;
 import com.i2i.zing.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ItemServiceImpl implements ItemService {
 
     @Autowired

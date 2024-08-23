@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.DarkStoreDto;
 import com.i2i.zing.service.DarkStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +31,10 @@ public class DarkStoreController {
      * @return DarkStoreDto as Object
      */
     @PostMapping
-    public ResponseEntity<DarkStoreDto> addDarkStore(@RequestBody DarkStoreDto darkStoreDto) {
-        DarkStoreDto createdDarkStoreDto = darkStoreService.addDarkStore(darkStoreDto);
-        return new ResponseEntity<>(createdDarkStoreDto, HttpStatus.CREATED);
+    public ResponseEntity<APIResponse> addDarkStore(@RequestBody DarkStoreDto darkStoreDto) {
+        APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -42,8 +44,10 @@ public class DarkStoreController {
      * @return List of DarkStoreDto as Dto Objects{@link DarkStoreDto}
      */
     @GetMapping
-    public ResponseEntity<List<DarkStoreDto>> getDarkStores() {
-        return new ResponseEntity<>(darkStoreService.getDarkStores(), HttpStatus.OK);
+    public ResponseEntity<APIResponse> getDarkStores() {
+        APIResponse apiResponse = darkStoreService.getDarkStores();
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**

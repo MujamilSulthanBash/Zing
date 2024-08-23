@@ -2,6 +2,7 @@ package com.i2i.zing.service;
 
 import java.util.List;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.DarkStoreDto;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ public interface DarkStoreService {
      * @param darkStoreDto {@link DarkStoreDto} - Store Details as Dto Object
      * @return DarkStore details as Dto Object
      */
-    DarkStoreDto addDarkStore(DarkStoreDto darkStoreDto);
+    APIResponse addDarkStore(DarkStoreDto darkStoreDto);
 
     /**
      * <p>
@@ -31,7 +32,7 @@ public interface DarkStoreService {
      * </p>
      * @return List of DarkStore Details as Dto Object {@link DarkStoreDto}
      */
-    List<DarkStoreDto> getDarkStores();
+    APIResponse getDarkStores();
 
     /**
      * <p>

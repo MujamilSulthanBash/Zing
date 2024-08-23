@@ -1,6 +1,7 @@
 package com.i2i.zing.service;
 
 import com.i2i.zing.dto.ItemDto;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  *     delete the Items
  * </p>
  */
+@Service
 public interface ItemService {
     /**
      * <p>

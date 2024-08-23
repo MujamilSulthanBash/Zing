@@ -1,11 +1,12 @@
 package com.i2i.zing.service.impl;
 
-import java.util.List;
 
-import com.i2i.zing.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CartDto;
+import com.i2i.zing.service.CartService;
 import com.i2i.zing.mapper.CartMapper;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.repository.CartRepository;
@@ -20,28 +21,40 @@ public class CartServiceImpl implements CartService {
     CartRepository cartRepository;
 
     @Override
-    public CartDto addCart(CartDto cartDto) {
-        Cart Cart = CartMapper.convertToCart(cartDto);
-        Cart resultCart = cartRepository.save(Cart);
-        return CartMapper.convertToCartDto(resultCart);
+    public APIResponse addCart(CartDto cartDto) {
+        APIResponse apiResponse = new APIResponse();
+        Cart resultCart = cartRepository.save(CartMapper.convertToCart(cartDto));
+        apiResponse.setData(resultCart);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public List<CartDto> getCarts() {
-        return cartRepository.findByIsDeletedFalse().stream()
-                .map(CartMapper::convertToCartDto).toList();
+    public APIResponse getCarts() {
+        APIResponse apiResponse = new APIResponse();
+        apiResponse.setData(cartRepository.findByIsDeletedFalse().stream()
+                .map(CartMapper::convertToCartDto).toList());
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public CartDto getCart(String cartId) {
+    public APIResponse getCart(String cartId) {
+        APIResponse apiResponse = new APIResponse();
         Cart cart = cartRepository.findByCartIdAndIsDeleted(cartId, false);
-        return CartMapper.convertToCartDto(cart);
+        apiResponse.setData(cart);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public void deleteCart(String cartId) {
+    public APIResponse deleteCart(String cartId) {
+        APIResponse apiResponse = new APIResponse();
         Cart cart = cartRepository.findByCartIdAndIsDeleted(cartId, false);
         cart.setDeleted(true);
         cartRepository.save(cart);
+        apiResponse.setData("Cart with Id : " + cartId + " has been deleted.");
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 }

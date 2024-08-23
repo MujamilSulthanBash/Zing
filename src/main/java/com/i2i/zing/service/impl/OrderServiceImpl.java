@@ -1,14 +1,15 @@
 package com.i2i.zing.service.impl;
 
-import com.i2i.zing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.http.HttpStatus;
+
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.OrderDto;
+import com.i2i.zing.service.OrderService;
 import com.i2i.zing.mapper.OrderMapper;
 import com.i2i.zing.model.Order;
 import com.i2i.zing.repository.OrderRepository;
-
-import java.util.List;
 
 /**
  * <p>
@@ -21,29 +22,40 @@ public class OrderServiceImpl implements OrderService {
     OrderRepository orderRepository;
 
     @Override
-    public OrderDto addOrder(OrderDto orderDto) {
-        Order order = OrderMapper.convertToOrder(orderDto);
-        Order resultOrder = orderRepository.save(order);
-        return OrderMapper.convertToOrderDto(resultOrder);
+    public APIResponse addOrder(OrderDto orderDto) {
+        APIResponse apiResponse = new APIResponse();
+        Order resultOrder = orderRepository.save(OrderMapper.convertToOrder(orderDto));
+        apiResponse.setData(resultOrder);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public List<OrderDto> getOrders() {
-        return orderRepository.findByIsDeletedFalse().stream()
-                .map(OrderMapper::convertToOrderDto).toList();
+    public APIResponse getOrders() {
+        APIResponse apiResponse = new APIResponse();
+        apiResponse.setData(orderRepository.findByIsDeletedFalse().stream()
+                .map(OrderMapper::convertToOrderDto).toList());
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public OrderDto getOrder(String orderId) {
+    public APIResponse getOrder(String orderId) {
+        APIResponse apiResponse = new APIResponse();
         Order order = orderRepository.findByOrderIdAndIsDeleted(orderId, false);
-        return OrderMapper.convertToOrderDto(order);
+        apiResponse.setData(order);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
-
     @Override
-    public void deleteOrder(String orderId) {
+    public APIResponse deleteOrder(String orderId) {
+        APIResponse apiResponse = new APIResponse();
         Order order = orderRepository.findByOrderIdAndIsDeleted(orderId, false);
         order.setDeleted(true);
         orderRepository.save(order);
+        apiResponse.setData("Order with ID : " + orderId + " has been deleted");
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 }

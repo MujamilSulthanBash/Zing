@@ -1,9 +1,11 @@
 package com.i2i.zing.service;
 
-import com.i2i.zing.dto.OrderDto;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.i2i.zing.dto.OrderDto;
+import com.i2i.zing.common.APIResponse;
 
 /**
  * <p>
@@ -18,18 +20,18 @@ public interface OrderService {
      * </p>
      *
      * @param orderDto - {@link OrderDto} value to set order Id.
-     * @return OrderDto value to indicate insertion status.
+     * @return APIResponse value to indicate insertion status.
      */
-    OrderDto addOrder(OrderDto orderDto);
+    APIResponse addOrder(OrderDto orderDto);
 
     /**
      * <p>
      *     Fetches all the Orders in application.
      * </p>
      *
-     * @return List<OrderDto> value to display Order list.
+     * @return APIResponse value to display Order list.
      */
-    List<OrderDto> getOrders();
+    APIResponse getOrders();
 
     /**
      * <p>
@@ -39,13 +41,14 @@ public interface OrderService {
      * @param orderId - String value to display the Order.
      * @return OrderDto value to display the Order.
      */
-    OrderDto getOrder(String orderId);
+    APIResponse getOrder(String orderId);
 
     /**
      * <p>
      *     Removes the Order from user view by changing boolean value.
      * </p>
      * @param orderId - String to remove Order.
+     * @return APIResponse value to acknowledge deletion.
      */
-    void deleteOrder(String orderId);
+    APIResponse deleteOrder(String orderId);
 }

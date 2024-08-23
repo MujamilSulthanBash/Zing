@@ -2,7 +2,7 @@ package com.i2i.zing.controller;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CustomerRequestDto;
-import com.i2i.zing.service.LoginService;
+import com.i2i.zing.service.impl.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

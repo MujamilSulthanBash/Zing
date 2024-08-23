@@ -1,6 +1,5 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
-import com.i2i.zing.common.UserRole;
 import com.i2i.zing.model.User;
 import com.i2i.zing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

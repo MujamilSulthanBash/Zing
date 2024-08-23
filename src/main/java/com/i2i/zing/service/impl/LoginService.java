@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CustomerRequestDto;
@@ -6,7 +6,6 @@ import com.i2i.zing.mapper.UserMapper;
 import com.i2i.zing.model.User;
 import com.i2i.zing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,9 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.i2i.zing.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

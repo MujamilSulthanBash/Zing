@@ -1,7 +1,8 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.List;
 
+import com.i2i.zing.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.i2i.zing.dto.CartDto;

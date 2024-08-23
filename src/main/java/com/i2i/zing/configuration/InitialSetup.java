@@ -1,7 +1,7 @@
 package com.i2i.zing.configuration;
 
-import com.i2i.zing.service.RoleService;
-import com.i2i.zing.service.UserService;
+import com.i2i.zing.service.impl.RoleService;
+import com.i2i.zing.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;

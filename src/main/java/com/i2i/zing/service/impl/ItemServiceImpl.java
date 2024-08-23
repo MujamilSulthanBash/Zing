@@ -1,10 +1,10 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import com.i2i.zing.dto.ItemDto;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Item;
-import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.ItemRepository;
+import com.i2i.zing.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;

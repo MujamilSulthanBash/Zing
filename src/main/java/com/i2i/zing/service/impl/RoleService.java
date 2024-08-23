@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import com.i2i.zing.common.UserRole;
 import com.i2i.zing.model.Role;

@@ -17,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Getter
+@Table(name = "carts")
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

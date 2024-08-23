@@ -32,4 +32,7 @@ public class Stock extends Auditable {
 
     @Column(name = "quantity")
     private int quantity;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
 }

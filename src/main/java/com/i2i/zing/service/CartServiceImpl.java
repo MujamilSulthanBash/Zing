@@ -38,9 +38,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public CartDto deleteCart(String cartId) {
+    public void deleteCart(String cartId) {
         Cart cart = cartRepository.findByCartIdAndIsDeleted(cartId, false);
         cart.setDeleted(true);
-        return CartMapper.convertToCartDto(cartRepository.save(cart));
+        cartRepository.save(cart);
     }
 }

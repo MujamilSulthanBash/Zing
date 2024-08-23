@@ -47,7 +47,6 @@ public interface CartService {
      *     Removes the Cart from user view by changing boolean value.
      * </p>
      * @param cartId - String to remove Cart.
-     * @return CartDto value to acknowledge.
      */
-    CartDto deleteCart(String cartId);
+    void deleteCart(String cartId);
 }

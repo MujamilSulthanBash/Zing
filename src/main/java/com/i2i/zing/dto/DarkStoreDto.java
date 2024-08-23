@@ -27,6 +27,4 @@ public class DarkStoreDto{
     @Size(min = 5, max = 15, message = "Location should contain 5 to 15 letters")
     @Pattern(regexp = "^[a-zA-Z]*$", message = "Category name should contain only letters.")
     private String location;
-
-    private Set<Stock> stocks;
 }

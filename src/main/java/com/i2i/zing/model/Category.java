@@ -33,4 +33,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
     private Set<Item> items;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
 }

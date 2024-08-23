@@ -30,4 +30,7 @@ public class DarkStore {
 
     @OneToMany(mappedBy = "darkstore", fetch = FetchType.EAGER)
     private Set<Stock> stocks;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted = false;
 }

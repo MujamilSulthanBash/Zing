@@ -25,7 +25,7 @@ import com.i2i.zing.model.Item;
 @NoArgsConstructor
 public class CategoryDto {
     private String categoryId;
-    private String Name;
+    private String name;
     private String description;
     private Set<Item> items;
 }

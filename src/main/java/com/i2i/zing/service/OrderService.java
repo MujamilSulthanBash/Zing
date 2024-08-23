@@ -46,7 +46,6 @@ public interface OrderService {
      *     Removes the Order from user view by changing boolean value.
      * </p>
      * @param orderId - String to remove Order.
-     * @return OrderDto value to acknowledge.
      */
-    OrderDto deleteOrder(String orderId);
+    void deleteOrder(String orderId);
 }

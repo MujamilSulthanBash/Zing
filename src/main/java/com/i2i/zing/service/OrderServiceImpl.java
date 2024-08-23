@@ -40,9 +40,9 @@ public class OrderServiceImpl implements OrderService {
 
 
     @Override
-    public OrderDto deleteOrder(String orderId) {
+    public void deleteOrder(String orderId) {
         Order order = orderRepository.findByOrderIdAndIsDeleted(orderId, false);
         order.setDeleted(true);
-        return OrderMapper.convertToOrderDto(orderRepository.save(order));
+        orderRepository.save(order);
     }
 }

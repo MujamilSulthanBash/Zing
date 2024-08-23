@@ -1,5 +1,6 @@
 package com.i2i.zing.dto;
 
+import com.i2i.zing.common.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,12 +18,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDto {
-    private String id;
+public class CustomerRequestDto {
     private String userName;
     private String emailId;
     private String contactNumber;
     private String location;
     private String password;
-    private String roleId;
 }

@@ -29,8 +29,7 @@ public class Customer {
     @Column(name = "id")
     private String customerId;
 
-    @Column(name = "membership", columnDefinition = "varchar(32) default 'SILVER'",
-            nullable = false)
+    @Column(name = "membership")
     @Enumerated(value = EnumType.STRING)
     private Membership memberShip;
 

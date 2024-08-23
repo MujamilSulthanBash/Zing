@@ -1,10 +1,7 @@
 package com.i2i.zing.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Set;
 import com.i2i.zing.common.UserRole;
@@ -20,6 +17,7 @@ import com.i2i.zing.common.UserRole;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 @Table(name = "roles")
 public class Role {
     @Id
@@ -27,8 +25,7 @@ public class Role {
     @Column(name = "id")
     private String roleId;
 
-    @Column(name = "role_name", columnDefinition = "varchar(32) default 'CUSTOMER'",
-            nullable = false)
+    @Column(name = "role_name")
     @Enumerated(value = EnumType.STRING)
     private UserRole roleName;
 

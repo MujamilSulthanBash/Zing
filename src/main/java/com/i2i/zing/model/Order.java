@@ -34,8 +34,7 @@ public class Order {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    @Column(name = "payment_status", columnDefinition = "varchar(32) default 'UNPAID'",
-            nullable = false)
+    @Column(name = "payment_status")
     @Enumerated(value = EnumType.STRING)
     private PaymentStatus paymentStatus;
 }

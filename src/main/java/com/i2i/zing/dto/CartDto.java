@@ -23,5 +23,6 @@ import lombok.Setter;
 public class CartDto {
     private String cartId;
     private String customerId;
-    private Set<CartItemDto> cartItems;
+    private String paymentMethod;
+    private Double totalAmount;
 }

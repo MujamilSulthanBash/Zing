@@ -2,10 +2,7 @@ package com.i2i.zing.model;
 
 import jakarta.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import com.i2i.zing.common.Membership;
 
@@ -19,6 +16,7 @@ import com.i2i.zing.common.Membership;
  */
 @Entity
 @AllArgsConstructor
+@Builder
 @NoArgsConstructor
 @Getter
 @Setter

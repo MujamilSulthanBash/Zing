@@ -15,6 +15,6 @@ import lombok.*;
 @NoArgsConstructor
 public class OrderDto {
     private String orderId;
-    private String cardId;
+    private String cartId;
     private String paymentStatus;
 }

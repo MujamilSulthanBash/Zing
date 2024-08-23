@@ -1,4 +1,16 @@
 package com.i2i.zing.mapper;
 
+import com.i2i.zing.dto.CustomerRequestDto;
+import com.i2i.zing.model.User;
+
 public class UserMapper {
+    public static User userEntity(CustomerRequestDto customerRequestDto) {
+        return User.builder()
+                .userName(customerRequestDto.getUserName())
+                .emailId(customerRequestDto.getEmailId())
+                .contactNumber(customerRequestDto.getContactNumber())
+                .location(customerRequestDto.getLocation())
+                .password(customerRequestDto.getPassword())
+                .build();
+    }
 }

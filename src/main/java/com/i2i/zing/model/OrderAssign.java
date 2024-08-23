@@ -38,8 +38,7 @@ public class OrderAssign {
     @JoinColumn(name = "delivery_person_id")
     private DeliveryPerson deliveryPerson;
 
-    @Column(name = "delivery_status", columnDefinition = "varchar(32) default 'PENDING'",
-            nullable = false)
+    @Column(name = "delivery_status")
     @Enumerated(value = EnumType.STRING)
     private DeliveryStatus deliveryStatus;
 }

@@ -11,7 +11,7 @@ import lombok.Setter;
 /**
  * <p>
  *     This class represents the Dto for
- *     Role details like Role ID, Role name, set of {@link UserDto} details
+ *     Role details like Role ID, Role name, set of {@link CustomerRequestDto} details
  * </p>
  */
 @Builder
@@ -22,5 +22,5 @@ import lombok.Setter;
 public class RoleDto {
     private String roleId;
     private String roleName;
-    private Set<UserDto> users;
+    private Set<CustomerRequestDto> users;
 }

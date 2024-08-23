@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import com.i2i.zing.mapper.CategoryMapper;
 import com.i2i.zing.model.Category;
 
 import com.i2i.zing.repository.CategoryRepository;
+import com.i2i.zing.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class CategoryServiceImpl implements CategoryService {

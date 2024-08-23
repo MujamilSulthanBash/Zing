@@ -1,9 +1,10 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import com.i2i.zing.dto.DarkStoreDto;
 import com.i2i.zing.mapper.DarkStoreMapper;
 import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.repository.DarkStoreRepository;
+import com.i2i.zing.service.DarkStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

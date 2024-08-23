@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;

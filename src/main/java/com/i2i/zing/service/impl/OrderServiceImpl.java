@@ -1,5 +1,6 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
+import com.i2i.zing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.i2i.zing.dto.OrderDto;

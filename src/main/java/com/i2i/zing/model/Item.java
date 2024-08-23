@@ -16,7 +16,7 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@Table(name = "stocks")
+@Table(name = "items")
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)

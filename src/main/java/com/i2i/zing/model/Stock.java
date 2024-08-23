@@ -16,7 +16,7 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "stocks")
-public class Stock {
+public class Stock extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")

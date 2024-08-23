@@ -15,12 +15,15 @@ public class LoginService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CustomerService customerService;
+
     public APIResponse signUp(CustomerRequestDto customerRequestDto) {
         APIResponse apiResponse = new APIResponse();
         User user = userRepository.save(UserMapper.userEntity(customerRequestDto));
+        customerService.createCustomer(user);
         apiResponse.setData(user);
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(user);
         return apiResponse;
     }
 

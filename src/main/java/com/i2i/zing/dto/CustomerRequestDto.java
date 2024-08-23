@@ -1,6 +1,5 @@
 package com.i2i.zing.dto;
 
-import com.i2i.zing.common.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

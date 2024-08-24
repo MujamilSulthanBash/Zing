@@ -21,7 +21,7 @@ public interface CategoryService {
      *     This method add the Category Record to the Database
      * </p>
      * @param categoryDto {@link CategoryDto} - Category as Dto Object
-     * @return CategoryDto as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
     APIResponse addCategory(CategoryDto categoryDto);
 
@@ -29,7 +29,7 @@ public interface CategoryService {
      * <p>
      *     This method retrieve all the Categories in the Database
      * </p>
-     * @return List of CategoryDtos {@link CategoryDto}
+     * @return APIResponse Details like Status, Data.
      */
     APIResponse getCategories();
 
@@ -38,7 +38,7 @@ public interface CategoryService {
      *     This method retrieve specific Category by ID
      * </p>
      * @param categoryId - To Identify the Category
-     * @return CategoryDto {@link CategoryDto} - as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
     APIResponse getCategoryById(String categoryId);
 
@@ -47,6 +47,7 @@ public interface CategoryService {
      *     This method delete the Category in the Database table
      * </p>
      * @param categoryId - To Identify the Category
+     * @return APIResponse Details like Status, Data.
      */
     APIResponse deleteCategory(String categoryId);
 }

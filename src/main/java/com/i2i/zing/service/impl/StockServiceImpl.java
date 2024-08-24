@@ -3,8 +3,10 @@ package com.i2i.zing.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.dto.StockDto;
@@ -18,31 +20,46 @@ public class StockServiceImpl implements StockService {
     StockRepository stockRepository;
 
     @Override
-    public StockDto addStock(StockDto stockDto) {
+    public APIResponse addStock(StockDto stockDto) {
+        APIResponse apiResponse = new APIResponse();
         Stock stock = StockMapper.convertDtoToEntity(stockDto);
-        return StockMapper.convertEntityToDto(stockRepository.save(stock));
+        StockMapper.convertEntityToDto(stockRepository.save(stock));
+        apiResponse.setData(stock);
+        apiResponse.setStatus(HttpStatus.CREATED.value());
+        return apiResponse;
     }
 
     @Override
-    public List<StockDto> getStocks() {
+    public APIResponse getStocks() {
+        APIResponse apiResponse = new APIResponse();
         List<StockDto> result = new ArrayList<>();
         List<Stock> stocks = stockRepository.findByIsDeletedFalse();
         for (Stock stock : stocks) {
             result.add(StockMapper.convertEntityToDto(stock));
         }
-        return result;
+        apiResponse.setData(result);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public StockDto getStockById(String stockId) {
+    public APIResponse getStockById(String stockId) {
+        APIResponse apiResponse = new APIResponse();
         Stock stock = stockRepository.findByIsDeletedFalseAndStockId(stockId);
-        return StockMapper.convertEntityToDto(stock);
+        StockMapper.convertEntityToDto(stock);
+        apiResponse.setData(stock);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
     @Override
-    public void deleteStock(String stockId) {
+    public APIResponse deleteStock(String stockId) {
+        APIResponse apiResponse = new APIResponse();
         Stock stock = stockRepository.findByIsDeletedFalseAndStockId(stockId);
         stock.setDeleted(true);
         stockRepository.save(stock);
+        apiResponse.setData("Stock Deleted Successfully : " + stockId);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 }

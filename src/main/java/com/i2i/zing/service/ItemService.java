@@ -1,5 +1,6 @@
 package com.i2i.zing.service;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.ItemDto;
 import org.springframework.stereotype.Service;
 
@@ -19,32 +20,33 @@ public interface ItemService {
      *     This method add the Item to the Database
      * </p>
      * @param itemDto {@link ItemDto} - Item Details as Dto Object
-     * @return ItemDto as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
-    ItemDto addItem(ItemDto itemDto);
+    APIResponse addItem(ItemDto itemDto);
 
     /**
      * <p>
      *     This method retrieve the items from the database
      * </p>
-     * @return List of ItemDtos {@link ItemDto}
+     * @return APIResponse Details like Status, Data.
      */
-    List<ItemDto> getItems();
+    APIResponse getItems();
 
     /**
      * <p>
      *     This method retrieve the specific Item by ID
      * </p>
      * @param itemId - To Identify the Item
-     * @return Item Details {@link ItemDto} as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
-    ItemDto getItemById(String itemId);
+    APIResponse getItemById(String itemId);
 
     /**
      * <p>
      *     This method delete the Item by ID
      * </p>
      * @param itemId - To Identify the Item
+     * @return APIResponse Details like Status, Data.
      */
-    void deleteItem(String itemId);
+    APIResponse deleteItem(String itemId);
 }

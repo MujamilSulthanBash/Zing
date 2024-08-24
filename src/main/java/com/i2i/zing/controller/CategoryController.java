@@ -4,11 +4,9 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CategoryDto;
 import com.i2i.zing.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
 
 /**
  * <p>
@@ -28,7 +26,7 @@ public class CategoryController {
      *     like id, name
      * </p>
      * @param categoryDto {@link CategoryDto} Category as Dto Object
-     * @return CategoryDto {@link CategoryDto} Dto Object
+     * @return APIResponse Details like Status, Data.
      */
     @PostMapping
     public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryDto categoryDto) {
@@ -41,7 +39,7 @@ public class CategoryController {
      * <p>
      *     This method get all the Categories from the Database
      * </p>
-     * @return List of Categories as Dto Object {@link CategoryDto}
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping
     public ResponseEntity<APIResponse> getCategories() {
@@ -55,7 +53,7 @@ public class CategoryController {
      *     This method get the Category by ID
      * </p>
      * @param categoryId - To Identify the Category
-     * @return CategoryDto {@link CategoryDto} - Dto Object
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{categoryId}")
     public ResponseEntity<APIResponse> getCategoryById(String categoryId) {
@@ -69,7 +67,7 @@ public class CategoryController {
      *     This method delete the Category in the Database
      * </p>
      * @param categoryId - To Identify the Category
-     * @return ResponseEntity Status OK
+     * @return APIResponse Details like Status, Data.
      */
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<APIResponse> deleteCategory(String categoryId) {

@@ -26,7 +26,7 @@ public class DarkStoreController {
      *     This method Add a DarkStore to the Database
      * </p>
      * @param darkStoreDto {@link DarkStoreDto}- DarkStore as Dto Object
-     * @return DarkStoreDto as Object
+     * @return APIResponse Details like Status, Data.
      */
     @PostMapping
     public ResponseEntity<APIResponse> addDarkStore(@RequestBody DarkStoreDto darkStoreDto) {
@@ -39,7 +39,7 @@ public class DarkStoreController {
      * <p>
      *     This method get all the DarkStores in the Database
      * </p>
-     * @return List of DarkStoreDto as Dto Objects{@link DarkStoreDto}
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping
     public ResponseEntity<APIResponse> getDarkStores() {
@@ -53,7 +53,7 @@ public class DarkStoreController {
      *     This method get the DarkStore by DarkStore Id
      * </p>
      * @param darkStoreId - To Identify DarkStore
-     * @return DarkStoreDto {@link DarkStoreDto}
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> getDarkStoreById(String darkStoreId) {
@@ -68,7 +68,7 @@ public class DarkStoreController {
      *     with the DarkStoreId
      * </p>
      * @param darkStoreId - To Identify DarkStore
-     * @return ResponseEntity Status OK
+     * @return APIResponse Details like Status, Data.
      */
     @DeleteMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> deleteDarkStore(String darkStoreId) {

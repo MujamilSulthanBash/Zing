@@ -1,14 +1,12 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockDto;
 import com.i2i.zing.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -27,23 +25,26 @@ public class StockController {
      *     This method add the Stock to the Database
      * </p>
      * @param stockDto {@link StockDto} Stock as Dto Object
-     * @return StockDto as Dto object
+     * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<StockDto> addStock(@RequestBody StockDto stockDto) {
-        StockDto createdStockDto = stockService.addStock(stockDto);
-        return new ResponseEntity<>(createdStockDto, HttpStatus.CREATED);
+    public ResponseEntity<APIResponse> addStock(@RequestBody StockDto stockDto) {
+        APIResponse apiResponse = stockService.addStock(stockDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
      * <p>
      *     This method get all the Stock Details in the Database table
      * </p>
-     * @return List of StockDto {@link StockDto}
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping
-    public ResponseEntity<List<StockDto>> getStocks() {
-        return new ResponseEntity<>(stockService.getStocks(), HttpStatus.OK);
+    public ResponseEntity<APIResponse> getStocks() {
+        APIResponse apiResponse = stockService.getStocks();
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -51,12 +52,13 @@ public class StockController {
      *     This method get the Stock Details by ID
      * </p>
      * @param stockId - To Identify the Stock
-     * @return StockDto {@link StockDto} as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{stockId}")
-    public ResponseEntity<StockDto> getStockById(String stockId) {
-        StockDto retrievedStock = stockService.getStockById(stockId);
-        return new ResponseEntity<>(retrievedStock, HttpStatus.OK);
+    public ResponseEntity<APIResponse> getStockById(String stockId) {
+        APIResponse apiResponse = stockService.getStockById(stockId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -64,12 +66,13 @@ public class StockController {
      *     This method delete the Stock Details by ID
      * </p>
      * @param stockId - To Identify the Stock
-     * @return ResponseEntity Status OK
+     * @return APIResponse Details like Status, Data.
      */
     @DeleteMapping("/{stockId}")
-    public ResponseEntity<Void> deleteStock(String stockId) {
-        stockService.deleteStock(stockId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<APIResponse> deleteStock(String stockId) {
+        APIResponse apiResponse = stockService.deleteStock(stockId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
 }

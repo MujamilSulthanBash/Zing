@@ -1,14 +1,12 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.ItemDto;
 import com.i2i.zing.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * <p>
@@ -27,23 +25,26 @@ public class ItemController {
      *     This method add the Item to the Database table
      * </p>
      * @param itemDto {@link ItemDto} - Item as Dto Object
-     * @return ItemDto as Dto Object with Status
+     * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<ItemDto> addItem(@RequestBody ItemDto itemDto) {
-        ItemDto createdItemDto = itemService.addItem(itemDto);
-        return new ResponseEntity<>(createdItemDto, HttpStatus.CREATED);
+    public ResponseEntity<APIResponse> addItem(@RequestBody ItemDto itemDto) {
+        APIResponse apiResponse = itemService.addItem(itemDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
      * <p>
      *     This method get all the Items in the database table
      * </p>
-     * @return List of ItemDtos {@link ItemDto}
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping
-    public ResponseEntity<List<ItemDto>> getItems() {
-        return new ResponseEntity<>(itemService.getItems(), HttpStatus.OK);
+    public ResponseEntity<APIResponse> getItems() {
+        APIResponse apiResponse = itemService.getItems();
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -51,12 +52,13 @@ public class ItemController {
      *     This method get specific Item by ID given by the user
      * </p>
      * @param itemId - To Identify the Item
-     * @return ItemDto {@link ItemDto} as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemDto> getItemById(String itemId) {
-        ItemDto retrievedItems = itemService.getItemById(itemId);
-        return new ResponseEntity<>(retrievedItems, HttpStatus.OK);
+    public ResponseEntity<APIResponse> getItemById(String itemId) {
+        APIResponse apiResponse = itemService.getItemById(itemId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 
     /**
@@ -64,11 +66,12 @@ public class ItemController {
      *     This method delete the Item by ID
      * </p>
      * @param itemId - To Identify the Item
-     * @return ResponseEntity status OK
+     * @return APIResponse Details like Status, Data.
      */
     @DeleteMapping("/{itemId}")
-    public ResponseEntity<Void> deleteItem(String itemId) {
-        itemService.deleteItem(itemId);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<APIResponse> deleteItem(String itemId) {
+        APIResponse apiResponse = itemService.deleteItem(itemId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
     }
 }

@@ -1,9 +1,8 @@
 package com.i2i.zing.service;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockDto;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * <p>
@@ -20,32 +19,33 @@ public interface StockService {
      *     This method add the Stock to the Database
      * </p>
      * @param stockDto {@link StockDto} - Stock Details as Dto Object
-     * @return Stock details as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
-    StockDto addStock(StockDto stockDto);
+    APIResponse addStock(StockDto stockDto);
 
     /**
      * <p>
      *     This method get all the Details of Stock from the Database
      * </p>
-     * @return List of StockDto {@link StockDto} as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
-    List<StockDto> getStocks();
+    APIResponse getStocks();
 
     /**
      * <p>
      *     This method get the Stock Details by the Stock ID
      * </p>
      * @param stockId - To Identify the Stock
-     * @return StockDto {@link StockDto} as Dto Object
+     * @return APIResponse Details like Status, Data.
      */
-    StockDto getStockById(String stockId);
+    APIResponse getStockById(String stockId);
 
     /**
      * <p>
      *     This method delete the Stock by the Stock ID
      * </p>
      * @param stockId - To Identify the Stock
+     * @return APIResponse Details like Status, Data.
      */
-    void deleteStock(String stockId);
+    APIResponse deleteStock(String stockId);
 }

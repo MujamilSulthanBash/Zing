@@ -1,6 +1,8 @@
 package com.i2i.zing.mapper;
 
+import com.i2i.zing.common.DeliveryStatus;
 import com.i2i.zing.dto.OrderAssignDto;
+import com.i2i.zing.model.DeliveryPerson;
 import com.i2i.zing.model.Order;
 import com.i2i.zing.model.OrderAssign;
 
@@ -36,11 +38,14 @@ public class OrderAssignMapper {
      * @return OrderAssign for internal usage.
      */
     public static OrderAssign convertToOrderAssign(OrderAssignDto orderAssignDto) {
+            DeliveryStatus deliveryStatus = DeliveryStatus.valueOf(orderAssignDto.getDeliveryStatus());
         return OrderAssign.builder()
                 .order(Order.builder()
-                        .orderId(orderAssignDto.getOrderId).build())
-                .deliveryPerson(orderAssignDto.getDeliveryPersonId())
-                .deliveryStatus(orderAssignDto.getDeliveryStatus())
+                        .orderId(orderAssignDto.getOrderId()).build())
+                .deliveryPerson(DeliveryPerson.builder()
+                        .deliveryPersonId(orderAssignDto.getDeliveryPersonId())
+                        .build())
+                .deliveryStatus(deliveryStatus)
                 .build();
     }
 
@@ -52,12 +57,15 @@ public class OrderAssignMapper {
      * @return OrderAssign for internal usage.
      */
     public static OrderAssign convertToUpdatableDto(OrderAssignDto orderAssignDto) {
+        DeliveryStatus deliveryStatus = DeliveryStatus.valueOf(orderAssignDto.getDeliveryStatus());
         return OrderAssign.builder()
                 .assignId(orderAssignDto.getAssignId())
                 .order(Order.builder()
-                        .orderId(orderAssignDto.getOrderId).build())
-                .deliveryPerson(orderAssignDto.getDeliveryPersonId())
-                .deliveryStatus(orderAssignDto.getDeliveryStatus())
+                        .orderId(orderAssignDto.getOrderId()).build())
+                .deliveryPerson(DeliveryPerson.builder()
+                        .deliveryPersonId(orderAssignDto.getDeliveryPersonId())
+                        .build())
+                .deliveryStatus(deliveryStatus)
                 .build();
     }
 }

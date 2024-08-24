@@ -35,58 +35,87 @@ public class LoginService {
 
     public APIResponse signUp(CustomerRequestDto customerRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        User checkUser = userService.retrieveByEmail(customerRequestDto.getEmailId());
-        if (checkUser != null) {
-            if (userService.checkByEmailId(customerRequestDto.getEmailId())) {
-                apiResponse.setStatus(HttpStatus.FOUND.value());
-                return apiResponse;
-            }
-        }
-        User user = UserMapper.userEntity(customerRequestDto);
-        user.setPassword(encoder.encode(customerRequestDto.getPassword()));
         Role role = roleService.retrieveRoleByName(UserRole.CUSTOMER);
-        if (user.getRoles() == null)
-        {
+        User user = UserMapper.userEntity(customerRequestDto);
+        if (! userService.checkByEmailId(customerRequestDto.getEmailId())) {
+            user.setPassword(encoder.encode(customerRequestDto.getPassword()));
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             user.setRoles(roles);
-        } else {
-            user.getRoles().add(role);
+            userService.createUser(user);
+            customerService.createCustomer(user);
+            apiResponse.setData(user);
+            apiResponse.setStatus(HttpStatus.OK.value());
+            return apiResponse;
         }
-        User savedUser = userService.createUser(user);
-        customerService.createCustomer(savedUser);
-        apiResponse.setData(user);
-        apiResponse.setStatus(HttpStatus.OK.value());
+        User checkUser = userService.retrieveByEmail(customerRequestDto.getEmailId());
+        boolean roleExist = false;
+        for (User userCheck  : role.getUsers()) {
+            if (userCheck.getUserId().equals(checkUser.getUserId())) {
+                roleExist = true;
+                break;
+            }
+        }
+        if(!roleExist) {
+            user.setUserId(checkUser.getUserId());
+            checkUser.getRoles().add(role);
+            user.setRoles(checkUser.getRoles());
+            userService.createUser(user);
+            customerService.createCustomer(user);
+            apiResponse.setData(user);
+            apiResponse.setStatus(HttpStatus.OK.value());
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.FOUND.value());
         return apiResponse;
     }
 
     public APIResponse signUpDeliveryPerson(DeliveryPersonRequestDto deliveryPersonRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        if (userService.checkByEmailId(deliveryPersonRequestDto.getEmailId())) {
-            apiResponse.setStatus(HttpStatus.FOUND.value());
-            return apiResponse;
-        }
-        DeliveryPerson deliveryPerson = DeliveryPerson.builder()
-                .aadharNumber(deliveryPersonRequestDto.getAadharNumber())
-                .licenseNumber(deliveryPersonRequestDto.getLicenseNumber())
-                .vehicleNumber(deliveryPersonRequestDto.getVehicleNumber())
-                .build();
-        User user = UserMapper.userEntity(deliveryPersonRequestDto);
-        user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
         Role role = roleService.retrieveRoleByName(UserRole.DELIVERYPERSON);
-        if (user.getRoles().isEmpty())
-        {
+        User user = UserMapper.userEntity(deliveryPersonRequestDto);
+        if (!userService.checkByEmailId(deliveryPersonRequestDto.getEmailId())) {
+            user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             user.setRoles(roles);
-        } else {
-            user.getRoles().add(role);
+            userService.createUser(user);
+            DeliveryPerson deliveryPerson = DeliveryPerson.builder()
+                    .aadharNumber(deliveryPersonRequestDto.getAadharNumber())
+                    .licenseNumber(deliveryPersonRequestDto.getLicenseNumber())
+                    .vehicleNumber(deliveryPersonRequestDto.getVehicleNumber())
+                    .build();
+            user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
+            deliveryPersonService.createDeliveryPerson(deliveryPerson,user);
+            apiResponse.setData(user);
+            apiResponse.setStatus(HttpStatus.OK.value());
+            return apiResponse;
         }
-        userService.createUser(user);
-        deliveryPersonService.createDeliveryPerson(deliveryPerson, user);
-        apiResponse.setData(user);
-        apiResponse.setStatus(HttpStatus.OK.value());
+        User checkUser = userService.retrieveByEmail(deliveryPersonRequestDto.getEmailId());
+        boolean roleExist = false;
+        for (User userCheck  : role.getUsers()) {
+            if (userCheck.getUserId().equals(checkUser.getUserId())) {
+                roleExist = true;
+                break;
+            }
+        }
+        if (!roleExist) {
+            user.setUserId(checkUser.getUserId());
+            checkUser.getRoles().add(role);
+            user.setRoles(checkUser.getRoles());
+            userService.createUser(user);
+            DeliveryPerson deliveryPerson = DeliveryPerson.builder()
+                    .aadharNumber(deliveryPersonRequestDto.getAadharNumber())
+                    .licenseNumber(deliveryPersonRequestDto.getLicenseNumber())
+                    .vehicleNumber(deliveryPersonRequestDto.getVehicleNumber())
+                    .build();
+            user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
+            deliveryPersonService.createDeliveryPerson(deliveryPerson,user);
+            apiResponse.setData(user);
+            apiResponse.setStatus(HttpStatus.OK.value());
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.FOUND.value());
         return apiResponse;
     }
-
 }

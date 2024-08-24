@@ -2,6 +2,7 @@ package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.model.Cart;
@@ -69,7 +70,7 @@ public class StockServiceImpl implements StockService {
         return apiResponse;
     }
 
-    public APIResponse reduceStocks(List<CartItem> cartItems) {
+    public APIResponse reduceStocks(Set<CartItem> cartItems) {
         APIResponse apiResponse = new APIResponse();
         for (CartItem cartItem : cartItems) {
             String itemId = cartItem.getItem().getItemId();

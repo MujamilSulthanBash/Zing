@@ -1,14 +1,15 @@
 package com.i2i.zing.service.impl;
 
+import com.i2i.zing.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.DeliveryStatus;
-import com.i2i.zing.dto.OrderAssignDto;
 import com.i2i.zing.mapper.OrderAssignMapper;
 import com.i2i.zing.model.DeliveryPerson;
 import com.i2i.zing.model.Order;
@@ -28,17 +29,25 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     OrderAssignRepository orderAssignRepository;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     DeliveryPersonService deliveryPersonService;
 
     @Override
     public void addOrderAssign(Order order) {
         APIResponse apiResponse = new APIResponse();
-        List<DeliveryPerson> deliveryPersons = deliveryPersonService
-                                               .getDeliveryPersonsByLocation(order
-                                                       .getCart().getCustomer().getUser().getLocation());
+        List<User> users = userService
+                .getUserByLocation(order
+                        .getCart().getCustomer().getUser().getLocation());
+        List<DeliveryPerson> deliveryPersons = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            deliveryPersons.add( deliveryPersonService.getDeliveryPersonsById(users.get(i).getUserId()));
+            break;
+        }
         DeliveryPerson deliveryPerson = null;
         for (DeliveryPerson person : deliveryPersons) {
-            if(person.getOrderAssign().size() < 5) {
+            if (person.getOrderAssign().size() < 5) {
                 deliveryPerson = person;
                 break;
             }
@@ -63,7 +72,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Override
     public APIResponse getOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeleted(orderAssignId,false);
+        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeleted(orderAssignId, false);
         apiResponse.setData(OrderAssignMapper.convertToOrderAssignDto(orderAssign));
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
@@ -72,7 +81,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Override
     public APIResponse deleteOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeleted(orderAssignId,false);
+        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeleted(orderAssignId, false);
         orderAssign.setDeleted(true);
         orderAssignRepository.save(orderAssign);
         apiResponse.setData(orderAssign);

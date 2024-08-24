@@ -8,7 +8,6 @@ import com.i2i.zing.mapper.UserMapper;
 import com.i2i.zing.model.DeliveryPerson;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
-import com.i2i.zing.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,9 +36,11 @@ public class LoginService {
     public APIResponse signUp(CustomerRequestDto customerRequestDto) {
         APIResponse apiResponse = new APIResponse();
         User checkUser = userService.retrieveByEmail(customerRequestDto.getEmailId());
-        if (userService.checkByEmailId(customerRequestDto.getEmailId())) {
-            apiResponse.setStatus(HttpStatus.FOUND.value());
-            return apiResponse;
+        if (checkUser != null) {
+            if (userService.checkByEmailId(customerRequestDto.getEmailId())) {
+                apiResponse.setStatus(HttpStatus.FOUND.value());
+                return apiResponse;
+            }
         }
         User user = UserMapper.userEntity(customerRequestDto);
         user.setPassword(encoder.encode(customerRequestDto.getPassword()));
@@ -52,8 +53,8 @@ public class LoginService {
         } else {
             user.getRoles().add(role);
         }
-        userService.createUser(user);
-        customerService.createCustomer(user);
+        User savedUser = userService.createUser(user);
+        customerService.createCustomer(savedUser);
         apiResponse.setData(user);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;

@@ -2,10 +2,7 @@ package com.i2i.zing.model;
 
 import com.i2i.zing.common.PaymentStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 /**
  * <p>
@@ -17,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "cart_items")
@@ -36,7 +34,6 @@ public class CartItem {
     private PaymentStatus paymentStatus;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "card_id")
     private Cart cart;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

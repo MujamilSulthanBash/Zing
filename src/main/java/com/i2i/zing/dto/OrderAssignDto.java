@@ -21,4 +21,5 @@ public class OrderAssignDto {
     private String assignId;
     private String deliveryPersonId;
     private String deliveryStatus;
+    private String orderId;
 }

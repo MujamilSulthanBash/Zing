@@ -6,6 +6,8 @@ import com.i2i.zing.repository.DeliveryPersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DeliveryPersonService {
 
@@ -20,5 +22,9 @@ public class DeliveryPersonService {
                 .user(user)
                 .build();
         deliveryPersonRepository.save(person);
+    }
+
+    public List<DeliveryPerson> getDeliveryPersonsByLocation(String location) {
+        return deliveryPersonRepository.findAllByLocation(location);
     }
 }

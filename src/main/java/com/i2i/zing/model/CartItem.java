@@ -23,7 +23,7 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
-    private Double quantity;
+    private int quantity;
 
     private Double price;
 

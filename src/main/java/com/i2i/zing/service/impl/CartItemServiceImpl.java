@@ -2,8 +2,8 @@ package com.i2i.zing.service.impl;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CartItemDto;
+import com.i2i.zing.dto.ItemDto;
 import com.i2i.zing.mapper.CartItemMapper;
-import com.i2i.zing.mapper.CartMapper;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.repository.CartItemRepository;
 import com.i2i.zing.service.ItemService;
@@ -25,7 +25,8 @@ public class CartItemServiceImpl implements CartItemService {
     public APIResponse addCartItem(CartItemDto cartItemDto) {
         APIResponse apiResponse = new APIResponse();
         CartItem cartItem = CartItemMapper.convertToCartItem(cartItemDto);
-        cartItem.setTotalPrice(cartItem.getQuantity() * itemservice.getItemById(cartItemDto.getItemId()).getPrice());
+        ItemDto itemDto= itemservice.getItemDtoById(cartItemDto.getItemId());
+        cartItem.setTotalPrice(cartItem.getQuantity() * itemDto.getPrice());
         CartItem resultCart = cartItemRepository.save(cartItem);
         apiResponse.setData(resultCart);
         apiResponse.setStatus(HttpStatus.OK.value());

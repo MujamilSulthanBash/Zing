@@ -2,9 +2,10 @@ package com.i2i.zing.service;
 
 import java.util.List;
 
-import com.i2i.zing.common.APIResponse;
 import org.springframework.stereotype.Service;
 
+import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.model.CartItem;
 import com.i2i.zing.dto.CartDto;
 
 /**
@@ -52,4 +53,23 @@ public interface CartService {
      * @return @APIResponse value to acknowledge deletion.
      */
     APIResponse deleteCart(String cartId);
+
+    /**
+     * <p>
+     *     Fetches all items added for a particular cart.
+     * </p>
+     * @param cartId - String value to fetch items.
+     * @return @APIResponse value to display items.
+     */
+    APIResponse getCartItemsOfCart(String cartId);
+
+    /**
+     * <p>
+     *     Fetches all items added for a particular cart
+     *     as object for intenal operation..
+     * </p>
+     * @param cartId - String value to fetch items.
+     * @return @APIResponse value to display items.
+     */
+    List<CartItem> getCartItemsOfCartAsObject(String cartId);
 }

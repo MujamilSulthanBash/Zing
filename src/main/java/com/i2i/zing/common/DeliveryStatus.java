@@ -10,5 +10,5 @@ public enum DeliveryStatus {
     PENDING,
     ACCEPTED,
     PICKEDUP,
-    DELIVERY;
+    DELIVERED;
 }

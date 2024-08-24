@@ -41,4 +41,7 @@ public class OrderAssign {
     @Column(name = "delivery_status")
     @Enumerated(value = EnumType.STRING)
     private DeliveryStatus deliveryStatus;
+
+    @Column(name = "is_deleted")
+    private boolean isDeleted;
 }

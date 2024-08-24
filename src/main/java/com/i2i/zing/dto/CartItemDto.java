@@ -21,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CartItemDto {
     private String cartItemId;
-    private Double quantity;
+    private int quantity;
     private Double totalPrice;
     private String cartId;
     private String itemId;

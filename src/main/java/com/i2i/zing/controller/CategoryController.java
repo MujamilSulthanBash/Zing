@@ -2,11 +2,14 @@ package com.i2i.zing.controller;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CategoryDto;
+import com.i2i.zing.model.Item;
 import com.i2i.zing.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * <p>
@@ -72,6 +75,13 @@ public class CategoryController {
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<APIResponse> deleteCategory(String categoryId) {
         APIResponse apiResponse = categoryService.deleteCategory(categoryId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
+    }
+
+    @GetMapping("/categoryId/items")
+    public ResponseEntity<APIResponse> getItemsByCategoryId(String categoryId) {
+        APIResponse apiResponse = categoryService.getItemsByCategoryId(categoryId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

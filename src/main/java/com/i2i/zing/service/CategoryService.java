@@ -50,4 +50,13 @@ public interface CategoryService {
      * @return APIResponse Details like Status, Data.
      */
     APIResponse deleteCategory(String categoryId);
+
+    /**
+     * <p>
+     *     This method retrieve the item records by Category ID
+     * </p>
+     * @param categoryId - To Identify the Category
+     * @return APIResponse Details like Status, Data.
+     */
+    APIResponse getItemsByCategoryId(String categoryId);
 }

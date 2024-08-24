@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.model.Cart;
+import com.i2i.zing.model.CartItem;
+import com.i2i.zing.service.CartService;
 import com.i2i.zing.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +21,9 @@ import com.i2i.zing.repository.StockRepository;
 public class StockServiceImpl implements StockService {
     @Autowired
     StockRepository stockRepository;
+
+    @Autowired
+    CartService cartService;
 
     @Override
     public APIResponse addStock(StockDto stockDto) {
@@ -62,4 +68,21 @@ public class StockServiceImpl implements StockService {
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
+
+    public APIResponse reduceStocks(List<CartItem> cartItems) {
+        APIResponse apiResponse = new APIResponse();
+        for (CartItem cartItem : cartItems) {
+            String itemId = cartItem.getItem().getItemId();
+            int quantity = cartItem.getQuantity();
+            List<Stock> stocks = stockRepository.findByIsDeletedFalse();
+            for (Stock stock : stocks) {
+                if (itemId == stock.getItem().getItemId()) {
+                    stock.setQuantity(stock.getQuantity() - quantity);
+                }
+            }
+        }
+        return apiResponse;
+    }
+
+
 }

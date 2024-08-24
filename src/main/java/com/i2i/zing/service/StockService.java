@@ -2,6 +2,7 @@ package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockDto;
+import com.i2i.zing.model.Stock;
 import org.springframework.stereotype.Service;
 
 /**
@@ -48,4 +49,6 @@ public interface StockService {
      * @return APIResponse Details like Status, Data.
      */
     APIResponse deleteStock(String stockId);
+
+    APIResponse reduceStocks();
 }

@@ -27,4 +27,8 @@ public class RoleService {
         }
     }
 
+    public Role retrieveRoleByName(UserRole userRole) {
+        return roleRepository.findByRoleName(userRole);
+    }
+
 }

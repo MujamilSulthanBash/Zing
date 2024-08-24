@@ -27,4 +27,15 @@ public class UserService {
         }
     }
 
+    public User retrieveByEmail(String emailId) {
+        return userRepository.findByEmailIdIgnoreCase(emailId);
+    }
+
+    public boolean checkByEmailId(String emailId) {
+        return userRepository.existsByEmailIdIgnoreCase(emailId);
+    }
+
+    public User createUser(User user) {
+        return userRepository.save(user);
+    }
 }

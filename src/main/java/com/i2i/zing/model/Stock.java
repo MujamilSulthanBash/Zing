@@ -26,7 +26,7 @@ public class Stock extends Auditable {
     @JoinColumn(name = "darkstore_id")
     private DarkStore darkstore;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "item_id")
     private Item item;
 

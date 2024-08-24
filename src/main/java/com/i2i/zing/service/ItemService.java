@@ -43,6 +43,15 @@ public interface ItemService {
 
     /**
      * <p>
+     *     This method retrieve the specific ItemDto by ID for internal operation,
+     * </p>
+     * @param itemId - To Identify the Item
+     * @return APIResponse Details like Status, Data.
+     */
+    ItemDto getItemDtoById(String itemId);
+
+    /**
+     * <p>
      *     This method delete the Item by ID
      * </p>
      * @param itemId - To Identify the Item

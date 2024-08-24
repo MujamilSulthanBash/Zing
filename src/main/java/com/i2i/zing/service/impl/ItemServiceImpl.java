@@ -54,6 +54,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
+    public ItemDto getItemDtoById(String itemId) {
+        Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
+        ItemDto itemDto = ItemMapper.convertEntityToDto(item);
+        return itemDto;
+    }
+
+    @Override
     public APIResponse deleteItem(String itemId) {
         APIResponse apiResponse = new APIResponse();
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);

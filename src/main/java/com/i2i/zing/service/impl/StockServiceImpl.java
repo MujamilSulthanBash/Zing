@@ -2,6 +2,7 @@ package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import com.i2i.zing.common.APIResponse;
@@ -77,13 +78,11 @@ public class StockServiceImpl implements StockService {
             int quantity = cartItem.getQuantity();
             List<Stock> stocks = stockRepository.findByIsDeletedFalse();
             for (Stock stock : stocks) {
-                if (itemId == stock.getItem().getItemId()) {
+                if (Objects.equals(itemId, stock.getItem().getItemId())) {
                     stock.setQuantity(stock.getQuantity() - quantity);
                 }
             }
         }
         return apiResponse;
     }
-
-
 }

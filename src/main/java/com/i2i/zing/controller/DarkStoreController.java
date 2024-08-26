@@ -1,14 +1,15 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.DarkStoreDto;
-import com.i2i.zing.service.DarkStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-
+import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.DarkStoreDto;
+import com.i2i.zing.service.DarkStoreService;
 /**
  * <p>
  *     This class is the Controller for DarkStore Operations
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("zing/api/v1/darkstores")
 public class DarkStoreController {
+    private static final Logger logger = LogManager.getLogger();
     @Autowired
     DarkStoreService darkStoreService;
 
@@ -30,7 +32,13 @@ public class DarkStoreController {
      */
     @PostMapping
     public ResponseEntity<APIResponse> addDarkStore(@RequestBody DarkStoreDto darkStoreDto) {
+        logger.debug("Dark Store Adding..");
         APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("Error Occurred while Adding DarkStore..");
+        } else {
+            logger.info("Dark Store Added Successfully..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

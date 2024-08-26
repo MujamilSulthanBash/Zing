@@ -1,15 +1,15 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CategoryDto;
-import com.i2i.zing.model.Item;
-import com.i2i.zing.service.CategoryService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.CategoryDto;
+import com.i2i.zing.service.CategoryService;
 
 /**
  * <p>
@@ -20,6 +20,7 @@ import java.util.List;
 @Controller
 @RequestMapping("zing/api/v1/categories")
 public class CategoryController {
+    private static final Logger logger = LogManager.getLogger();
     @Autowired
     CategoryService categoryService;
 
@@ -33,7 +34,13 @@ public class CategoryController {
      */
     @PostMapping
     public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryDto categoryDto) {
+        logger.debug("Category Adding..");
         APIResponse apiResponse = categoryService.addCategory(categoryDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("Error Occurred while Adding DarkStore..");
+        } else {
+            logger.info("Category Added Successfully..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

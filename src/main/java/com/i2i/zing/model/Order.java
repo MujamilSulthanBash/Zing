@@ -36,7 +36,7 @@ import com.i2i.zing.common.PaymentStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order {
+public class Order extends Auditable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)

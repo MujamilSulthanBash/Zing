@@ -31,8 +31,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({EntityNotFoundException.class})
     public APIResponse handleEntityNotFoundException(EntityNotFoundException exception) {
         APIResponse apiResponse = new APIResponse();
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setErrorCode("NOT_FOUND");
+        exceptionResponse.setTimestamp(LocalDateTime.now());
+        exceptionResponse.setErrorMessage(exception.getMessage());
         apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        apiResponse.setError(exception.getMessage());
+        apiResponse.setError(exceptionResponse);
         logger.warn("Error: {}", exception.getMessage(), exception);
         return apiResponse;
     }
@@ -40,8 +44,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({EntityAlreadyExistsException.class})
     public APIResponse handleEntityAlreadyExistsException(EntityAlreadyExistsException exception) {
         APIResponse apiResponse = new APIResponse();
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setErrorCode("CONFLICT");
+        exceptionResponse.setTimestamp(LocalDateTime.now());
+        exceptionResponse.setErrorMessage(exception.getMessage());
         apiResponse.setStatus(HttpStatus.CONFLICT.value());
-        apiResponse.setError(exception.getMessage());
+        apiResponse.setError(exceptionResponse);
         logger.warn("Error: {}", exception.getMessage(), exception);
         return apiResponse;
     }
@@ -49,8 +57,25 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({RuntimeException.class})
     public APIResponse handleRuntimeException(RuntimeException exception) {
         APIResponse apiResponse = new APIResponse();
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setErrorCode("INTERNAL_SERVER_ERROR");
+        exceptionResponse.setTimestamp(LocalDateTime.now());
+        exceptionResponse.setErrorMessage(exception.getMessage());
         apiResponse.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-        apiResponse.setError(exception.getMessage());
+        apiResponse.setError(exceptionResponse);
+        logger.warn("Error: {}", exception.getMessage(), exception);
+        return apiResponse;
+    }
+
+    @ExceptionHandler({UnAuthorizedExecption.class})
+    public APIResponse handleUnAuthorizedException(UnAuthorizedExecption exception) {
+        APIResponse apiResponse = new APIResponse();
+        ExceptionResponse exceptionResponse = new ExceptionResponse();
+        exceptionResponse.setErrorCode("UNAUTHORIZED");
+        exceptionResponse.setTimestamp(LocalDateTime.now());
+        exceptionResponse.setErrorMessage(exception.getMessage());
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        apiResponse.setError(exceptionResponse);
         logger.warn("Error: {}", exception.getMessage(), exception);
         return apiResponse;
     }

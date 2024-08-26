@@ -7,7 +7,7 @@ package com.i2i.zing.exeception;
  * </p>
  */
 public class EntityAlreadyExistsException extends RuntimeException{
-    public EntityAlreadyExistsException(String message){
+    public EntityAlreadyExistsException(String message) {
         super(message);
     }
 }

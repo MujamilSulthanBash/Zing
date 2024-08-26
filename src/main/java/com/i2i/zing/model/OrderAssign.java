@@ -1,6 +1,5 @@
 package com.i2i.zing.model;
 
-import com.i2i.zing.common.DeliveryStatus;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -9,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.i2i.zing.common.DeliveryStatus;
 /**
  * <p>
  *      Represents blueprint for the orderAssign datatype.
@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderAssign extends {
+public class OrderAssign extends Auditable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)

@@ -25,10 +25,30 @@ public interface CartItemService {
 
     /**
      * <p>
+     *     Retrieves the CartItem.
+     * </p>
+     *
+     * @param cartItemId - String to remove CartItem.
+     * @return @APIResponse value to acknowledge deletion.
+     */
+    APIResponse getCartItem(String cartItemId);
+
+    /**
+     * <p>
      *     Removes the CartItem.
      * </p>
+     *
      * @param cartItemId - String to remove CartItem.
      * @return @APIResponse value to acknowledge deletion.
      */
     APIResponse deleteCartItem(String cartItemId);
+
+    /**
+     * <p>
+     *     Updates the cart Item by changing the item or quantity or cart.
+     * </p>
+     *
+     * @param cartItemDto {@link CartItemDto} value to update cart Item.
+     */
+    APIResponse updateCartItem(CartItemDto cartItemDto);
 }

@@ -16,6 +16,7 @@ public class CartItemMapper {
      * <p>
      *     Converts the entity to displayable dto format.
      * </p>
+     *
      * @param cartItem {@link CartItem} for conversion into dto.
      * @return CartItemDto to display.
      */
@@ -33,11 +34,31 @@ public class CartItemMapper {
      * <p>
      *     Converts input dto to entity for creating cartItem.
      * </p>
+     *
      * @param cartItemDto {@link CartItemDto} to convert into entity.
      * @return CartItem  for internal usage.
      */
     public static CartItem convertToCartItem(CartItemDto cartItemDto) {
         return CartItem.builder()
+                .item(Item.builder()
+                        .itemId(cartItemDto.getItemId()).build())
+                .cart(Cart.builder()
+                        .cartId(cartItemDto.getCartId()).build())
+                .quantity(cartItemDto.getQuantity())
+                .build();
+    }
+
+    /**
+     * <p>
+     *     Converts input dto to entity for updating cartItem.
+     * </p>
+     *
+     * @param cartItemDto {@link CartItemDto} to convert into entity.
+     * @return CartItem  for internal usage.
+     */
+    public static CartItem convertToUpdateDtoToCartItem(CartItemDto cartItemDto) {
+        return CartItem.builder()
+                .id(cartItemDto.getCartItemId())
                 .item(Item.builder()
                         .itemId(cartItemDto.getItemId()).build())
                 .cart(Cart.builder()

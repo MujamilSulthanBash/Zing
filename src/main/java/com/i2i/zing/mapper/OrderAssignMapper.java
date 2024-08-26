@@ -56,7 +56,7 @@ public class OrderAssignMapper {
      * @param orderAssignDto {@link OrderAssignDto} to convert into entity.
      * @return OrderAssign for internal usage.
      */
-    public static OrderAssign convertToUpdatableDto(OrderAssignDto orderAssignDto) {
+    public static OrderAssign convertToUpdatableEntity(OrderAssignDto orderAssignDto) {
         DeliveryStatus deliveryStatus = DeliveryStatus.valueOf(orderAssignDto.getDeliveryStatus());
         return OrderAssign.builder()
                 .assignId(orderAssignDto.getAssignId())

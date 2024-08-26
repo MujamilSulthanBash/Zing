@@ -1,9 +1,11 @@
 package com.i2i.zing.service;
 
-import com.i2i.zing.model.Order;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.OrderAssignDto;
+import com.i2i.zing.model.Order;
+import com.i2i.zing.model.OrderAssign;
 
 /**
  * <p>
@@ -44,8 +46,20 @@ public interface OrderAssignService {
      * <p>
      *     Removes the OrderAssign from user view by changing boolean value.
      * </p>
+     *
      * @param orderAssignId - String to remove OrderAssign.
      * @return APIResponse value to acknowledge deletion.
      */
     APIResponse deleteOrderAssign(String orderAssignId);
+
+    /**
+     * <p>
+     *     Updates the delivery status and delivery person of the
+     *     order assigned.
+     * </p>
+     *
+     * @param orderAssignDto - {@link OrderAssignDto} value to update
+     * @return APIResponse value to acknowledge update.
+     */
+    APIResponse updateOrderAssign(OrderAssignDto orderAssignDto);
 }

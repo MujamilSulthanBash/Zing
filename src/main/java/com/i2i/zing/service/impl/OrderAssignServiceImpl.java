@@ -1,19 +1,23 @@
 package com.i2i.zing.service.impl;
 
-import com.i2i.zing.model.User;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.DeliveryStatus;
+import com.i2i.zing.dto.OrderAssignDto;
+import com.i2i.zing.exeception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderAssignMapper;
 import com.i2i.zing.model.DeliveryPerson;
 import com.i2i.zing.model.Order;
 import com.i2i.zing.model.OrderAssign;
+import com.i2i.zing.model.User;
 import com.i2i.zing.repository.OrderAssignRepository;
 import com.i2i.zing.service.OrderAssignService;
 
@@ -34,6 +38,8 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Autowired
     DeliveryPersonService deliveryPersonService;
 
+    private static final Logger logger = LogManager.getLogger();
+
     @Override
     public void addOrderAssign(Order order) {
         APIResponse apiResponse = new APIResponse();
@@ -41,8 +47,8 @@ public class OrderAssignServiceImpl implements OrderAssignService {
                 .getUserByLocation(order
                         .getCart().getCustomer().getUser().getLocation());
         List<DeliveryPerson> deliveryPersons = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            deliveryPersons.add( deliveryPersonService.getDeliveryPersonsById(users.get(i).getUserId()));
+        for (User user : users) {
+            deliveryPersons.add(deliveryPersonService.getDeliveryPersonsById(user.getUserId()));
             break;
         }
         DeliveryPerson deliveryPerson = null;
@@ -73,6 +79,10 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     public APIResponse getOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
         OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignId);
+        if (null == orderAssign) {
+            logger.warn("There is no assigning record with ID : {}", orderAssignId);
+            throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignId);
+        }
         apiResponse.setData(OrderAssignMapper.convertToOrderAssignDto(orderAssign));
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
@@ -82,7 +92,27 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     public APIResponse deleteOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
         OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignId);
+        if (null == orderAssign) {
+            logger.warn("There is no assigning record with ID : {} to delete.", orderAssignId);
+            throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignId + " to delete.");
+        }
         orderAssign.setDeleted(true);
+        orderAssignRepository.save(orderAssign);
+        apiResponse.setData(orderAssign);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
+    }
+
+    @Override
+    public APIResponse updateOrderAssign(OrderAssignDto orderAssignDto) {
+        APIResponse apiResponse = new APIResponse();
+        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignDto.getAssignId());
+        if (null == orderAssign) {
+            logger.warn("There is no assigning record with ID : {} to update.", orderAssignDto.getAssignId());
+            throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignDto.getAssignId() + " to update.");
+        }
+        OrderAssign requestBody = OrderAssignMapper.convertToUpdatableEntity(orderAssignDto);
+        orderAssign.setDeliveryStatus(requestBody.getDeliveryStatus());
         orderAssignRepository.save(orderAssign);
         apiResponse.setData(orderAssign);
         apiResponse.setStatus(HttpStatus.OK.value());

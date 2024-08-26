@@ -24,7 +24,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderAssign {
+public class OrderAssign extends {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)

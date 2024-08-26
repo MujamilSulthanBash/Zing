@@ -11,6 +11,7 @@ import com.i2i.zing.mapper.CartMapper;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.repository.CartRepository;
 import com.i2i.zing.service.CartService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * Passes value for insertion,deletion and retrieval on Cart.
  * </p>
  */
+@Service
 public class CartServiceImpl implements CartService {
     @Autowired
     CartRepository cartRepository;

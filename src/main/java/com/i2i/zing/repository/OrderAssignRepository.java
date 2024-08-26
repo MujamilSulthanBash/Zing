@@ -31,8 +31,7 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
      *     using boolean value.
      * </p>
      * @param id - String value to fetch the Order assign.
-     * @param isDeleted - boolean value to check deletion status.
      * @return Order to display the order.
      */
-    OrderAssign findByOrderAssignIdAndIsDeleted(String id, boolean isDeleted);
+    OrderAssign findByOrderAssignIdAndIsDeletedFalse(String id);
 }

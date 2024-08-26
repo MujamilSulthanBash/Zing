@@ -72,7 +72,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Override
     public APIResponse getOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeleted(orderAssignId, false);
+        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignId);
         apiResponse.setData(OrderAssignMapper.convertToOrderAssignDto(orderAssign));
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
@@ -81,7 +81,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Override
     public APIResponse deleteOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeleted(orderAssignId, false);
+        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignId);
         orderAssign.setDeleted(true);
         orderAssignRepository.save(orderAssign);
         apiResponse.setData(orderAssign);

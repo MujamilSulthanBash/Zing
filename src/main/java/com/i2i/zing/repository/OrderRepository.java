@@ -31,8 +31,7 @@ public interface OrderRepository extends JpaRepository<Order, String> {
      *     using boolean value.
             * </p>
             * @param id - String value to fetch the Order.
-            * @param isDeleted - boolean value to check deletion status.
             * @return Order to display the order.
      */
-     Order findByOrderIdAndIsDeleted(String id, boolean isDeleted);
+     Order findByOrderIdAndIsDeletedFalse(String id);
 }

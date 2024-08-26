@@ -60,7 +60,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public APIResponse getOrder(String orderId) {
         APIResponse apiResponse = new APIResponse();
-        Order order = orderRepository.findByOrderIdAndIsDeleted(orderId, false);
+        Order order = orderRepository.findByOrderIdAndIsDeletedFalse(orderId);
         apiResponse.setData(order);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
@@ -69,7 +69,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public APIResponse deleteOrder(String orderId) {
         APIResponse apiResponse = new APIResponse();
-        Order order = orderRepository.findByOrderIdAndIsDeleted(orderId, false);
+        Order order = orderRepository.findByOrderIdAndIsDeletedFalse(orderId);
         order.setDeleted(true);
         orderRepository.save(order);
         apiResponse.setData("Order with ID : " + orderId + " has been deleted");

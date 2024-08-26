@@ -1,12 +1,9 @@
 package com.i2i.zing.dto;
 
-import com.i2i.zing.model.Stock;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-
-import java.util.Set;
 
 /**
  * <p>

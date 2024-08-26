@@ -1,9 +1,6 @@
 package com.i2i.zing.model;
 
-import javax.persistence.EntityListeners;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 import lombok.Getter;
@@ -20,16 +17,20 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable {
 
+    @Column(name = "created_by", updatable = false)
     @CreatedBy
     private String createdBy;
 
+    @Column(name = "created_date", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Date createdDate;
 
+    @Column(name = "modified_by")
     @LastModifiedBy
     private String lastModifiedBy;
 
+    @Column(name = "modified_date")
     @Temporal(TemporalType.TIMESTAMP)
     @LastModifiedDate
     private Date lastModifiedDate;

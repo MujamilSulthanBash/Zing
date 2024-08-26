@@ -33,5 +33,5 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
      * @param id - String value to fetch the Order assign.
      * @return Order to display the order.
      */
-    OrderAssign findByOrderAssignIdAndIsDeletedFalse(String id);
+    OrderAssign findByAssignIdAndIsDeletedFalse(String id);
 }

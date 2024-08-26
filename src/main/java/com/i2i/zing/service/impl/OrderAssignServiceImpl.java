@@ -48,7 +48,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
                         .getCart().getCustomer().getUser().getLocation());
         List<DeliveryPerson> deliveryPersons = new ArrayList<>();
         for (User user : users) {
-            deliveryPersons.add(deliveryPersonService.getDeliveryPersonsById(user.getUserId()));
+            deliveryPersons.add(deliveryPersonService.getDeliveryPersonById(user.getUserId()));
             break;
         }
         DeliveryPerson deliveryPerson = null;
@@ -78,7 +78,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Override
     public APIResponse getOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignId);
+        OrderAssign orderAssign = orderAssignRepository.findByAssignIdAndIsDeletedFalse(orderAssignId);
         if (null == orderAssign) {
             logger.warn("There is no assigning record with ID : {}", orderAssignId);
             throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignId);
@@ -91,7 +91,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Override
     public APIResponse deleteOrderAssign(String orderAssignId) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignId);
+        OrderAssign orderAssign = orderAssignRepository.findByAssignIdAndIsDeletedFalse(orderAssignId);
         if (null == orderAssign) {
             logger.warn("There is no assigning record with ID : {} to delete.", orderAssignId);
             throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignId + " to delete.");
@@ -106,7 +106,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Override
     public APIResponse updateOrderAssign(OrderAssignDto orderAssignDto) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByOrderAssignIdAndIsDeletedFalse(orderAssignDto.getAssignId());
+        OrderAssign orderAssign = orderAssignRepository.findByAssignIdAndIsDeletedFalse(orderAssignDto.getAssignId());
         if (null == orderAssign) {
             logger.warn("There is no assigning record with ID : {} to update.", orderAssignDto.getAssignId());
             throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignDto.getAssignId() + " to update.");

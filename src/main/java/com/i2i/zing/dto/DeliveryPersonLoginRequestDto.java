@@ -11,13 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryPersonRequestDto {
-    private String userName;
+public class DeliveryPersonLoginRequestDto {
     private String emailId;
-    private String contactNumber;
-    private String location;
     private String password;
-    private String vehicleNumber;
-    private String aadharNumber;
-    private String licenseNumber;
 }

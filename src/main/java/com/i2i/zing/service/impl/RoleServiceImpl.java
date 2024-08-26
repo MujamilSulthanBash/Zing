@@ -1,22 +1,23 @@
 package com.i2i.zing.service.impl;
 
-import com.i2i.zing.common.UserRole;
-import com.i2i.zing.model.Role;
-import com.i2i.zing.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.i2i.zing.common.UserRole;
+import com.i2i.zing.model.Role;
+import com.i2i.zing.repository.RoleRepository;
+import com.i2i.zing.service.RoleService;
+
 @Service
-public class RoleServiceImpl {
+public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository roleRepository;
 
-
-
+    @Override
     public void addRoles() {
         List<Role> roles = new ArrayList<>();
         if (! roleRepository.existsByRoleName(UserRole.ADMIN)) {
@@ -27,6 +28,7 @@ public class RoleServiceImpl {
         }
     }
 
+    @Override
     public Role retrieveRoleByName(UserRole userRole) {
         return roleRepository.findByRoleName(userRole);
     }

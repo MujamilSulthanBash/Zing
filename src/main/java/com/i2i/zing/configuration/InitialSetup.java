@@ -1,7 +1,7 @@
 package com.i2i.zing.configuration;
 
-import com.i2i.zing.service.impl.RoleService;
-import com.i2i.zing.service.impl.UserService;
+import com.i2i.zing.service.impl.RoleServiceImpl;
+import com.i2i.zing.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
 public class InitialSetup implements CommandLineRunner {
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceImpl roleServiceImpl;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Override
     public void run(String... args) throws Exception {
-        roleService.addRoles();
-        userService.createAdmin();
+        roleServiceImpl.addRoles();
+        userServiceImpl.createAdmin();
     }
 }

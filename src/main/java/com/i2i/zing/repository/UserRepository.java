@@ -1,6 +1,5 @@
 package com.i2i.zing.repository;
 
-import com.i2i.zing.common.UserRole;
 import com.i2i.zing.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -17,6 +16,6 @@ public interface UserRepository extends JpaRepository<User, String> {
 
     User findByEmailIdIgnoreCase(String email);
 
-    @Query("SELECT u FROM User u JOIN u.roles r WHERE u.location = :location AND r.name = :userRole")
-    List<User> findUsersByLocation(String location, String userRole);
+    @Query(value = "SELECT * FROM user u LEFT JOIN deliveryperson d ON u.userid = d.userid WHERE u.location = :location", nativeQuery = true)
+    List<User> findUsersByLocation(String location);
 }

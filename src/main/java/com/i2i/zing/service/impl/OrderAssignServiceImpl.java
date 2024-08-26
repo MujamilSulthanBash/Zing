@@ -33,10 +33,10 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     OrderAssignRepository orderAssignRepository;
 
     @Autowired
-    UserService userService;
+    UserServiceImpl userService;
 
     @Autowired
-    DeliveryPersonService deliveryPersonService;
+    DeliveryPersonServiceImpl deliveryPersonService;
 
     private static final Logger logger = LogManager.getLogger();
 

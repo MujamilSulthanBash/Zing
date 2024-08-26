@@ -2,9 +2,12 @@ package com.i2i.zing.service.impl;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.UserRole;
+import com.i2i.zing.configuration.JwtService;
+import com.i2i.zing.dto.CustomerLoginRequest;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.mapper.UserMapper;
+import com.i2i.zing.model.Customer;
 import com.i2i.zing.model.DeliveryPerson;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
@@ -17,41 +20,46 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class LoginService {
+public class LoginServiceImpl {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
-    private CustomerService customerService;
+    private CustomerServiceImpl customerServiceImpl;
 
     @Autowired
-    private RoleService roleService;
+    private RoleServiceImpl roleServiceImpl;
 
     @Autowired
-    private DeliveryPersonService deliveryPersonService;
+    private DeliveryPersonServiceImpl deliveryPersonServiceImpl;
+
+    @Autowired
+    private JwtService jwtService;
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     public APIResponse signUp(CustomerRequestDto customerRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Role role = roleService.retrieveRoleByName(UserRole.CUSTOMER);
+        Role role = roleServiceImpl.retrieveRoleByName(UserRole.CUSTOMER);
         User user = UserMapper.userEntity(customerRequestDto);
-        if (! userService.checkByEmailId(customerRequestDto.getEmailId())) {
-            user.setPassword(encoder.encode(customerRequestDto.getPassword()));
+        if (! userServiceImpl.checkByEmailId(customerRequestDto.getEmailId())) {
+            user.setPassword(encoder.encode(user.getPassword()));
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             user.setRoles(roles);
-            userService.createUser(user);
-            customerService.createCustomer(user);
+            userServiceImpl.createUser(user);
+            Customer customer = Customer.builder()
+                    .user(user).build();
+            customerServiceImpl.createCustomer(customer);
             apiResponse.setData(user);
             apiResponse.setStatus(HttpStatus.OK.value());
             return apiResponse;
         }
-        User checkUser = userService.retrieveByEmail(customerRequestDto.getEmailId());
+        User checkUser = userServiceImpl.retrieveByEmail(customerRequestDto.getEmailId());
         boolean roleExist = false;
-        for (User userCheck  : role.getUsers()) {
-            if (userCheck.getUserId().equals(checkUser.getUserId())) {
+        for (Role checkRole  : checkUser.getRoles()) {
+            if (checkRole.getRoleId().equals(role.getRoleId())) {
                 roleExist = true;
                 break;
             }
@@ -60,8 +68,10 @@ public class LoginService {
             user.setUserId(checkUser.getUserId());
             checkUser.getRoles().add(role);
             user.setRoles(checkUser.getRoles());
-            userService.createUser(user);
-            customerService.createCustomer(user);
+            userServiceImpl.createUser(user);
+            Customer customer = new Customer();
+            customer.setUser(user);
+            customerServiceImpl.createCustomer(customer);
             apiResponse.setData(user);
             apiResponse.setStatus(HttpStatus.OK.value());
             return apiResponse;
@@ -70,31 +80,49 @@ public class LoginService {
         return apiResponse;
     }
 
+    public APIResponse customerLogIn(CustomerLoginRequest customerLoginRequest) {
+        APIResponse apiResponse = new APIResponse();
+        if(userServiceImpl.checkByEmailId(customerLoginRequest.getEmailId())) {
+            User checkUser = userServiceImpl.retrieveByEmail(customerLoginRequest.getEmailId());
+            if(encoder.matches(customerLoginRequest.getPassword(), checkUser.getPassword())) {
+                String token = jwtService.generateJwt(checkUser);
+                apiResponse.setData(token);
+                apiResponse.setStatus(HttpStatus.OK.value());
+                return apiResponse;
+            }
+            apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        return apiResponse;
+    }
+
     public APIResponse signUpDeliveryPerson(DeliveryPersonRequestDto deliveryPersonRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Role role = roleService.retrieveRoleByName(UserRole.DELIVERYPERSON);
+        Role role = roleServiceImpl.retrieveRoleByName(UserRole.DELIVERYPERSON);
         User user = UserMapper.userEntity(deliveryPersonRequestDto);
-        if (!userService.checkByEmailId(deliveryPersonRequestDto.getEmailId())) {
+        if (!userServiceImpl.checkByEmailId(deliveryPersonRequestDto.getEmailId())) {
             user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
             Set<Role> roles = new HashSet<>();
             roles.add(role);
             user.setRoles(roles);
-            userService.createUser(user);
+//            userService.createUser(user);
             DeliveryPerson deliveryPerson = DeliveryPerson.builder()
                     .aadharNumber(deliveryPersonRequestDto.getAadharNumber())
                     .licenseNumber(deliveryPersonRequestDto.getLicenseNumber())
                     .vehicleNumber(deliveryPersonRequestDto.getVehicleNumber())
                     .build();
+            deliveryPerson.setUser(user);
             user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
-            deliveryPersonService.createDeliveryPerson(deliveryPerson,user);
-            apiResponse.setData(user);
+            deliveryPersonServiceImpl.createDeliveryPerson(deliveryPerson);
+            apiResponse.setData(userServiceImpl.createUser(user));
             apiResponse.setStatus(HttpStatus.OK.value());
             return apiResponse;
         }
-        User checkUser = userService.retrieveByEmail(deliveryPersonRequestDto.getEmailId());
+        User checkUser = userServiceImpl.retrieveByEmail(deliveryPersonRequestDto.getEmailId());
         boolean roleExist = false;
-        for (User userCheck  : role.getUsers()) {
-            if (userCheck.getUserId().equals(checkUser.getUserId())) {
+        for (Role checkRole  : checkUser.getRoles()) {
+            if (checkRole.getRoleId().equals(role.getRoleId())) {
                 roleExist = true;
                 break;
             }
@@ -103,19 +131,21 @@ public class LoginService {
             user.setUserId(checkUser.getUserId());
             checkUser.getRoles().add(role);
             user.setRoles(checkUser.getRoles());
-            userService.createUser(user);
+//            userService.createUser(user);
             DeliveryPerson deliveryPerson = DeliveryPerson.builder()
                     .aadharNumber(deliveryPersonRequestDto.getAadharNumber())
                     .licenseNumber(deliveryPersonRequestDto.getLicenseNumber())
                     .vehicleNumber(deliveryPersonRequestDto.getVehicleNumber())
                     .build();
+            deliveryPerson.setUser(user);
             user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
-            deliveryPersonService.createDeliveryPerson(deliveryPerson,user);
-            apiResponse.setData(user);
+            deliveryPersonServiceImpl.createDeliveryPerson(deliveryPerson);
+            apiResponse.setData(userServiceImpl.createUser(user));
             apiResponse.setStatus(HttpStatus.OK.value());
             return apiResponse;
         }
         apiResponse.setStatus(HttpStatus.FOUND.value());
         return apiResponse;
     }
+
 }

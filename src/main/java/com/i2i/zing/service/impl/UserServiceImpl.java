@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UserService {
+public class UserServiceImpl {
 
     @Autowired
     private UserRepository userRepository;
@@ -39,4 +41,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public List<User> getUserByLocation(String location) {
+        return userRepository.findUsersByLocation(location);
+    }
 }

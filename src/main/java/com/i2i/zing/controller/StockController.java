@@ -1,12 +1,19 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.StockDto;
-import com.i2i.zing.service.StockService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.StockDto;
+import com.i2i.zing.service.StockService;
 
 /**
  * <p>
@@ -17,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping("zing/api/v1/stocks")
 public class StockController {
+    private static final Logger logger = LogManager.getLogger();
     @Autowired
     StockService stockService;
 
@@ -30,6 +38,11 @@ public class StockController {
     @PostMapping
     public ResponseEntity<APIResponse> addStock(@RequestBody StockDto stockDto) {
         APIResponse apiResponse = stockService.addStock(stockDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("Error Occurred while Adding Stock..");
+        } else {
+            logger.info("Stock Added Successfully..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

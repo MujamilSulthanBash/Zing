@@ -7,6 +7,12 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+/**
+ * <p>
+ *     Sends the mail to destined user once they successfully signed up
+ *     and place their orders along with verification otp.
+ * </p>
+ */
 @Service
 public class EmailSenderService {
     @Autowired
@@ -14,9 +20,11 @@ public class EmailSenderService {
 
     private static final Logger logger = LogManager.getLogger();
 
+    private final String userName = System.getenv("MAIL_USERNAME");
+
     public void sendEmail(String to, String subject, String body) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom("MAIL_USERNAME");
+        message.setFrom(userName);
         message.setTo(to);
         message.setSubject(subject);
         message.setText(body);

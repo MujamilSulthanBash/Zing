@@ -1,7 +1,5 @@
 package com.i2i.zing.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.dto.OrderDto;
@@ -16,7 +14,9 @@ import com.i2i.zing.common.APIResponse;
 public interface OrderService {
     /**
      * <p>
-     *     passes the value for insertion into the collection.
+     *     passes the value for insertion into the collection, revokes method to
+     *     assign deliveryPerson, revokes stock reduction method to notify the
+     *     stock level and revokes mail sender the notify customers.
      * </p>
      *
      * @param orderDto - {@link OrderDto} value to set order Id.

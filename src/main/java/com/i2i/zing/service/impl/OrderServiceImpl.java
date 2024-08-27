@@ -3,6 +3,7 @@ package com.i2i.zing.service.impl;
 import java.util.List;
 import java.util.Objects;
 
+import com.i2i.zing.util.OtpGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     StockService stockService;
 
+    @Autowired
+    EmailSenderService emailSenderService;
+
     private static final Logger logger = LogManager.getLogger();
 
     @Override
@@ -60,6 +64,11 @@ public class OrderServiceImpl implements OrderService {
             orderAssignService.addOrderAssign(resultOrder);
         }
         stockService.reduceStocks(resultOrder.getCart().getCartItems());
+        String subject = "Order Acknowledgement";
+        String body = "Your order " + resultOrder.getOrderId() + " has been successfully placed."
+                       + "Your One Time Password for the order verification is "
+                       + String.valueOf(OtpGenerator.generateOtp());
+        emailSenderService.sendEmail(resultOrder.getCart().getCustomer().getUser().getUserId(), subject, body);
         return apiResponse;
     }
 

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 /**
  * <p>
  *     This class represents the Dto for
@@ -22,4 +24,5 @@ public class OrderAssignDto {
     private String deliveryPersonId;
     private String deliveryStatus;
     private String orderId;
+    private Date timeOfUpdate;
 }

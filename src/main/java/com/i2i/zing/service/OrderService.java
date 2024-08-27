@@ -7,14 +7,14 @@ import com.i2i.zing.common.APIResponse;
 
 /**
  * <p>
- * Passes value for insertion,deletion and retrieval on Order.
+ *    Passes value for insertion,deletion and retrieval on Order.
  * </p>
  */
 @Service
 public interface OrderService {
     /**
      * <p>
-     *     passes the value for insertion into the collection, revokes method to
+     *     Passes the value for insertion into the collection, revokes method to
      *     assign deliveryPerson, revokes stock reduction method to notify the
      *     stock level and revokes mail sender the notify customers.
      * </p>

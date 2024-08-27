@@ -27,6 +27,7 @@ public class OrderAssignMapper {
                 .deliveryPersonId(orderAssign.getDeliveryPerson().getDeliveryPersonId())
                 .deliveryStatus(orderAssign.getDeliveryStatus().toString())
                 .orderId(orderAssign.getOrder().getOrderId())
+                .timeOfUpdate(orderAssign.getModifiedDate())
                 .build();
     }
 

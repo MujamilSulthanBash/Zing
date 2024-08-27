@@ -49,6 +49,7 @@ public class OrderServiceImpl implements OrderService {
     public APIResponse addOrder(OrderDto orderDto) {
         APIResponse apiResponse = new APIResponse();
         List<Order> orders = orderRepository.findByIsDeletedFalse();
+        logger.debug("Getting list of orders to check previous carts.");
         for (Order order : orders) {
             if (Objects.equals(order.getCart().getCartId(), orderDto.getCartId())) {
                 logger.warn("Order with cart id : {} already exists.", orderDto.getCartId());
@@ -58,9 +59,10 @@ public class OrderServiceImpl implements OrderService {
         Order resultOrder = orderRepository.save(OrderMapper.convertToOrder(orderDto));
         apiResponse.setData(resultOrder);
         apiResponse.setStatus(HttpStatus.OK.value());
-        if ((resultOrder.getCart().getPaymentMethod().equals(PaymentMethod.UPI)) &&
-                (resultOrder.getPaymentStatus().equals(PaymentStatus.PAID)) ||
-                ((resultOrder.getCart().getPaymentMethod().equals(PaymentMethod.CASHON)))) {
+        logger.debug("Checking payment method and status to assign order.");
+        if (((resultOrder.getCart().getPaymentMethod().equals(PaymentMethod.UPI)) &&
+                (resultOrder.getPaymentStatus().equals(PaymentStatus.PAID))) ||
+                (resultOrder.getCart().getPaymentMethod().equals(PaymentMethod.CASHON))) {
             orderAssignService.addOrderAssign(resultOrder);
         }
         stockService.reduceStocks(resultOrder.getCart().getCartItems());

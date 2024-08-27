@@ -1,5 +1,7 @@
 package com.i2i.zing.dto;
 
+import java.util.Date;
+
 import lombok.*;
 
 /**
@@ -17,4 +19,5 @@ public class OrderDto {
     private String orderId;
     private String cartId;
     private String paymentStatus;
+    private Date timeOfOrder;
 }

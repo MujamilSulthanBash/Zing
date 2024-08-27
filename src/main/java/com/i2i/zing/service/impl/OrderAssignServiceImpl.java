@@ -42,11 +42,12 @@ public class OrderAssignServiceImpl implements OrderAssignService {
 
     @Override
     public void addOrderAssign(Order order) {
-        APIResponse apiResponse = new APIResponse();
+        logger.debug("Revoked userService to get use list.");
         List<User> users = userService
                 .getUserByLocation(order
                         .getCart().getCustomer().getUser().getLocation());
         List<DeliveryPerson> deliveryPersons = new ArrayList<>();
+        logger.debug("Revoked deliveryPersonService to get deliveryPerson list.");
         for (User user : users) {
             deliveryPersons.add(deliveryPersonService.getDeliveryPersonById(user.getUserId()));
             break;
@@ -58,12 +59,13 @@ public class OrderAssignServiceImpl implements OrderAssignService {
                 break;
             }
         }
+        logger.debug("Assigned delivery Person.");
         OrderAssign orderAssign = OrderAssign.builder()
                 .order(order)
                 .deliveryPerson(deliveryPerson)
                 .deliveryStatus(DeliveryStatus.PENDING)
                 .build();
-        orderAssignRepository.save(orderAssign);
+        OrderAssign resultOrderAssign = orderAssignRepository.save(orderAssign);
     }
 
     @Override
@@ -84,21 +86,6 @@ public class OrderAssignServiceImpl implements OrderAssignService {
             throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignId);
         }
         apiResponse.setData(OrderAssignMapper.convertToOrderAssignDto(orderAssign));
-        apiResponse.setStatus(HttpStatus.OK.value());
-        return apiResponse;
-    }
-
-    @Override
-    public APIResponse deleteOrderAssign(String orderAssignId) {
-        APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByAssignIdAndIsDeletedFalse(orderAssignId);
-        if (null == orderAssign) {
-            logger.warn("There is no assigning record with ID : {} to delete.", orderAssignId);
-            throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignId + " to delete.");
-        }
-        orderAssign.setDeleted(true);
-        orderAssignRepository.save(orderAssign);
-        apiResponse.setData(orderAssign);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

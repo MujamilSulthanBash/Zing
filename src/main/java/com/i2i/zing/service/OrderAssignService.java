@@ -44,16 +44,6 @@ public interface OrderAssignService {
 
     /**
      * <p>
-     *     Removes the OrderAssign from user view by changing boolean value.
-     * </p>
-     *
-     * @param orderAssignId - String to remove OrderAssign.
-     * @return APIResponse value to acknowledge deletion.
-     */
-    APIResponse deleteOrderAssign(String orderAssignId);
-
-    /**
-     * <p>
      *     Updates the delivery status and delivery person of the
      *     order assigned.
      * </p>

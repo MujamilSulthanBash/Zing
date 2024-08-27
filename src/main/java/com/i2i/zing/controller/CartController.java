@@ -34,11 +34,6 @@ public class CartController {
     @PostMapping
     public ResponseEntity<APIResponse> addCart(@RequestBody CartDto cartDto) {
         APIResponse apiResponse = cartService.addCart(cartDto);
-        if (null == apiResponse.getData()) {
-            logger.warn("Error Occurred while Adding Cart..");
-        } else {
-            logger.info("Cart Added Successfully..");
-        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -79,7 +74,7 @@ public class CartController {
      * @param cartId - To Identify the Cart
      * @return APIResponse Details like Status, Data.
      */
-    @GetMapping("/{cartId")
+    @GetMapping("/{cartId}/cartItems")
     public ResponseEntity<APIResponse> getItemsOfCart(String cartId) {
         APIResponse apiResponse = cartService.getCartItemsOfCart(cartId);
         return ResponseEntity.status(apiResponse.getStatus())

@@ -25,11 +25,6 @@ public class CartItemController {
     @PostMapping
     public ResponseEntity<APIResponse> addCartItem(@RequestBody CartItemDto cartItemDto) {
         APIResponse apiResponse = cartItemService.addCartItem(cartItemDto);
-        if (null == apiResponse.getData()) {
-            logger.warn("Error Occurred while Adding cart Item..");
-        } else {
-            logger.info("Item Added Successfully..");
-        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

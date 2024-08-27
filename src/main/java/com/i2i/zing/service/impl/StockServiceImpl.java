@@ -11,6 +11,8 @@ import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.service.CartService;
 import com.i2i.zing.service.StockService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,15 @@ import com.i2i.zing.repository.StockRepository;
 
 @Service
 public class StockServiceImpl implements StockService {
+    private static final Logger logger = LogManager.getLogger();
     @Autowired
     StockRepository stockRepository;
 
     @Autowired
     CartService cartService;
+
+    @Autowired
+    EmailSenderService emailSenderService;
 
     @Override
     public APIResponse addStock(StockDto stockDto) {
@@ -74,6 +80,7 @@ public class StockServiceImpl implements StockService {
 
     public APIResponse reduceStocks(Set<CartItem> cartItems) {
         APIResponse apiResponse = new APIResponse();
+        final String to = "aravind.sureshkumar@ideas2it.com";
         for (CartItem cartItem : cartItems) {
             String itemId = cartItem.getItem().getItemId();
             int quantity = cartItem.getQuantity();
@@ -81,6 +88,13 @@ public class StockServiceImpl implements StockService {
             for (Stock stock : stocks) {
                 if (Objects.equals(itemId, stock.getItem().getItemId())) {
                     stock.setQuantity(stock.getQuantity() - quantity);
+                    if(stock.getQuantity() <= 10) {
+                        String subject = "Stock Refilling Alert";
+                        String body = "Stock level at darkStore " + stock.getDarkstore().getDarkStoreId()
+                                       + " needs to be refilled. The current last reading : " + stock.getQuantity();
+                        emailSenderService.sendEmail(to, subject, body);
+                        logger.warn("Item {} has Minimum Stock Add more..", stock.getItem().getItemName());
+                    }
                 }
             }
         }

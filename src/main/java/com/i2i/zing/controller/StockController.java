@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.i2i.zing.common.APIResponse;
@@ -17,7 +16,7 @@ import com.i2i.zing.service.StockService;
  *     like Add, Update, Read and Delete the Stocks.
  * </p>
  */
-@Controller
+@RestController
 @RequestMapping("zing/api/v1/stocks")
 public class StockController {
     private static final Logger logger = LogManager.getLogger();
@@ -34,11 +33,6 @@ public class StockController {
     @PostMapping
     public ResponseEntity<APIResponse> addStock(@RequestBody StockDto stockDto) {
         APIResponse apiResponse = stockService.addStock(stockDto);
-        if (null == apiResponse.getData()) {
-            logger.warn("Error Occurred while Adding Stock..");
-        } else {
-            logger.info("Stock Added Successfully..");
-        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -84,6 +78,13 @@ public class StockController {
                 .body(apiResponse);
     }
 
+    /**
+     * <p>
+     *     This method Update the Stock Details by Stock Id
+     * </p>
+     * @param stockDto {@link StockDto} - Stock as Dto Object
+     * @return - APIResponse Details like Status, Data.
+     */
     @PutMapping
     public ResponseEntity<APIResponse> updateStock(@RequestBody StockDto stockDto) {
         APIResponse apiResponse = stockService.updateStock(stockDto);

@@ -4,15 +4,13 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.ItemDto;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Item;
+import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.ItemRepository;
 import com.i2i.zing.service.ItemService;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.net.http.HttpClient;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -36,11 +34,12 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public APIResponse getItems() {
+    public APIResponse getItemsByLocation(String location) {
         APIResponse apiResponse = new APIResponse();
         List<ItemDto> result = new ArrayList<>();
-        List<Item> items = itemRepository.findByIsDeletedFalse();
-        for (Item item : items) {
+        List<Stock> stocks = itemRepository.findStocksByLocation(location);
+        for (Stock stock : stocks) {
+            Item item = stock.getItem();
             result.add(ItemMapper.convertEntityToDto(item));
         }
         apiResponse.setData(result);

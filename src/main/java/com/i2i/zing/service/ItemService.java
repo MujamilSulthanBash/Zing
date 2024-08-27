@@ -30,7 +30,7 @@ public interface ItemService {
      * </p>
      * @return APIResponse Details like Status, Data.
      */
-    APIResponse getItems();
+    APIResponse getItemsByLocation(String location);
 
     /**
      * <p>

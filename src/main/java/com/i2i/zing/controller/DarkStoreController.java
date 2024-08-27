@@ -34,11 +34,6 @@ public class DarkStoreController {
     public ResponseEntity<APIResponse> addDarkStore(@RequestBody DarkStoreDto darkStoreDto) {
         logger.debug("Dark Store Adding..");
         APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreDto);
-        if (null == apiResponse.getData()) {
-            logger.warn("Error Occurred while Adding DarkStore..");
-        } else {
-            logger.info("Dark Store Added Successfully..");
-        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

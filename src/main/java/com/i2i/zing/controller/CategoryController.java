@@ -36,11 +36,6 @@ public class CategoryController {
     public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryDto categoryDto) {
         logger.debug("Category Adding..");
         APIResponse apiResponse = categoryService.addCategory(categoryDto);
-        if (null == apiResponse.getData()) {
-            logger.warn("Error Occurred while Adding DarkStore..");
-        } else {
-            logger.info("Category Added Successfully..");
-        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

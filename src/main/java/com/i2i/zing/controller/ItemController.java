@@ -40,9 +40,9 @@ public class ItemController {
      * </p>
      * @return APIResponse Details like Status, Data.
      */
-    @GetMapping
-    public ResponseEntity<APIResponse> getItems() {
-        APIResponse apiResponse = itemService.getItems();
+    @GetMapping("/{location}")
+    public ResponseEntity<APIResponse> getItems(String location) {
+        APIResponse apiResponse = itemService.getItemsByLocation(location);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

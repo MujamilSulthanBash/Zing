@@ -1,7 +1,12 @@
 package com.i2i.zing.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.i2i.zing.common.UserRole;
+import com.i2i.zing.model.Role;
+import com.i2i.zing.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -16,17 +21,23 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleService roleService;
+
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     @Override
     public void createAdmin() {
         User user = User.builder()
                 .userName("ADMIN")
-                .emailId("admin@1234")
+                .emailId("admin@gmail.com")
                 .contactNumber("123456789")
-                .password(encoder.encode("Admin@123"))
+                .password(encoder.encode(System.getenv("ADMIN_PASSWORD")))
                 .location("chennai")
                 .build();
+        Set<Role> roles = new HashSet<>();
+        roles.add(roleService.retrieveRoleByName(UserRole.ADMIN));
+        user.setRoles(roles);
         if( ! userRepository.existsByUserName("ADMIN")) {
             userRepository.save(user);
         }

@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DeliveryPersonLoginRequestDto {
+public class UserLoginRequestDto {
     private String emailId;
     private String password;
 }

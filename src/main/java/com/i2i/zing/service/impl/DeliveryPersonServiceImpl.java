@@ -14,12 +14,7 @@ public class DeliveryPersonServiceImpl implements DeliveryPersonService {
     private DeliveryPersonRepository deliveryPersonRepository;
 
     public void createDeliveryPerson(DeliveryPerson deliveryPerson) {
-        DeliveryPerson person = DeliveryPerson.builder()
-                .aadharNumber(deliveryPerson.getAadharNumber())
-                .licenseNumber(deliveryPerson.getLicenseNumber())
-                .vehicleNumber(deliveryPerson.getVehicleNumber())
-                .build();
-        deliveryPersonRepository.save(person);
+        deliveryPersonRepository.save(deliveryPerson);
     }
 
     @Override

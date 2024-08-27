@@ -15,6 +15,16 @@ public class UserMapper {
                 .build();
     }
 
+    public static CustomerRequestDto customerDto(DeliveryPersonRequestDto deliveryPersonRequestDto) {
+        return CustomerRequestDto.builder()
+                .userName(deliveryPersonRequestDto.getUserName())
+                .emailId(deliveryPersonRequestDto.getEmailId())
+                .contactNumber(deliveryPersonRequestDto.getContactNumber())
+                .location(deliveryPersonRequestDto.getLocation())
+                .password(deliveryPersonRequestDto.getPassword())
+                .build();
+    }
+
     public static User userEntity(DeliveryPersonRequestDto deliveryPersonRequestDto) {
         return User.builder()
                 .userName(deliveryPersonRequestDto.getUserName())

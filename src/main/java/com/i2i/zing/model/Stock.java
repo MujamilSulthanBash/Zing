@@ -2,6 +2,11 @@ package com.i2i.zing.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -16,7 +21,8 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "stocks")
-public class Stock extends Auditable {
+@EntityListeners(AuditingEntityListener.class)
+public class Stock {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -35,4 +41,11 @@ public class Stock extends Auditable {
 
     @Column(name = "is_deleted")
     private boolean isDeleted = false;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @LastModifiedDate
+    private Date modifiedDate;
 }

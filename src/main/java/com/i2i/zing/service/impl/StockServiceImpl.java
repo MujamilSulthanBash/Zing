@@ -1,13 +1,14 @@
 package com.i2i.zing.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
+import com.i2i.zing.model.Item;
 import com.i2i.zing.service.CartService;
 import com.i2i.zing.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,6 +84,20 @@ public class StockServiceImpl implements StockService {
                 }
             }
         }
+        return apiResponse;
+    }
+
+    @Override
+    public APIResponse updateStock(StockDto stockDto) {
+        APIResponse apiResponse = new APIResponse();
+        Stock stock = StockMapper.convertDtoToEntity(stockDto);
+        Stock existingStock = stockRepository.findByIsDeletedFalseAndStockId(stockDto.getItemId());
+        LocalDate modifiedDateTime = LocalDate.now();
+        Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        existingStock.setModifiedDate(modifiedDate);
+        stockRepository.save(existingStock);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(modifiedDateTime);
         return apiResponse;
     }
 }

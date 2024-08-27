@@ -74,4 +74,11 @@ public class ItemController {
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
+
+    @PutMapping
+    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemDto itemDto) {
+        APIResponse apiResponse = itemService.updateItem(itemDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
+    }
 }

@@ -9,6 +9,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.i2i.zing.common.DeliveryStatus;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Date;
+
 /**
  * <p>
  *      Represents blueprint for the orderAssign datatype.
@@ -24,7 +30,8 @@ import com.i2i.zing.common.DeliveryStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderAssign extends Auditable {
+@EntityListeners(AuditingEntityListener.class)
+public class OrderAssign {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -44,4 +51,11 @@ public class OrderAssign extends Auditable {
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @LastModifiedDate
+    private Date modifiedDate;
 }

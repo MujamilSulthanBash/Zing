@@ -1,10 +1,13 @@
 package com.i2i.zing.model;
 
+import java.util.Date;
 import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 /**
  * <p>
@@ -21,7 +24,8 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "users")
-public class User extends Auditable {
+@EntityListeners(AuditingEntityListener.class)
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -45,4 +49,8 @@ public class User extends Auditable {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JsonManagedReference
     private Set<Role> roles;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
 }

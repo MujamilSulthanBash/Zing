@@ -58,4 +58,6 @@ public interface ItemService {
      * @return APIResponse Details like Status, Data.
      */
     APIResponse deleteItem(String itemId);
+
+    APIResponse updateItem(ItemDto itemDto);
 }

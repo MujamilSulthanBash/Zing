@@ -1,17 +1,6 @@
 package com.i2i.zing.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +9,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import com.i2i.zing.common.PaymentStatus;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.util.Date;
 
 /**
  * <p>
@@ -36,7 +30,8 @@ import com.i2i.zing.common.PaymentStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Order extends Auditable {
+@EntityListeners(AuditingEntityListener.class)
+public class Order {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -52,4 +47,11 @@ public class Order extends Auditable {
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
+
+    @CreatedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @LastModifiedDate
+    private Date modifiedDate;
 }

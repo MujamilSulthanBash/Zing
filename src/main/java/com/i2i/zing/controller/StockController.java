@@ -5,11 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockDto;
@@ -84,6 +80,13 @@ public class StockController {
     @DeleteMapping("/{stockId}")
     public ResponseEntity<APIResponse> deleteStock(String stockId) {
         APIResponse apiResponse = stockService.deleteStock(stockId);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
+    }
+
+    @PutMapping
+    public ResponseEntity<APIResponse> updateStock(@RequestBody StockDto stockDto) {
+        APIResponse apiResponse = stockService.updateStock(stockDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

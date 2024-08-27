@@ -53,4 +53,6 @@ public interface StockService {
     APIResponse deleteStock(String stockId);
 
     APIResponse reduceStocks(Set<CartItem> cartItems);
+
+    APIResponse updateStock(StockDto stockDto);
 }

@@ -6,12 +6,17 @@ import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.repository.ItemRepository;
 import com.i2i.zing.service.ItemService;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.net.http.HttpClient;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -68,6 +73,20 @@ public class ItemServiceImpl implements ItemService {
         itemRepository.save(item);
         apiResponse.setData("Item Deleted Successfully : " + itemId);
         apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
+    }
+
+    @Override
+    public APIResponse updateItem(ItemDto itemDto) {
+        APIResponse apiResponse = new APIResponse();
+        Item item = ItemMapper.convertDtoToEntity(itemDto);
+        Item existingItem = itemRepository.findByIsDeletedFalseAndItemId(itemDto.getItemId());
+        LocalDate modifiedDateTime = LocalDate.now();
+        Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        existingItem.setModifiedDate(modifiedDate);
+        itemRepository.save(existingItem);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(modifiedDateTime);
         return apiResponse;
     }
 }

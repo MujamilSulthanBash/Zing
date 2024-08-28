@@ -58,6 +58,11 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    public List<Stock> getStocksByLocation(String location) {
+        return stockRepository.findStocksByLocation(location);
+    }
+
+    @Override
     public APIResponse getStockById(String stockId) {
         APIResponse apiResponse = new APIResponse();
         Stock stock = stockRepository.findByIsDeletedFalseAndStockId(stockId);

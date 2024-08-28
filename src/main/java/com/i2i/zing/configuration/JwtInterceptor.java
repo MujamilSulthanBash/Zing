@@ -40,7 +40,7 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws UnAuthorizedExecption {
         String authToken = request.getHeader("Authorization");
-        if (!(request.getRequestURI().contains("signup") || request.getRequestURI().contains("login"))) {
+        if (!(request.getRequestURI().contains("signup") || request.getRequestURI().contains("login") || request.getRequestURI().contains("showitems")) ) {
             if (authToken == null || !authToken.startsWith(bearerPrefix)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return false;
@@ -90,9 +90,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                 .setSigningKey(secretKey)
                 .parseClaimsJws(token)
                 .getBody();
-
         final List roles = claims.get("roles", List.class);
-        System.out.println(roles);
         return isAuthorizedForURI(roles, requestURI);
     }
 
@@ -107,15 +105,16 @@ public class JwtInterceptor implements HandlerInterceptor {
      */
     private boolean isAuthorizedForURI(List<String> roles, String requestURI) {
         Map<String, List<String>> uriRoleMap = Map.of(
-                "/admin/**", List.of("ADMIN"),
-                "/customers/**", List.of("CUSTOMER","ADMIN"),
-                "/deliverypersons/**", List.of("DELIVERYPERSON","ADMIN"),
-                "/zing/api/v1/private/api",List.of("ADMIN")
+                "/zing/api/v1", List.of("ADMIN"),
+                "/zing/api/v1/customers/", List.of("CUSTOMER","ADMIN"),
+                "/zing/api/v1/categories/", List.of("CUSTOMER","ADMIN"),
+                "/zing/api/v1/deliverypersons/", List.of("DELIVERYPERSON","ADMIN")
         );
+        System.out.println(requestURI);
         for (Map.Entry<String, List<String>> entry : uriRoleMap.entrySet()) {
             String uriPattern = entry.getKey();
             List<String> requiredRoles = entry.getValue();
-            if (requestURI.startsWith(uriPattern) && roles.stream().anyMatch(role -> requiredRoles.contains(String.valueOf(role)))) {
+            if (requestURI.contains(uriPattern) && roles.stream().anyMatch(role -> requiredRoles.contains(String.valueOf(role)))) {
                 return true;
             }
         }

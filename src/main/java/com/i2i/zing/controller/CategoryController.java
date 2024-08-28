@@ -61,7 +61,7 @@ public class CategoryController {
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{categoryId}")
-    public ResponseEntity<APIResponse> getCategoryById(String categoryId) {
+    public ResponseEntity<APIResponse> getCategoryById(@PathVariable String categoryId) {
         APIResponse apiResponse = categoryService.getCategoryById(categoryId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -75,14 +75,14 @@ public class CategoryController {
      * @return APIResponse Details like Status, Data.
      */
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<APIResponse> deleteCategory(String categoryId) {
+    public ResponseEntity<APIResponse> deleteCategory(@PathVariable String categoryId) {
         APIResponse apiResponse = categoryService.deleteCategory(categoryId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
 
-    @GetMapping("/categoryId/items")
-    public ResponseEntity<APIResponse> getItemsByCategoryId(String categoryId) {
+    @GetMapping("/{categoryId}/items")
+    public ResponseEntity<APIResponse> getItemsByCategoryId(@PathVariable String categoryId) {
         APIResponse apiResponse = categoryService.getItemsByCategoryId(categoryId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

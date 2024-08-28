@@ -7,6 +7,7 @@ import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.ItemRepository;
 import com.i2i.zing.service.ItemService;
+import com.i2i.zing.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class ItemServiceImpl implements ItemService {
     @Autowired
     ItemRepository itemRepository;
 
+    @Autowired
+    private StockService stockService;
+
     @Override
     public APIResponse addItem(ItemDto itemDto) {
         APIResponse apiResponse = new APIResponse();
@@ -37,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
     public APIResponse getItemsByLocation(String location) {
         APIResponse apiResponse = new APIResponse();
         List<String> result = new ArrayList<>();
-        List<Stock> stocks = itemRepository.findStocksByLocation(location);
+        List<Stock> stocks = stockService.getStocksByLocation(location);
         for (Stock stock : stocks) {
             String itemName = stock.getItem().getItemName();
             result.add(itemName);
@@ -51,8 +55,7 @@ public class ItemServiceImpl implements ItemService {
     public APIResponse getItemById(String itemId) {
         APIResponse apiResponse = new APIResponse();
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
-        ItemMapper.convertEntityToDto(item);
-        apiResponse.setData(item);
+        apiResponse.setData(ItemMapper.convertEntityToDto(item));
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

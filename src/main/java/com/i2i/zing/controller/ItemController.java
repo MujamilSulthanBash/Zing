@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.dto.LocationRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -40,9 +41,9 @@ public class ItemController {
      * </p>
      * @return APIResponse Details like Status, Data.
      */
-    @GetMapping("/{location}")
-    public ResponseEntity<APIResponse> getItems(String location) {
-        APIResponse apiResponse = itemService.getItemsByLocation(location);
+    @GetMapping("/showitems")
+    public ResponseEntity<APIResponse> getItemsByLocation(@RequestBody LocationRequestDto locationRequestDto) {
+        APIResponse apiResponse = itemService.getItemsByLocation(locationRequestDto.getLocation());
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -55,7 +56,8 @@ public class ItemController {
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{itemId}")
-    public ResponseEntity<APIResponse> getItemById(String itemId) {
+    public ResponseEntity<APIResponse> getItemById(@PathVariable String itemId) {
+        System.out.println(itemId);
         APIResponse apiResponse = itemService.getItemById(itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

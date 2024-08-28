@@ -1,7 +1,7 @@
 package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CartItemDto;
+import com.i2i.zing.dto.CartItemRequestDto;
 
 public interface CartItemService {
     /**
@@ -9,10 +9,10 @@ public interface CartItemService {
      *     passes the value for insertion into the collection.
      * </p>
      *
-     * @param cartItemDto - {@link CartItemDto} value to set Cart Id.
+     * @param cartItemRequestDto - {@link CartItemRequestDto} value to set Cart Id.
      * @return APIResponse value to indicate insertion status.
      */
-    APIResponse addCartItem(CartItemDto cartItemDto);
+    APIResponse addCartItem(CartItemRequestDto cartItemRequestDto);
 
     /**
      * <p>
@@ -48,7 +48,7 @@ public interface CartItemService {
      *     Updates the cart Item by changing the item or quantity or cart.
      * </p>
      *
-     * @param cartItemDto {@link CartItemDto} value to update cart Item.
+     * @param cartItemRequestDto {@link CartItemRequestDto} value to update cart Item.
      */
-    APIResponse updateCartItem(CartItemDto cartItemDto);
+    APIResponse updateCartItem(CartItemRequestDto cartItemRequestDto);
 }

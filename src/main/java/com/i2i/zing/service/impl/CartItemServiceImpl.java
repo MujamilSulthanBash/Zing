@@ -1,5 +1,7 @@
 package com.i2i.zing.service.impl;
 
+import com.i2i.zing.dto.CartItemRequestDto;
+import com.i2i.zing.dto.ItemRequestDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CartItemDto;
-import com.i2i.zing.dto.ItemDto;
 import com.i2i.zing.exeception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.model.CartItem;
@@ -27,11 +27,11 @@ public class CartItemServiceImpl implements CartItemService {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public APIResponse addCartItem(CartItemDto cartItemDto) {
+    public APIResponse addCartItem(CartItemRequestDto cartItemRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        CartItem cartItem = CartItemMapper.convertToCartItem(cartItemDto);
-        ItemDto itemDto= itemservice.getItemDtoById(cartItemDto.getItemId());
-        cartItem.setTotalPrice((double)cartItem.getQuantity() * itemDto.getPrice());
+        CartItem cartItem = CartItemMapper.convertToCartItem(cartItemRequestDto);
+        ItemRequestDto itemRequestDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
+        cartItem.setTotalPrice((double)cartItem.getQuantity() * itemRequestDto.getPrice());
         CartItem resultCart = cartItemRepository.save(cartItem);
         apiResponse.setData(resultCart);
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -71,12 +71,12 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public APIResponse updateCartItem(CartItemDto cartItemDto) {
+    public APIResponse updateCartItem(CartItemRequestDto cartItemRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        CartItem cartItem = cartItemRepository.findById(cartItemDto.getCartItemId())
-                .orElseThrow(() -> new EntityNotFoundException("CartItem with Id : " + cartItemDto.getCartItemId() + " not found to update."));
-        logger.warn("CartItem with Id : {} not found to update.", cartItemDto.getCartItemId());
-        CartItem requestBody = CartItemMapper.convertToUpdateDtoToCartItem(cartItemDto);
+        CartItem cartItem = cartItemRepository.findById(cartItemRequestDto.getCartItemId())
+                .orElseThrow(() -> new EntityNotFoundException("CartItem with Id : " + cartItemRequestDto.getCartItemId() + " not found to update."));
+        logger.warn("CartItem with Id : {} not found to update.", cartItemRequestDto.getCartItemId());
+        CartItem requestBody = CartItemMapper.convertToUpdateDtoToCartItem(cartItemRequestDto);
         cartItem.setItem(requestBody.getItem());
         cartItem.setCart(requestBody.getCart());
         cartItem.setQuantity(requestBody.getQuantity());

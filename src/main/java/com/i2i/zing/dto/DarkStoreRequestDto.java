@@ -16,7 +16,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DarkStoreDto{
+public class DarkStoreRequestDto {
     @NotBlank
     private String darkStoreId;
 

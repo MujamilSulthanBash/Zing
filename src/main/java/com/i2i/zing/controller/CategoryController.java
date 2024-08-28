@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CategoryDto;
+import com.i2i.zing.dto.CategoryRequestDto;
 import com.i2i.zing.service.CategoryService;
 
 /**
@@ -29,13 +29,13 @@ public class CategoryController {
      *     This method add the Category to the Database
      *     like id, name
      * </p>
-     * @param categoryDto {@link CategoryDto} Category as Dto Object
+     * @param categoryRequestDto {@link CategoryRequestDto} Category as Dto Object
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
         logger.debug("Category Adding..");
-        APIResponse apiResponse = categoryService.addCategory(categoryDto);
+        APIResponse apiResponse = categoryService.addCategory(categoryRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

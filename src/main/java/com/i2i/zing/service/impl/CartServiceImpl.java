@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CartDto;
+import com.i2i.zing.dto.CartRequestDto;
 import com.i2i.zing.exeception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.mapper.CartMapper;
@@ -31,9 +31,9 @@ public class CartServiceImpl implements CartService {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public APIResponse addCart(CartDto cartDto) {
+    public APIResponse addCart(CartRequestDto cartRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Cart resultCart = cartRepository.save(CartMapper.convertToCart(cartDto));
+        Cart resultCart = cartRepository.save(CartMapper.convertToCart(cartRequestDto));
         apiResponse.setData(resultCart);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.StockDto;
+import com.i2i.zing.dto.StockRequestDto;
 import com.i2i.zing.service.StockService;
 
 /**
@@ -27,12 +27,12 @@ public class StockController {
      * <p>
      *     This method add the Stock to the Database
      * </p>
-     * @param stockDto {@link StockDto} Stock as Dto Object
+     * @param stockRequestDto {@link StockRequestDto} Stock as Dto Object
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addStock(@RequestBody StockDto stockDto) {
-        APIResponse apiResponse = stockService.addStock(stockDto);
+    public ResponseEntity<APIResponse> addStock(@RequestBody StockRequestDto stockRequestDto) {
+        APIResponse apiResponse = stockService.addStock(stockRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -82,12 +82,12 @@ public class StockController {
      * <p>
      *     This method Update the Stock Details by Stock Id
      * </p>
-     * @param stockDto {@link StockDto} - Stock as Dto Object
+     * @param stockRequestDto {@link StockRequestDto} - Stock as Dto Object
      * @return - APIResponse Details like Status, Data.
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateStock(@RequestBody StockDto stockDto) {
-        APIResponse apiResponse = stockService.updateStock(stockDto);
+    public ResponseEntity<APIResponse> updateStock(@RequestBody StockRequestDto stockRequestDto) {
+        APIResponse apiResponse = stockService.updateStock(stockRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

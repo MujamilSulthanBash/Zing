@@ -1,6 +1,6 @@
 package com.i2i.zing.mapper;
 
-import com.i2i.zing.dto.DarkStoreDto;
+import com.i2i.zing.dto.DarkStoreRequestDto;
 import com.i2i.zing.model.DarkStore;
 /**
  * <p>
@@ -14,27 +14,27 @@ public class DarkStoreMapper {
      *     Converts the entity to dto format.
      * </p>
      * @param darkStore {@link DarkStore} into dto.
-     * @return DarkStoreDto to display.
+     * @return DarkStoreRequestDto to display.
      */
-    public static DarkStoreDto convertEntityToDto(DarkStore darkStore) {
-        DarkStoreDto darkStoreDto = DarkStoreDto.builder()
+    public static DarkStoreRequestDto convertEntityToDto(DarkStore darkStore) {
+        DarkStoreRequestDto darkStoreRequestDto = DarkStoreRequestDto.builder()
                 .darkStoreId(darkStore.getDarkStoreId())
                 .location(darkStore.getLocation())
                 .build();
-        return darkStoreDto;
+        return darkStoreRequestDto;
     }
 
     /**
      * <p>
      *     Converts the Dto to entity object.
      * </p>
-     * @param darkStoreDto {@link DarkStoreDto} for conversion into dto.
+     * @param darkStoreRequestDto {@link DarkStoreRequestDto} for conversion into dto.
      * @return DarkStore to display.
      */
-    public static DarkStore convertDtoToEntity(DarkStoreDto darkStoreDto) {
+    public static DarkStore convertDtoToEntity(DarkStoreRequestDto darkStoreRequestDto) {
         DarkStore darkStore = DarkStore.builder()
-                .darkStoreId(darkStoreDto.getDarkStoreId())
-                .location(darkStoreDto.getLocation())
+                .darkStoreId(darkStoreRequestDto.getDarkStoreId())
+                .location(darkStoreRequestDto.getLocation())
                 .build();
         return darkStore;
     }

@@ -1,6 +1,6 @@
 package com.i2i.zing.mapper;
 
-import com.i2i.zing.dto.ItemDto;
+import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.model.Category;
 import com.i2i.zing.model.Item;
 /**
@@ -15,32 +15,32 @@ public class ItemMapper {
      *     Converts the entity to dto object.
      * </p>
      * @param item {@link Item} for conversion into dto.
-     * @return ItemDto to display.
+     * @return ItemRequestDto to display.
      */
-    public static ItemDto convertEntityToDto(Item item) {
-        ItemDto itemDto = ItemDto.builder()
+    public static ItemRequestDto convertEntityToDto(Item item) {
+        ItemRequestDto itemRequestDto = ItemRequestDto.builder()
                 .itemId(item.getItemId())
                 .name(item.getItemName())
                 .price(item.getPrice())
                 .categoryName(item.getCategory().getName())
                 .build();
-        return itemDto;
+        return itemRequestDto;
     }
 
     /**
      * <p>
      *     Converts the dto to entity Object
      * </p>
-     * @param itemDto {@link ItemDto} convert to entity.
+     * @param itemRequestDto {@link ItemRequestDto} convert to entity.
      * @return Item to display.
      */
-    public static Item convertDtoToEntity(ItemDto itemDto) {
+    public static Item convertDtoToEntity(ItemRequestDto itemRequestDto) {
         Item item = Item.builder()
-                .itemId(itemDto.getItemId())
-                .itemName(itemDto.getName())
-                .price(itemDto.getPrice())
+                .itemId(itemRequestDto.getItemId())
+                .itemName(itemRequestDto.getName())
+                .price(itemRequestDto.getPrice())
                 .category(Category.builder()
-                        .categoryId(itemDto.getCategoryId())
+                        .categoryId(itemRequestDto.getCategoryId())
                         .build())
                 .build();
         return item;

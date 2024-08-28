@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.dto.LocationRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -7,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.ItemDto;
 import com.i2i.zing.service.ItemService;
 /**
  * <p>
@@ -25,12 +25,12 @@ public class ItemController {
      * <p>
      *     This method add the Item to the Database table
      * </p>
-     * @param itemDto {@link ItemDto} - Item as Dto Object
+     * @param itemRequestDto {@link ItemRequestDto} - Item as Dto Object
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addItem(@RequestBody ItemDto itemDto) {
-        APIResponse apiResponse = itemService.addItem(itemDto);
+    public ResponseEntity<APIResponse> addItem(@RequestBody ItemRequestDto itemRequestDto) {
+        APIResponse apiResponse = itemService.addItem(itemRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -78,8 +78,8 @@ public class ItemController {
     }
 
     @PutMapping
-    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemDto itemDto) {
-        APIResponse apiResponse = itemService.updateItem(itemDto);
+    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemRequestDto itemRequestDto) {
+        APIResponse apiResponse = itemService.updateItem(itemRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

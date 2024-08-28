@@ -1,6 +1,6 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.dto.CartDto;
+import com.i2i.zing.dto.CartRequestDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +28,12 @@ public class CartController {
      *     This method add the Cart in the Database
      *     to add Cart Items
      * </p>
-     * @param cartDto {@link CartDto} - Cart as Dto Object
+     * @param cartRequestDto {@link CartRequestDto} - Cart as Dto Object
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCart(@RequestBody CartDto cartDto) {
-        APIResponse apiResponse = cartService.addCart(cartDto);
+    public ResponseEntity<APIResponse> addCart(@RequestBody CartRequestDto cartRequestDto) {
+        APIResponse apiResponse = cartService.addCart(cartRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

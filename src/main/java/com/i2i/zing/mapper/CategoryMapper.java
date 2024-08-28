@@ -1,7 +1,6 @@
 package com.i2i.zing.mapper;
 
-import com.i2i.zing.dto.CategoryDto;
-import com.i2i.zing.model.Cart;
+import com.i2i.zing.dto.CategoryRequestDto;
 import com.i2i.zing.model.Category;
 
 /**
@@ -16,16 +15,16 @@ public class CategoryMapper {
      *     Converts the entity to displayable dto
      * </p>
      * @param category {@link Category} for conversion into dto.
-     * @return CategoryDto to display.
+     * @return CategoryRequestDto to display.
      */
-    public static CategoryDto convertEntityToDto(Category category) {
-        CategoryDto categoryDto = CategoryDto.builder()
+    public static CategoryRequestDto convertEntityToDto(Category category) {
+        CategoryRequestDto categoryRequestDto = CategoryRequestDto.builder()
                 .categoryId(category.getCategoryId())
                 .name(category.getName())
                 .description(category.getDescription())
                 .items(category.getItems())
                 .build();
-        return categoryDto;
+        return categoryRequestDto;
     }
 
     /**
@@ -33,15 +32,15 @@ public class CategoryMapper {
      *     Converts the dto to entity Object for
      *     Database Operations
      * </p>
-     * @param categoryDto {@link CategoryDto} for conversion into entity.
+     * @param categoryRequestDto {@link CategoryRequestDto} for conversion into entity.
      * @return Category to display.
      */
-    public static Category convertDtoToEntity(CategoryDto categoryDto) {
+    public static Category convertDtoToEntity(CategoryRequestDto categoryRequestDto) {
         Category category = Category.builder()
-                .categoryId(categoryDto.getCategoryId())
-                .description(categoryDto.getDescription())
-                .items(categoryDto.getItems())
-                .name(categoryDto.getName())
+                .categoryId(categoryRequestDto.getCategoryId())
+                .description(categoryRequestDto.getDescription())
+                .items(categoryRequestDto.getItems())
+                .name(categoryRequestDto.getName())
                 .build();
         return category;
     }

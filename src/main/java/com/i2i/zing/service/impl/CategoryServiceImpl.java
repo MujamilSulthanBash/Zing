@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CategoryDto;
-import com.i2i.zing.dto.ItemDto;
+import com.i2i.zing.dto.CategoryRequestDto;
+import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.mapper.CategoryMapper;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Category;
@@ -22,9 +22,9 @@ public class CategoryServiceImpl implements CategoryService {
     @Autowired
     CategoryRepository categoryRepository;
 
-    public APIResponse addCategory(CategoryDto categoryDto) {
+    public APIResponse addCategory(CategoryRequestDto categoryRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Category category = CategoryMapper.convertDtoToEntity(categoryDto);
+        Category category = CategoryMapper.convertDtoToEntity(categoryRequestDto);
         CategoryMapper.convertEntityToDto(categoryRepository.save(category));
         apiResponse.setData(category);
         apiResponse.setStatus(HttpStatus.CREATED.value());
@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public APIResponse getCategories() {
         APIResponse apiResponse = new APIResponse();
-        List<CategoryDto> result = new ArrayList<>();
+        List<CategoryRequestDto> result = new ArrayList<>();
         List<Category> categories = categoryRepository.findByIsDeletedFalse();
         for (Category category : categories) {
             result.add(CategoryMapper.convertEntityToDto(category));
@@ -69,11 +69,11 @@ public class CategoryServiceImpl implements CategoryService {
     public APIResponse getItemsByCategoryId(String categoryId) {
         APIResponse apiResponse = new APIResponse();
         Category category = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryId);
-        List<ItemDto> itemDtos = new ArrayList<>();
+        List<ItemRequestDto> itemRequestDtos = new ArrayList<>();
         for (Item item : category.getItems()) {
-            itemDtos.add(ItemMapper.convertEntityToDto(item));
+            itemRequestDtos.add(ItemMapper.convertEntityToDto(item));
         }
-        apiResponse.setData(itemDtos);
+        apiResponse.setData(itemRequestDtos);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

@@ -1,7 +1,7 @@
 package com.i2i.zing.service.impl;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.DarkStoreDto;
+import com.i2i.zing.dto.DarkStoreRequestDto;
 import com.i2i.zing.mapper.DarkStoreMapper;
 import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.repository.DarkStoreRepository;
@@ -19,9 +19,9 @@ public class DarkStoreServiceImpl implements DarkStoreService {
     @Autowired
     DarkStoreRepository darkStoreRepository;
 
-    public APIResponse addDarkStore(DarkStoreDto darkStoreDto) {
+    public APIResponse addDarkStore(DarkStoreRequestDto darkStoreRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        DarkStore darkStore = DarkStoreMapper.convertDtoToEntity(darkStoreDto);
+        DarkStore darkStore = DarkStoreMapper.convertDtoToEntity(darkStoreRequestDto);
         DarkStoreMapper.convertEntityToDto(darkStoreRepository.save(darkStore));
         apiResponse.setData(darkStore);
         apiResponse.setStatus(HttpStatus.CREATED.value());
@@ -31,7 +31,7 @@ public class DarkStoreServiceImpl implements DarkStoreService {
     @Override
     public APIResponse getDarkStores() {
         APIResponse apiResponse = new APIResponse();
-        List<DarkStoreDto> result = new ArrayList<>();
+        List<DarkStoreRequestDto> result = new ArrayList<>();
         List<DarkStore> darkStores = darkStoreRepository.findByIsDeletedFalse();
         for (DarkStore darkStore : darkStores) {
             result.add(DarkStoreMapper.convertEntityToDto(darkStore));

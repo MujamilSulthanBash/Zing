@@ -1,7 +1,7 @@
 package com.i2i.zing.service.impl;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.ItemDto;
+import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
@@ -28,9 +28,9 @@ public class ItemServiceImpl implements ItemService {
     private StockService stockService;
 
     @Override
-    public APIResponse addItem(ItemDto itemDto) {
+    public APIResponse addItem(ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Item item = ItemMapper.convertDtoToEntity(itemDto);
+        Item item = ItemMapper.convertDtoToEntity(itemRequestDto);
         ItemMapper.convertEntityToDto(itemRepository.save(item));
         apiResponse.setData(item);
         apiResponse.setStatus(HttpStatus.CREATED.value());
@@ -61,10 +61,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemDto getItemDtoById(String itemId) {
+    public ItemRequestDto getItemDtoById(String itemId) {
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
-        ItemDto itemDto = ItemMapper.convertEntityToDto(item);
-        return itemDto;
+        ItemRequestDto itemRequestDto = ItemMapper.convertEntityToDto(item);
+        return itemRequestDto;
     }
 
     @Override
@@ -79,10 +79,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public APIResponse updateItem(ItemDto itemDto) {
+    public APIResponse updateItem(ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Item item = ItemMapper.convertDtoToEntity(itemDto);
-        Item existingItem = itemRepository.findByIsDeletedFalseAndItemId(itemDto.getItemId());
+        Item item = ItemMapper.convertDtoToEntity(itemRequestDto);
+        Item existingItem = itemRepository.findByIsDeletedFalseAndItemId(itemRequestDto.getItemId());
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingItem.setModifiedDate(modifiedDate);

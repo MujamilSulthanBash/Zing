@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.model.CartItem;
-import com.i2i.zing.dto.CartDto;
+import com.i2i.zing.dto.CartRequestDto;
 
 /**
  * <p>
@@ -21,10 +21,10 @@ public interface CartService {
      *     passes the value for insertion into the collection.
      * </p>
      *
-     * @param cartDto - {@link CartDto} value to set Cart Id.
+     * @param cartRequestDto - {@link CartRequestDto} value to set Cart Id.
      * @return APIResponse value to indicate insertion status.
      */
-    APIResponse addCart(CartDto cartDto);
+    APIResponse addCart(CartRequestDto cartRequestDto);
 
     /**
      * <p>

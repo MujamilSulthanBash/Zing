@@ -1,7 +1,7 @@
 package com.i2i.zing.mapper;
 
 import com.i2i.zing.common.PaymentMethod;
-import com.i2i.zing.dto.CartDto;
+import com.i2i.zing.dto.CartRequestDto;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.Customer;
 
@@ -20,8 +20,8 @@ public class CartMapper {
      * @param cart {@link Cart} for conversion into dto.
      * @return OrderDto to display.
      */
-    public static CartDto convertToCartDto(Cart cart) {
-        return CartDto.builder()
+    public static CartRequestDto convertToCartDto(Cart cart) {
+        return CartRequestDto.builder()
                 .cartId(cart.getCartId())
                 .customerId(cart.getCartId())
                 .paymentMethod(cart.getPaymentMethod().toString())
@@ -33,15 +33,15 @@ public class CartMapper {
      * <p>
      *     Converts input dto to entity for creating cart.
      * </p>
-     * @param cartDto {@link CartDto} to convert into entity.
+     * @param cartRequestDto {@link CartRequestDto} to convert into entity.
      * @return Cart to for internal usage.
      */
-    public static Cart convertToCart(CartDto cartDto) {
+    public static Cart convertToCart(CartRequestDto cartRequestDto) {
         return Cart.builder()
                 .customer(Customer.builder()
-                        .customerId(cartDto.getCartId())
+                        .customerId(cartRequestDto.getCartId())
                         .build())
-                .paymentMethod("CASHON".equals(cartDto.getPaymentMethod()) ? PaymentMethod.CASHON : PaymentMethod.UPI)
+                .paymentMethod("CASHON".equals(cartRequestDto.getPaymentMethod()) ? PaymentMethod.CASHON : PaymentMethod.UPI)
                 .build();
     }
 }

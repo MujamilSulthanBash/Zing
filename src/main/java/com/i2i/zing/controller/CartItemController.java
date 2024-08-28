@@ -1,7 +1,7 @@
 package com.i2i.zing.controller;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CartItemDto;
+import com.i2i.zing.dto.CartItemRequestDto;
 import com.i2i.zing.service.CartItemService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,13 +26,13 @@ public class CartItemController {
      * <p>
      *     This method add the Cart Items to the Database
      * </p>
-     * @param cartItemDto - CartItem Details like ID, quantity
+     * @param cartItemRequestDto - CartItem Details like ID, quantity
      *                    total price etc.,
      * @return - APIResponse (Status , Data)
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCartItem(@RequestBody CartItemDto cartItemDto) {
-        APIResponse apiResponse = cartItemService.addCartItem(cartItemDto);
+    public ResponseEntity<APIResponse> addCartItem(@RequestBody CartItemRequestDto cartItemRequestDto) {
+        APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -82,12 +82,12 @@ public class CartItemController {
      * <p>
      *     This method update the Stock
      * </p>
-     * @param cartItemDto - CartItem Details as Dto Object
+     * @param cartItemRequestDto - CartItem Details as Dto Object
      * @return - APIResponse (Status, Data)
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateCartItem(@RequestBody CartItemDto cartItemDto) {
-        APIResponse apiResponse = cartItemService.updateCartItem(cartItemDto);
+    public ResponseEntity<APIResponse> updateCartItem(@RequestBody CartItemRequestDto cartItemRequestDto) {
+        APIResponse apiResponse = cartItemService.updateCartItem(cartItemRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

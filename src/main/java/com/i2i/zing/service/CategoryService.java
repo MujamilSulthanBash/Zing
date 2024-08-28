@@ -3,7 +3,7 @@ package com.i2i.zing.service;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CategoryDto;
+import com.i2i.zing.dto.CategoryRequestDto;
 /**
  * <p>
  *     This interface has Abstract methods to implements the
@@ -18,10 +18,10 @@ public interface CategoryService {
      * <p>
      *     This method add the Category Record to the Database
      * </p>
-     * @param categoryDto {@link CategoryDto} - Category as Dto Object
+     * @param categoryRequestDto {@link CategoryRequestDto} - Category as Dto Object
      * @return APIResponse Details like Status, Data.
      */
-    APIResponse addCategory(CategoryDto categoryDto);
+    APIResponse addCategory(CategoryRequestDto categoryRequestDto);
 
     /**
      * <p>

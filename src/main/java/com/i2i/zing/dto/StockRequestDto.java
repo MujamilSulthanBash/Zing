@@ -17,7 +17,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class StockDto {
+public class StockRequestDto {
     private String stockId;
     private String darkStoreId;
     private String itemId;

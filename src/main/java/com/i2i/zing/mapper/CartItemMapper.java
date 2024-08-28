@@ -1,6 +1,6 @@
 package com.i2i.zing.mapper;
 
-import com.i2i.zing.dto.CartItemDto;
+import com.i2i.zing.dto.CartItemRequestDto;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Item;
@@ -18,10 +18,10 @@ public class CartItemMapper {
      * </p>
      *
      * @param cartItem {@link CartItem} for conversion into dto.
-     * @return CartItemDto to display.
+     * @return CartItemRequestDto to display.
      */
-    public static CartItemDto convertToCartItemDto(CartItem cartItem) {
-        return CartItemDto.builder()
+    public static CartItemRequestDto convertToCartItemDto(CartItem cartItem) {
+        return CartItemRequestDto.builder()
                 .cartItemId(cartItem.getId())
                 .itemId(cartItem.getItem().getItemId())
                 .cartId(cartItem.getCart().getCartId())
@@ -35,16 +35,16 @@ public class CartItemMapper {
      *     Converts input dto to entity for creating cartItem.
      * </p>
      *
-     * @param cartItemDto {@link CartItemDto} to convert into entity.
+     * @param cartItemRequestDto {@link CartItemRequestDto} to convert into entity.
      * @return CartItem  for internal usage.
      */
-    public static CartItem convertToCartItem(CartItemDto cartItemDto) {
+    public static CartItem convertToCartItem(CartItemRequestDto cartItemRequestDto) {
         return CartItem.builder()
                 .item(Item.builder()
-                        .itemId(cartItemDto.getItemId()).build())
+                        .itemId(cartItemRequestDto.getItemId()).build())
                 .cart(Cart.builder()
-                        .cartId(cartItemDto.getCartId()).build())
-                .quantity(cartItemDto.getQuantity())
+                        .cartId(cartItemRequestDto.getCartId()).build())
+                .quantity(cartItemRequestDto.getQuantity())
                 .build();
     }
 
@@ -53,17 +53,17 @@ public class CartItemMapper {
      *     Converts input dto to entity for updating cartItem.
      * </p>
      *
-     * @param cartItemDto {@link CartItemDto} to convert into entity.
+     * @param cartItemRequestDto {@link CartItemRequestDto} to convert into entity.
      * @return CartItem  for internal usage.
      */
-    public static CartItem convertToUpdateDtoToCartItem(CartItemDto cartItemDto) {
+    public static CartItem convertToUpdateDtoToCartItem(CartItemRequestDto cartItemRequestDto) {
         return CartItem.builder()
-                .id(cartItemDto.getCartItemId())
+                .id(cartItemRequestDto.getCartItemId())
                 .item(Item.builder()
-                        .itemId(cartItemDto.getItemId()).build())
+                        .itemId(cartItemRequestDto.getItemId()).build())
                 .cart(Cart.builder()
-                        .cartId(cartItemDto.getCartId()).build())
-                .quantity(cartItemDto.getQuantity())
+                        .cartId(cartItemRequestDto.getCartId()).build())
+                .quantity(cartItemRequestDto.getQuantity())
                 .build();
     }
 }

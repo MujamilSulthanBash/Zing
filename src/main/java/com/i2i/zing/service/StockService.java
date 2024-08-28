@@ -1,7 +1,7 @@
 package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.StockDto;
+import com.i2i.zing.dto.StockRequestDto;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Stock;
 import org.springframework.stereotype.Service;
@@ -23,10 +23,10 @@ public interface StockService {
      * <p>
      *     This method add the Stock to the Database
      * </p>
-     * @param stockDto {@link StockDto} - Stock Details as Dto Object
+     * @param stockRequestDto {@link StockRequestDto} - Stock Details as Dto Object
      * @return APIResponse Details like Status, Data.
      */
-    APIResponse addStock(StockDto stockDto);
+    APIResponse addStock(StockRequestDto stockRequestDto);
 
     /**
      * <p>
@@ -56,7 +56,7 @@ public interface StockService {
 
     APIResponse reduceStocks(Set<CartItem> cartItems);
 
-    APIResponse updateStock(StockDto stockDto);
+    APIResponse updateStock(StockRequestDto stockRequestDto);
 
     List<Stock> getStocksByLocation(String location);
 }

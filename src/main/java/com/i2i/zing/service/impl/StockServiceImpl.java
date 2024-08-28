@@ -5,10 +5,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.mapper.ItemMapper;
-import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
-import com.i2i.zing.model.Item;
 import com.i2i.zing.service.CartService;
 import com.i2i.zing.service.StockService;
 import org.apache.logging.log4j.LogManager;
@@ -17,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import com.i2i.zing.dto.StockDto;
+import com.i2i.zing.dto.StockRequestDto;
 import com.i2i.zing.mapper.StockMapper;
 import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.StockRepository;
@@ -35,9 +32,9 @@ public class StockServiceImpl implements StockService {
     EmailSenderService emailSenderService;
 
     @Override
-    public APIResponse addStock(StockDto stockDto) {
+    public APIResponse addStock(StockRequestDto stockRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Stock stock = StockMapper.convertDtoToEntity(stockDto);
+        Stock stock = StockMapper.convertDtoToEntity(stockRequestDto);
         StockMapper.convertEntityToDto(stockRepository.save(stock));
         apiResponse.setData(stock);
         apiResponse.setStatus(HttpStatus.CREATED.value());
@@ -47,7 +44,7 @@ public class StockServiceImpl implements StockService {
     @Override
     public APIResponse getStocks() {
         APIResponse apiResponse = new APIResponse();
-        List<StockDto> result = new ArrayList<>();
+        List<StockRequestDto> result = new ArrayList<>();
         List<Stock> stocks = stockRepository.findByIsDeletedFalse();
         for (Stock stock : stocks) {
             result.add(StockMapper.convertEntityToDto(stock));
@@ -107,10 +104,10 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public APIResponse updateStock(StockDto stockDto) {
+    public APIResponse updateStock(StockRequestDto stockRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Stock stock = StockMapper.convertDtoToEntity(stockDto);
-        Stock existingStock = stockRepository.findByIsDeletedFalseAndStockId(stockDto.getItemId());
+        Stock stock = StockMapper.convertDtoToEntity(stockRequestDto);
+        Stock existingStock = stockRepository.findByIsDeletedFalseAndStockId(stockRequestDto.getItemId());
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingStock.setModifiedDate(modifiedDate);

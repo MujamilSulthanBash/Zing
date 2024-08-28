@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemDto {
+public class CartItemRequestDto {
     private String cartItemId;
     private int quantity;
     private Double totalPrice;

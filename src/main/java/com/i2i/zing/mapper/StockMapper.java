@@ -1,31 +1,31 @@
 package com.i2i.zing.mapper;
 
-import com.i2i.zing.dto.StockDto;
+import com.i2i.zing.dto.StockRequestDto;
 import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
 
 public class StockMapper {
-    public static StockDto convertEntityToDto(Stock stock) {
-        StockDto stockDto = StockDto.builder()
+    public static StockRequestDto convertEntityToDto(Stock stock) {
+        StockRequestDto stockRequestDto = StockRequestDto.builder()
                 .stockId(stock.getStockId())
                 .darkStoreId(stock.getDarkstore().getDarkStoreId())
                 .itemId(stock.getItem().getItemId())
                 .quantity(stock.getQuantity())
                 .build();
-        return stockDto;
+        return stockRequestDto;
     }
 
-    public static Stock convertDtoToEntity(StockDto stockDto) {
+    public static Stock convertDtoToEntity(StockRequestDto stockRequestDto) {
         Stock stock = Stock.builder()
-                .stockId(stockDto.getStockId())
+                .stockId(stockRequestDto.getStockId())
                 .darkstore(DarkStore.builder()
-                        .darkStoreId(stockDto.getDarkStoreId())
+                        .darkStoreId(stockRequestDto.getDarkStoreId())
                         .build())
                 .item(Item.builder()
-                        .itemId(stockDto.getItemId())
+                        .itemId(stockRequestDto.getItemId())
                         .build())
-                .quantity(stockDto.getQuantity())
+                .quantity(stockRequestDto.getQuantity())
                 .build();
         return stock;
     }

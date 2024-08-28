@@ -4,15 +4,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.i2i.zing.common.UserRole;
-import com.i2i.zing.model.Role;
-import com.i2i.zing.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.i2i.zing.common.UserRole;
+import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
 import com.i2i.zing.repository.UserRepository;
+import com.i2i.zing.service.RoleService;
 import com.i2i.zing.service.UserService;
 
 @Service

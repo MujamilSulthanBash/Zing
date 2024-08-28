@@ -36,11 +36,11 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public APIResponse getItemsByLocation(String location) {
         APIResponse apiResponse = new APIResponse();
-        List<ItemDto> result = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         List<Stock> stocks = itemRepository.findStocksByLocation(location);
         for (Stock stock : stocks) {
-            Item item = stock.getItem();
-            result.add(ItemMapper.convertEntityToDto(item));
+            String itemName = stock.getItem().getItemName();
+            result.add(itemName);
         }
         apiResponse.setData(result);
         apiResponse.setStatus(HttpStatus.OK.value());

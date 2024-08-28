@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/orders")
+@RequestMapping("zing/api/v1/customers/orders")
 public class OrderController {
     private static final Logger logger = LogManager.getLogger();
     @Autowired

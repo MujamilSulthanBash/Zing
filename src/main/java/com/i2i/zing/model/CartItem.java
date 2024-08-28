@@ -30,13 +30,10 @@ public class CartItem {
     @Column(name = "total_price")
     private Double totalPrice;
 
-    @Column(name = "payment_status")
-    private PaymentStatus paymentStatus;
-
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     private Cart cart;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "item_id")
     private Item item;
 }

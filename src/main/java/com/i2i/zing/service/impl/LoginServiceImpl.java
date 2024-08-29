@@ -3,6 +3,7 @@ package com.i2i.zing.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.i2i.zing.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,10 +16,6 @@ import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.dto.UserLoginRequestDto;
 import com.i2i.zing.mapper.UserMapper;
-import com.i2i.zing.model.Customer;
-import com.i2i.zing.model.DeliveryPerson;
-import com.i2i.zing.model.Role;
-import com.i2i.zing.model.User;
 import com.i2i.zing.service.CustomerService;
 import com.i2i.zing.service.DeliveryPersonService;
 import com.i2i.zing.service.LoginService;

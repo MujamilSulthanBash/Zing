@@ -1,5 +1,6 @@
 package com.i2i.zing.model;
 
+import com.i2i.zing.common.PaymentMethod;
 import jakarta.persistence.*;
 
 import lombok.AllArgsConstructor;
@@ -37,9 +38,16 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String orderId;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "cart_id")
     private Cart cart;
+
+    @Column(name = "order_amount")
+    private Double orderAmount;
+
+    @Column(name = "payment_Method")
+    @Enumerated(value = EnumType.STRING)
+    private PaymentMethod paymentMethod;
 
     @Column(name = "payment_status")
     @Enumerated(value = EnumType.STRING)

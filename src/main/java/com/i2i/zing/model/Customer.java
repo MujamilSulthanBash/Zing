@@ -31,7 +31,7 @@ public class Customer {
     @Enumerated(value = EnumType.STRING)
     private Membership memberShip;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
 }

@@ -19,5 +19,6 @@ public class OrderDto {
     private String orderId;
     private String cartId;
     private String paymentStatus;
+    private String paymentMethod;
     private Date timeOfOrder;
 }

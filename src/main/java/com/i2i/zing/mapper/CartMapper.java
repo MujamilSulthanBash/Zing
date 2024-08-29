@@ -25,8 +25,6 @@ public class CartMapper {
         return CartRequestDto.builder()
                 .cartId(cart.getCartId())
                 .customerId(cart.getCartId())
-                .paymentMethod(cart.getPaymentMethod().toString())
-                .totalAmount(cart.getTotalAmount())
                 .build();
     }
 
@@ -49,7 +47,6 @@ public class CartMapper {
                 .customer(Customer.builder()
                         .customerId(cartRequestDto.getCartId())
                         .build())
-                .paymentMethod("CASHON".equals(cartRequestDto.getPaymentMethod()) ? PaymentMethod.CASHON : PaymentMethod.UPI)
                 .build();
     }
 }

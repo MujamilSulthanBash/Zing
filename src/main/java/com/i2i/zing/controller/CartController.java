@@ -20,6 +20,7 @@ import com.i2i.zing.service.CartService;
 @RequestMapping("zing/api/v1/customers/carts")
 public class CartController {
     private static final Logger logger = LogManager.getLogger();
+
     @Autowired
     CartService cartService;
 
@@ -31,12 +32,12 @@ public class CartController {
      * @param cartRequestDto {@link CartRequestDto} - Cart as Dto Object
      * @return APIResponse Details like Status, Data.
      */
-    @PostMapping
-    public ResponseEntity<APIResponse> addCart(@RequestBody CartRequestDto cartRequestDto) {
-        APIResponse apiResponse = cartService.addCart(cartRequestDto);
-        return ResponseEntity.status(apiResponse.getStatus())
-                .body(apiResponse);
-    }
+//    @PostMapping
+//    public ResponseEntity<APIResponse> addCart(@RequestBody CartRequestDto cartRequestDto) {
+//        APIResponse apiResponse = cartService.addCart(cartRequestDto);
+//        return ResponseEntity.status(apiResponse.getStatus())
+//                .body(apiResponse);
+//    }
 
     /**
      * <p>

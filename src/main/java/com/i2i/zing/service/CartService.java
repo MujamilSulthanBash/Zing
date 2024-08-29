@@ -2,6 +2,8 @@ package com.i2i.zing.service;
 
 import java.util.List;
 
+import com.i2i.zing.model.Cart;
+import com.i2i.zing.model.Customer;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
@@ -21,10 +23,10 @@ public interface CartService {
      *     passes the value for insertion into the collection.
      * </p>
      *
-     * @param cartRequestDto - {@link CartRequestDto} value to set Cart Id.
+     * @param customer - {@link Customer} value to set Cart Id.
      * @return APIResponse value to indicate insertion status.
      */
-    APIResponse addCart(CartRequestDto cartRequestDto);
+    APIResponse addCart(Customer customer);
 
     /**
      * <p>
@@ -44,6 +46,8 @@ public interface CartService {
      * @return APIResponse value to display the Cart.
      */
     APIResponse getCart(String cartId);
+
+    Cart getCartAsModel(String cartId);
 
     /**
      * <p>

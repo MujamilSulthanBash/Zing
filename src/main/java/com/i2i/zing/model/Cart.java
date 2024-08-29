@@ -29,15 +29,8 @@ public class Cart {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @Column(name = "payment_Method")
-    @Enumerated(value = EnumType.STRING)
-    private PaymentMethod paymentMethod;
-
     @Column(name = "total_amount")
     private Double totalAmount;
-
-    @Column(name = "is_deleted")
-    private boolean isDeleted;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE)
     private Set<CartItem> cartItems;

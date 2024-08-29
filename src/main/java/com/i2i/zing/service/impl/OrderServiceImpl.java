@@ -3,6 +3,9 @@ package com.i2i.zing.service.impl;
 import java.util.List;
 import java.util.Objects;
 
+import com.i2i.zing.model.Cart;
+import com.i2i.zing.model.CartItem;
+import com.i2i.zing.service.CartService;
 import com.i2i.zing.util.OtpGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.PaymentMethod;
-import com.i2i.zing.common.PaymentStatus;
 import com.i2i.zing.dto.OrderDto;
 import com.i2i.zing.exeception.EntityAlreadyExistsException;
 import com.i2i.zing.exeception.EntityNotFoundException;
@@ -43,6 +45,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     EmailSenderService emailSenderService;
 
+    @Autowired
+    CartService cartService;
+
     private static final Logger logger = LogManager.getLogger();
 
     @Override
@@ -56,13 +61,20 @@ public class OrderServiceImpl implements OrderService {
                 throw new EntityAlreadyExistsException("Order with cart id : " + orderDto.getCartId() + " already exists.");
             }
         }
-        Order resultOrder = orderRepository.save(OrderMapper.convertToOrder(orderDto));
+        Cart cart = cartService.getCartAsModel(orderDto.getCartId());
+        Order order = OrderMapper.convertToOrder(orderDto);
+        Double sum = 0.0;
+        for (CartItem cartItem : cart.getCartItems()) {
+            sum += cartItem.getTotalPrice();
+        }
+        order.setCart(cart);
+        order.setOrderAmount(sum);
+        Order resultOrder = orderRepository.save(order);
         apiResponse.setData(resultOrder);
         apiResponse.setStatus(HttpStatus.OK.value());
         logger.debug("Checking payment method and status to assign order.");
-        if (((resultOrder.getCart().getPaymentMethod().equals(PaymentMethod.UPI)) &&
-                (resultOrder.getPaymentStatus().equals(PaymentStatus.PAID))) ||
-                (resultOrder.getCart().getPaymentMethod().equals(PaymentMethod.CASHON))) {
+        if ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
+                (resultOrder.getPaymentMethod().equals(PaymentMethod.CASHON))) {
             orderAssignService.addOrderAssign(resultOrder);
         }
         stockService.reduceStocks(resultOrder.getCart().getCartItems());
@@ -70,7 +82,8 @@ public class OrderServiceImpl implements OrderService {
         String body = "Your order " + resultOrder.getOrderId() + " has been successfully placed."
                        + "Your One Time Password for the order verification is "
                        + String.valueOf(OtpGenerator.generateOtp());
-        emailSenderService.sendEmail(resultOrder.getCart().getCustomer().getUser().getUserId(), subject, body);
+        emailSenderService.sendEmail(resultOrder.getCart().getCustomer().getUser().getEmailId(), subject, body);
+        cartService.addCart(resultOrder.getCart().getCustomer());
         return apiResponse;
     }
 

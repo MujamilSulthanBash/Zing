@@ -4,4 +4,6 @@ import com.i2i.zing.model.Customer;
 
 public interface CustomerService {
     void createCustomer(Customer customer);
+
+    Customer getCustomer(String customerId);
 }

@@ -1,5 +1,6 @@
 package com.i2i.zing.mapper;
 
+import com.i2i.zing.common.PaymentMethod;
 import com.i2i.zing.common.PaymentStatus;
 import com.i2i.zing.dto.OrderDto;
 import com.i2i.zing.model.Cart;
@@ -41,7 +42,8 @@ public class OrderMapper {
                 .cart(Cart.builder()
                         .cartId(orderDto.getCartId())
                         .build())
-                .paymentStatus("PAID".equals(orderDto.getPaymentStatus()) ? PaymentStatus.PAID : PaymentStatus.UNPAID)
+                .paymentMethod("UPI".equals(orderDto.getPaymentMethod()) ? PaymentMethod.UPI : PaymentMethod.CASHON)
+                .paymentStatus("UPI".equals(orderDto.getPaymentMethod()) ? PaymentStatus.PAID : PaymentStatus.UNPAID)
                 .build();
     }
 }

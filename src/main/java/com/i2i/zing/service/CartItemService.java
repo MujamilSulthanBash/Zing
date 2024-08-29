@@ -2,6 +2,7 @@ package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CartItemRequestDto;
+import com.i2i.zing.model.Customer;
 
 public interface CartItemService {
     /**

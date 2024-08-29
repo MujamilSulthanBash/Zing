@@ -1,6 +1,7 @@
 package com.i2i.zing.controller;
 
 import com.i2i.zing.dto.ItemRequestDto;
+import com.i2i.zing.dto.ItemResponseDto;
 import com.i2i.zing.dto.LocationRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -78,8 +79,8 @@ public class ItemController {
     }
 
     @PutMapping
-    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemRequestDto itemRequestDto) {
-        APIResponse apiResponse = itemService.updateItem(itemRequestDto);
+    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemResponseDto itemResponseDto) {
+        APIResponse apiResponse = itemService.updateItem(itemResponseDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

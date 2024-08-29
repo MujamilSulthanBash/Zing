@@ -2,6 +2,7 @@ package com.i2i.zing.service.impl;
 
 import com.i2i.zing.dto.CartItemRequestDto;
 import com.i2i.zing.dto.ItemRequestDto;
+import com.i2i.zing.dto.ItemResponseDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,8 @@ public class CartItemServiceImpl implements CartItemService {
     public APIResponse addCartItem(CartItemRequestDto cartItemRequestDto) {
         APIResponse apiResponse = new APIResponse();
         CartItem cartItem = CartItemMapper.convertToCartItem(cartItemRequestDto);
-        ItemRequestDto itemRequestDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
-        cartItem.setTotalPrice((double)cartItem.getQuantity() * itemRequestDto.getPrice());
+        ItemResponseDto itemResponseDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
+        cartItem.setTotalPrice((double)cartItem.getQuantity() * itemResponseDto.getPrice());
         CartItem resultCart = cartItemRepository.save(cartItem);
         apiResponse.setData(resultCart);
         apiResponse.setStatus(HttpStatus.OK.value());

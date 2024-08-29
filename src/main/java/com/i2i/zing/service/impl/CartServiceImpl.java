@@ -2,7 +2,7 @@ package com.i2i.zing.service.impl;
 
 import java.util.List;
 
-import com.i2i.zing.dto.CartResponseDto;
+import com.i2i.zing.model.Customer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CartRequestDto;
 import com.i2i.zing.exeception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.mapper.CartMapper;
@@ -32,20 +31,18 @@ public class CartServiceImpl implements CartService {
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public APIResponse addCart(CartRequestDto cartRequestDto) {
+    public void addCart(Customer customer) {
         APIResponse apiResponse = new APIResponse();
-        Cart resultCart = cartRepository.save(CartMapper.convertToCart(cartRequestDto));
-        CartResponseDto cartResponseDto = CartMapper.convertEntityToDto(resultCart);
-        apiResponse.setData(cartResponseDto);
-        apiResponse.setStatus(HttpStatus.OK.value());
-        return apiResponse;
+        Cart cart = new Cart();
+        cart.setCustomer(customer);
+        cartRepository.save(cart);
     }
 
     @Override
     public APIResponse getCarts() {
         APIResponse apiResponse = new APIResponse();
-        apiResponse.setData(cartRepository.findByIsDeletedFalse().stream()
-                .map(CartMapper::convertToCartDto).toList());
+        apiResponse.setData(cartRepository.findAll().stream()
+                .map(CartMapper::convertEntityToDto).toList());
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
@@ -53,7 +50,7 @@ public class CartServiceImpl implements CartService {
     @Override
     public APIResponse getCart(String cartId) {
         APIResponse apiResponse = new APIResponse();
-        Cart cart = cartRepository.findByCartIdAndIsDeleted(cartId, false);
+        Cart cart = cartRepository.findByCartId(cartId);
         if (null == cart) {
             logger.warn("Cart with Id : {} not found.", cartId);
             throw new EntityNotFoundException("Cart with Id : " + cartId + " not found.");
@@ -64,24 +61,19 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public APIResponse deleteCart(String cartId) {
-        APIResponse apiResponse = new APIResponse();
-        Cart cart = cartRepository.findByCartIdAndIsDeleted(cartId, false);
+    public Cart getCartAsModel(String cartId) {
+        Cart cart = cartRepository.findByCartId(cartId);
         if (null == cart) {
-            logger.warn("Cart with Id : {} not found to delete.", cartId);
-            throw new EntityNotFoundException("Cart with Id : " + cartId + " not found to delete.");
+            logger.warn("Cart with Id : {} not found.", cartId);
+            throw new EntityNotFoundException("Cart with Id : " + cartId + " not found.");
         }
-        cart.setDeleted(true);
-        cartRepository.save(cart);
-        apiResponse.setData("Cart with Id : " + cartId + " has been deleted.");
-        apiResponse.setStatus(HttpStatus.OK.value());
-        return apiResponse;
+        return cart;
     }
 
     @Override
     public APIResponse getCartItemsOfCart(String cartId) {
         APIResponse apiResponse = new APIResponse();
-        Cart cart = cartRepository.findByCartIdAndIsDeleted(cartId, false);
+        Cart cart = cartRepository.findByCartId(cartId);
         if (null == cart) {
             logger.warn("Cart with Id : {} not found to fetch items.", cartId);
             throw new EntityNotFoundException("Cart with Id : " + cartId + " not found to fetch Items.");
@@ -94,7 +86,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public List<CartItem> getCartItemsOfCartAsObject(String cartId) {
-        Cart cart = cartRepository.findByCartIdAndIsDeleted(cartId, false);
+        Cart cart = cartRepository.findByCartId(cartId);
         if (null == cart) {
             logger.warn("Cart with Id : {} not found to fetch item objects.", cartId);
             throw new EntityNotFoundException("Cart with Id : " + cartId + " not found to fetch Items.");

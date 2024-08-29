@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CategoryCreationDto;
-import com.i2i.zing.dto.CategoryRequestDto;
-import com.i2i.zing.dto.CategoryResponseDto;
-import com.i2i.zing.dto.ItemRequestDto;
+import com.i2i.zing.dto.*;
 import com.i2i.zing.mapper.CategoryMapper;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Category;
@@ -71,11 +68,11 @@ public class CategoryServiceImpl implements CategoryService {
     public APIResponse getItemsByCategoryId(String categoryId) {
         APIResponse apiResponse = new APIResponse();
         Category category = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryId);
-        List<ItemRequestDto> itemRequestDtos = new ArrayList<>();
+        List<ItemResponseDto> itemResponseDtos = new ArrayList<>();
         for (Item item : category.getItems()) {
-            itemRequestDtos.add(ItemMapper.convertEntityToDto(item));
+            itemResponseDtos.add(ItemMapper.convertEntityToResponseDto(item));
         }
-        apiResponse.setData(itemRequestDtos);
+        apiResponse.setData(itemResponseDtos);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

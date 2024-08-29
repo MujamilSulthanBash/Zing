@@ -73,8 +73,8 @@ public class OrderServiceImpl implements OrderService {
         apiResponse.setData(resultOrder);
         apiResponse.setStatus(HttpStatus.OK.value());
         logger.debug("Checking payment method and status to assign order.");
-        if ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
-                (resultOrder.getPaymentMethod().equals(PaymentMethod.CASHON))) {
+        if ((sum > 50.0) && ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
+                (resultOrder.getPaymentMethod().equals(PaymentMethod.CASHON)))) {
             orderAssignService.addOrderAssign(resultOrder);
         }
         stockService.reduceStocks(resultOrder.getCart().getCartItems());

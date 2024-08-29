@@ -8,8 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartResponseDto {
-    private String cart_id;
+    private String cartId;
     private String customerId;
-    private String paymentMethod;
-    private Double totalAmount;
 }

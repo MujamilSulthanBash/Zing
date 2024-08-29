@@ -1,6 +1,5 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.dto.CartRequestDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,21 +25,6 @@ public class CartController {
 
     /**
      * <p>
-     *     This method add the Cart in the Database
-     *     to add Cart Items
-     * </p>
-     * @param cartRequestDto {@link CartRequestDto} - Cart as Dto Object
-     * @return APIResponse Details like Status, Data.
-     */
-//    @PostMapping
-//    public ResponseEntity<APIResponse> addCart(@RequestBody CartRequestDto cartRequestDto) {
-//        APIResponse apiResponse = cartService.addCart(cartRequestDto);
-//        return ResponseEntity.status(apiResponse.getStatus())
-//                .body(apiResponse);
-//    }
-
-    /**
-     * <p>
      *     This method get the Cart Details by the Cart Id
      * </p>
      * @param cartId - To Identify the Cart
@@ -49,20 +33,6 @@ public class CartController {
     @GetMapping("/{cartId}")
     public ResponseEntity<APIResponse> getCart(String cartId) {
         APIResponse apiResponse = cartService.getCart(cartId);
-        return ResponseEntity.status(apiResponse.getStatus())
-                .body(apiResponse);
-    }
-
-    /**
-     * <p>
-     *     This method delete the Cart by CartId
-     * </p>
-     * @param cartId - To Identify the Cart
-     * @return APIResponse Details like Status, Data.
-     */
-    @DeleteMapping("/{cartId}")
-    public ResponseEntity<APIResponse> deleteCart(String cartId) {
-        APIResponse apiResponse = cartService.deleteCart(cartId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

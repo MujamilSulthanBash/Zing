@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.model.CartItem;
-import com.i2i.zing.dto.CartRequestDto;
 
 /**
  * <p>
@@ -24,9 +23,8 @@ public interface CartService {
      * </p>
      *
      * @param customer - {@link Customer} value to set Cart Id.
-     * @return APIResponse value to indicate insertion status.
      */
-    APIResponse addCart(Customer customer);
+    void addCart(Customer customer);
 
     /**
      * <p>
@@ -47,16 +45,15 @@ public interface CartService {
      */
     APIResponse getCart(String cartId);
 
-    Cart getCartAsModel(String cartId);
-
     /**
      * <p>
-     *     Removes the Cart from user view by changing boolean value.
+     *     Fetches the Cart and returns the Cart as model for internal operation.
      * </p>
-     * @param cartId - String to remove Cart.
-     * @return @APIResponse value to acknowledge deletion.
+     *
+     * @param cartId - String value to display the Cart.
+     * @return APIResponse value to display the Cart.
      */
-    APIResponse deleteCart(String cartId);
+    Cart getCartAsModel(String cartId);
 
     /**
      * <p>

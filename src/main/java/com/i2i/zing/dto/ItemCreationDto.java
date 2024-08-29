@@ -7,9 +7,9 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CartItemResponseDto {
-    private int quantity;
-    private Double totalPrice;
-    private String cartId;
+public class ItemCreationDto {
     private String itemId;
+    private String name;
+    private int price;
+    private String categoryName;
 }

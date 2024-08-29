@@ -2,6 +2,7 @@ package com.i2i.zing.mapper;
 
 import com.i2i.zing.common.PaymentMethod;
 import com.i2i.zing.dto.CartRequestDto;
+import com.i2i.zing.dto.CartResponseDto;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.Customer;
 
@@ -26,6 +27,13 @@ public class CartMapper {
                 .customerId(cart.getCartId())
                 .paymentMethod(cart.getPaymentMethod().toString())
                 .totalAmount(cart.getTotalAmount())
+                .build();
+    }
+
+    public static CartResponseDto convertEntityToDto(Cart cart) {
+        return CartResponseDto.builder()
+                .cart_id(cart.getCartId())
+                .customerId(cart.getCustomer().getCustomerId())
                 .build();
     }
 

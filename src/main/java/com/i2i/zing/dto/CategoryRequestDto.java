@@ -24,7 +24,6 @@ import com.i2i.zing.model.Item;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryRequestDto {
-    private String categoryId;
     private String name;
     private String description;
 }

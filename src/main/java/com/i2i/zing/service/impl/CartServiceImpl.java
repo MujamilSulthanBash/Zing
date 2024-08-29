@@ -2,6 +2,7 @@ package com.i2i.zing.service.impl;
 
 import java.util.List;
 
+import com.i2i.zing.dto.CartResponseDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,8 @@ public class CartServiceImpl implements CartService {
     public APIResponse addCart(CartRequestDto cartRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Cart resultCart = cartRepository.save(CartMapper.convertToCart(cartRequestDto));
-        apiResponse.setData(resultCart);
+        CartResponseDto cartResponseDto = CartMapper.convertEntityToDto(resultCart);
+        apiResponse.setData(cartResponseDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

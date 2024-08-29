@@ -1,6 +1,8 @@
 package com.i2i.zing.mapper;
 
+import com.i2i.zing.dto.ItemCreationDto;
 import com.i2i.zing.dto.ItemRequestDto;
+import com.i2i.zing.dto.ItemResponseDto;
 import com.i2i.zing.model.Category;
 import com.i2i.zing.model.Item;
 /**
@@ -17,15 +19,27 @@ public class ItemMapper {
      * @param item {@link Item} for conversion into dto.
      * @return ItemRequestDto to display.
      */
-    public static ItemRequestDto convertEntityToDto(Item item) {
-        ItemRequestDto itemRequestDto = ItemRequestDto.builder()
+    public static ItemCreationDto convertEntityToDto(Item item) {
+        ItemCreationDto itemCreationDto = ItemCreationDto.builder()
                 .itemId(item.getItemId())
                 .name(item.getItemName())
                 .price(item.getPrice())
                 .categoryName(item.getCategory().getName())
                 .build();
-        return itemRequestDto;
+        return itemCreationDto;
     }
+
+    public static ItemResponseDto convertEntityToResponseDto(Item item) {
+        ItemResponseDto itemResponseDto = ItemResponseDto.builder()
+                .itemId(item.getItemId())
+                .name(item.getItemName())
+                .price(item.getPrice())
+                .categoryName(item.getCategory().getName())
+                .build();
+        return itemResponseDto;
+    }
+
+
 
     /**
      * <p>
@@ -36,11 +50,21 @@ public class ItemMapper {
      */
     public static Item convertDtoToEntity(ItemRequestDto itemRequestDto) {
         Item item = Item.builder()
-                .itemId(itemRequestDto.getItemId())
                 .itemName(itemRequestDto.getName())
                 .price(itemRequestDto.getPrice())
                 .category(Category.builder()
                         .categoryId(itemRequestDto.getCategoryId())
+                        .build())
+                .build();
+        return item;
+    }
+
+    public static Item convertDtoToResponseEntity(ItemResponseDto itemResponseDto) {
+        Item item = Item.builder()
+                .itemName(itemResponseDto.getName())
+                .price(itemResponseDto.getPrice())
+                .category(Category.builder()
+                        .name(itemResponseDto.getCategoryName())
                         .build())
                 .build();
         return item;

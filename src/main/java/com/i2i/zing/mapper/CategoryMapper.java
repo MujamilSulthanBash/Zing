@@ -1,6 +1,8 @@
 package com.i2i.zing.mapper;
 
+import com.i2i.zing.dto.CategoryCreationDto;
 import com.i2i.zing.dto.CategoryRequestDto;
+import com.i2i.zing.dto.CategoryResponseDto;
 import com.i2i.zing.model.Category;
 
 /**
@@ -10,37 +12,49 @@ import com.i2i.zing.model.Category;
  * </p>
  */
 public class CategoryMapper {
+
     /**
      * <p>
-     *     Converts the entity to displayable dto
+     *     This method convert the Entity to Response Dto
      * </p>
-     * @param category {@link Category} for conversion into dto.
-     * @return CategoryRequestDto to display.
+     * @param category - Entity Object
+     * @return CategoryResponseDto - Response as Dto Object
      */
-    public static CategoryRequestDto convertEntityToDto(Category category) {
-        CategoryRequestDto categoryRequestDto = CategoryRequestDto.builder()
+    public static CategoryResponseDto convertEntityToResponseDto(Category category) {
+        return CategoryResponseDto.builder()
                 .categoryId(category.getCategoryId())
                 .name(category.getName())
                 .description(category.getDescription())
                 .items(category.getItems())
                 .build();
-        return categoryRequestDto;
     }
 
     /**
      * <p>
-     *     Converts the dto to entity Object for
-     *     Database Operations
+     *     This method convert the Entity to Creation Dto
      * </p>
-     * @param categoryRequestDto {@link CategoryRequestDto} for conversion into entity.
-     * @return Category to display.
+     * @param category - Category as Entity Object
+     * @return - CategoryCreationDto as Dto Object
      */
-    public static Category convertDtoToEntity(CategoryRequestDto categoryRequestDto) {
+    public static CategoryCreationDto convertEntityToCreationDto(Category category) {
+        return CategoryCreationDto.builder()
+                .categoryId(category.getCategoryId())
+                .name(category.getName())
+                .description(category.getDescription())
+                .build();
+    }
+
+    /**
+     * <p>
+     *     This method convert the Request Dto to Entity Object
+     * </p>
+     * @param categoryRequestDto {@link CategoryRequestDto} - Category Details as Dto Object
+     * @return Category as Entity Object
+     */
+    public static Category convertDtoToCreationEntity(CategoryRequestDto categoryRequestDto) {
         Category category = Category.builder()
-                .categoryId(categoryRequestDto.getCategoryId())
-                .description(categoryRequestDto.getDescription())
-                .items(categoryRequestDto.getItems())
                 .name(categoryRequestDto.getName())
+                .description(categoryRequestDto.getDescription())
                 .build();
         return category;
     }

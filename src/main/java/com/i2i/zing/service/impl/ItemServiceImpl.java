@@ -2,6 +2,7 @@ package com.i2i.zing.service.impl;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.ItemRequestDto;
+import com.i2i.zing.dto.ItemResponseDto;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
@@ -31,8 +32,7 @@ public class ItemServiceImpl implements ItemService {
     public APIResponse addItem(ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Item item = ItemMapper.convertDtoToEntity(itemRequestDto);
-        ItemMapper.convertEntityToDto(itemRepository.save(item));
-        apiResponse.setData(item);
+        apiResponse.setData(ItemMapper.convertEntityToDto(itemRepository.save(item)));
         apiResponse.setStatus(HttpStatus.CREATED.value());
         return apiResponse;
     }
@@ -55,16 +55,16 @@ public class ItemServiceImpl implements ItemService {
     public APIResponse getItemById(String itemId) {
         APIResponse apiResponse = new APIResponse();
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
-        apiResponse.setData(ItemMapper.convertEntityToDto(item));
+        apiResponse.setData(ItemMapper.convertEntityToResponseDto(item));
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
 
     @Override
-    public ItemRequestDto getItemDtoById(String itemId) {
+    public ItemResponseDto getItemDtoById(String itemId) {
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
-        ItemRequestDto itemRequestDto = ItemMapper.convertEntityToDto(item);
-        return itemRequestDto;
+        ItemResponseDto itemResponseDto = ItemMapper.convertEntityToResponseDto(item);
+        return itemResponseDto;
     }
 
     @Override
@@ -79,10 +79,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public APIResponse updateItem(ItemRequestDto itemRequestDto) {
+    public APIResponse updateItem(ItemResponseDto itemResponseDto) {
         APIResponse apiResponse = new APIResponse();
-        Item item = ItemMapper.convertDtoToEntity(itemRequestDto);
-        Item existingItem = itemRepository.findByIsDeletedFalseAndItemId(itemRequestDto.getItemId());
+        Item item = ItemMapper.convertDtoToResponseEntity(itemResponseDto);
+        Item existingItem = itemRepository.findByIsDeletedFalseAndItemId(itemResponseDto.getItemId());
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingItem.setModifiedDate(modifiedDate);

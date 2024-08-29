@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemResponseDto {
+    private String itemId;
     private String name;
     private int price;
     private String categoryName;

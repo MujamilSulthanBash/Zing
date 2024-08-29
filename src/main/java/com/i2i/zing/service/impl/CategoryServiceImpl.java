@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.CategoryCreationDto;
 import com.i2i.zing.dto.CategoryRequestDto;
+import com.i2i.zing.dto.CategoryResponseDto;
 import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.mapper.CategoryMapper;
 import com.i2i.zing.mapper.ItemMapper;
@@ -24,9 +26,9 @@ public class CategoryServiceImpl implements CategoryService {
 
     public APIResponse addCategory(CategoryRequestDto categoryRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Category category = CategoryMapper.convertDtoToEntity(categoryRequestDto);
-        CategoryMapper.convertEntityToDto(categoryRepository.save(category));
-        apiResponse.setData(category);
+        Category category = CategoryMapper.convertDtoToCreationEntity(categoryRequestDto);
+        CategoryCreationDto categoryCreationDto = CategoryMapper.convertEntityToCreationDto(categoryRepository.save(category));
+        apiResponse.setData(categoryCreationDto);
         apiResponse.setStatus(HttpStatus.CREATED.value());
         return apiResponse;
     }
@@ -34,10 +36,10 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public APIResponse getCategories() {
         APIResponse apiResponse = new APIResponse();
-        List<CategoryRequestDto> result = new ArrayList<>();
+        List<CategoryResponseDto> result = new ArrayList<>();
         List<Category> categories = categoryRepository.findByIsDeletedFalse();
         for (Category category : categories) {
-            result.add(CategoryMapper.convertEntityToDto(category));
+            result.add(CategoryMapper.convertEntityToResponseDto(category));
         }
         apiResponse.setData(result);
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -48,9 +50,9 @@ public class CategoryServiceImpl implements CategoryService {
     public APIResponse getCategoryById(String categoryId) {
         APIResponse apiResponse = new APIResponse();
         Category category = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryId);
-        CategoryMapper.convertEntityToDto(category);
+        CategoryResponseDto categoryResponseDto = CategoryMapper.convertEntityToResponseDto(category);
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(category);
+        apiResponse.setData(categoryResponseDto);
         return apiResponse;
     }
 

@@ -90,6 +90,7 @@ public class StockServiceImpl implements StockService {
             for (Stock stock : stocks) {
                 if (Objects.equals(itemId, stock.getItem().getItemId())) {
                     stock.setQuantity(stock.getQuantity() - quantity);
+                    stockRepository.save(stock);
                     if(stock.getQuantity() <= 10) {
                         String subject = "Stock Refilling Alert";
                         String body = "Stock level at darkStore " + stock.getDarkstore().getDarkStoreId()

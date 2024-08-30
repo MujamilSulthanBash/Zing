@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.dto.VerifyEmailDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,27 @@ public class LoginController {
     @PostMapping("users/login")
     public ResponseEntity<APIResponse> userLogin(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         APIResponse apiResponse = loginService.userLogin(userLoginRequestDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
+    }
+
+    /**
+     * <p>
+     *     This method is used to authenticate the User login Credentials
+     * </p>
+     * @param verifyEmailDto - Login Request Details like User email, otp
+     * @return - APIResponse (Status Code, Data)
+     */
+    @PostMapping("customers/verify")
+    public ResponseEntity<APIResponse> verifyCustomerMail(@RequestBody VerifyEmailDto verifyEmailDto) {
+        APIResponse apiResponse = loginService.verifyCustomerEmail(verifyEmailDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
+    }
+
+    @PostMapping("deliverypersons/verify")
+    public ResponseEntity<APIResponse> verifyDeliveryPersonsMail(@RequestBody VerifyEmailDto verifyEmailDto) {
+        APIResponse apiResponse = loginService.verifyDeliveryPersonEmail(verifyEmailDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

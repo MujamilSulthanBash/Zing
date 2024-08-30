@@ -4,6 +4,7 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.dto.UserLoginRequestDto;
+import com.i2i.zing.dto.VerifyEmailDto;
 
 /**
  * <p>
@@ -41,5 +42,9 @@ public interface LoginService {
      * @return - APIResponse (Status Code, Data, Error)
      */
     APIResponse userLogin(UserLoginRequestDto userLoginRequestDto);
+
+    APIResponse verifyCustomerEmail(VerifyEmailDto verifyEmailDto);
+
+    APIResponse verifyDeliveryPersonEmail(VerifyEmailDto verifyEmailDto);
 
 }

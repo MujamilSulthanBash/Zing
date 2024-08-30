@@ -1,9 +1,10 @@
 package com.i2i.zing.service.impl;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
-import com.i2i.zing.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,12 +16,18 @@ import com.i2i.zing.configuration.JwtService;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.dto.UserLoginRequestDto;
+import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.mapper.UserMapper;
+import com.i2i.zing.model.Customer;
+import com.i2i.zing.model.DeliveryPerson;
+import com.i2i.zing.model.Role;
+import com.i2i.zing.model.User;
 import com.i2i.zing.service.CustomerService;
 import com.i2i.zing.service.DeliveryPersonService;
 import com.i2i.zing.service.LoginService;
 import com.i2i.zing.service.RoleService;
 import com.i2i.zing.service.UserService;
+import com.i2i.zing.util.OtpGenerator;
 
 @Service
 public class LoginServiceImpl implements LoginService {
@@ -40,7 +47,16 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    EmailSenderService emailSenderService;
+
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
+    private static Map<String, String> otpStore = new HashMap<>();
+
+    private static Map<String, CustomerRequestDto> primaryCacheMemory = new HashMap<>();
+
+    private static Map<String, DeliveryPersonRequestDto> secondaryCacheMemory = new HashMap<>();
 
     public APIResponse customerSignUp(CustomerRequestDto customerRequestDto) {
         APIResponse apiResponse = new APIResponse();
@@ -63,8 +79,12 @@ public class LoginServiceImpl implements LoginService {
             apiResponse.setStatus(HttpStatus.FOUND.value());
             return apiResponse;
         }
-        User savedUser = createUser(customerRequestDto, role);
-        createCustomer(savedUser);
+        if (! sendMail(customerRequestDto.getEmailId())) {
+            apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            apiResponse.setData("Please verify your email !");
+            return apiResponse;
+        }
+        primaryCacheMemory.put(customerRequestDto.getEmailId(), customerRequestDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
@@ -90,8 +110,12 @@ public class LoginServiceImpl implements LoginService {
             apiResponse.setStatus(HttpStatus.FOUND.value());
             return apiResponse;
         }
-        User savedUser = createUser(UserMapper.customerDto(deliveryPersonRequestDto), role);
-        createDeliveryPerson(deliveryPersonRequestDto, savedUser);
+        if (! sendMail(deliveryPersonRequestDto.getEmailId())) {
+            apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            apiResponse.setData("Please verify your email !");
+            return apiResponse;
+        }
+        secondaryCacheMemory.put(deliveryPersonRequestDto.getEmailId(), deliveryPersonRequestDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
@@ -174,6 +198,72 @@ public class LoginServiceImpl implements LoginService {
         }
         apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
         return apiResponse;
+    }
+
+    @Override
+    public APIResponse verifyCustomerEmail(VerifyEmailDto verifyEmailDto) {
+        APIResponse apiResponse = new APIResponse();
+        if (verifyOtp(verifyEmailDto.getEmail(), verifyEmailDto.getOtp())) {
+            Role role = roleService.retrieveRoleByName(UserRole.CUSTOMER);
+            for (Map.Entry<String, CustomerRequestDto> entry : primaryCacheMemory.entrySet()) {
+                if (entry.getKey().equals(verifyEmailDto.getEmail())) {
+                    User savedUser = createUser(entry.getValue(), role);
+                    createCustomer(savedUser);
+                    apiResponse.setStatus(HttpStatus.OK.value());
+                    return apiResponse;
+                }
+            }
+            apiResponse.setStatus(HttpStatus.OK.value());
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        return apiResponse;
+    }
+
+    @Override
+    public APIResponse verifyDeliveryPersonEmail(VerifyEmailDto verifyEmailDto) {
+        APIResponse apiResponse = new APIResponse();
+        if (verifyOtp(verifyEmailDto.getEmail(), verifyEmailDto.getOtp())) {
+            Role role = roleService.retrieveRoleByName(UserRole.DELIVERYPERSON);
+            for (Map.Entry<String, DeliveryPersonRequestDto> entry : secondaryCacheMemory.entrySet()) {
+                if (entry.getKey().equals(verifyEmailDto.getEmail())) {
+                    DeliveryPersonRequestDto deliveryPersonRequestDto = entry.getValue();
+                    User savedUser = createUser(UserMapper.customerDto(deliveryPersonRequestDto), role);
+                    createDeliveryPerson(deliveryPersonRequestDto, savedUser);
+                    apiResponse.setStatus(HttpStatus.OK.value());
+                    return apiResponse;
+                }
+            }
+            apiResponse.setStatus(HttpStatus.OK.value());
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        return apiResponse;
+    }
+
+    private boolean sendMail(String email) {
+        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
+            if (entry.getKey().equals(email)) {
+                return false;
+            }
+        }
+        String to = email;
+        String subject = "Login OTP";
+        String otp = String.valueOf(OtpGenerator.generateOtp());
+        String body = "Your One Time Password for SignUp verification is " + otp;
+        otpStore.put(email, otp);
+        emailSenderService.sendEmail(to, subject, body);
+        return true;
+    }
+
+    private boolean verifyOtp(String email, String otp) {
+        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
+            if (entry.getKey().equals(email) && entry.getValue().equals(otp)) {
+                otpStore.remove(entry.getKey());
+                return true;
+            }
+        }
+        return false;
     }
 
 }

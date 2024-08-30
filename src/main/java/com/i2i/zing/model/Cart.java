@@ -1,5 +1,6 @@
 package com.i2i.zing.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.i2i.zing.common.PaymentMethod;
 import jakarta.persistence.*;
 import lombok.*;
@@ -25,7 +26,7 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String cartId;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -33,5 +34,6 @@ public class Cart {
     private Double totalAmount;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE)
+    @JsonIgnore
     private Set<CartItem> cartItems;
 }

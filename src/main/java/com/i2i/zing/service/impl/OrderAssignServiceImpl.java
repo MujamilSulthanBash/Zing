@@ -52,6 +52,8 @@ public class OrderAssignServiceImpl implements OrderAssignService {
         List<DeliveryPerson> deliveryPersons = new ArrayList<>();
         logger.debug("Revoked deliveryPersonService to get deliveryPerson list.");
         for (User user : users) {
+            DeliveryPerson d1 = deliveryPersonService.getDeliveryPersonById(user.getUserId());
+            System.out.println(d1.getDeliveryPersonId());
             deliveryPersons.add(deliveryPersonService.getDeliveryPersonById(user.getUserId()));
             break;
         }

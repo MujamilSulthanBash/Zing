@@ -6,6 +6,8 @@ import lombok.*;
 
 import com.i2i.zing.common.Membership;
 
+import java.util.Set;
+
 /**
  * <p>
  *     Represents blueprint for the Customer datatype.
@@ -34,4 +36,7 @@ public class Customer {
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Cart> carts;
 }

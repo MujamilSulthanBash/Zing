@@ -3,10 +3,6 @@ package com.i2i.zing.service.impl;
 import java.util.List;
 import java.util.Objects;
 
-import com.i2i.zing.model.Cart;
-import com.i2i.zing.model.CartItem;
-import com.i2i.zing.service.CartService;
-import com.i2i.zing.util.OtpGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +15,15 @@ import com.i2i.zing.dto.OrderDto;
 import com.i2i.zing.exception.EntityAlreadyExistsException;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderMapper;
+import com.i2i.zing.model.Cart;
+import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Order;
 import com.i2i.zing.repository.OrderRepository;
 import com.i2i.zing.service.StockService;
 import com.i2i.zing.service.OrderAssignService;
 import com.i2i.zing.service.OrderService;
+import com.i2i.zing.service.CartService;
+import com.i2i.zing.util.OtpGenerator;
 
 /**
  * <p>
@@ -72,7 +72,7 @@ public class OrderServiceImpl implements OrderService {
         Order resultOrder = orderRepository.save(order);
         apiResponse.setData(OrderMapper.convertToOrderDto(resultOrder));
         apiResponse.setStatus(HttpStatus.OK.value());
-        logger.debug("Checking payment method and status to assign order.");
+        logger.debug("Checking payment method and amount to assign order.");
         if ((sum > 50.0) && ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
                 (resultOrder.getPaymentMethod().equals(PaymentMethod.CASHON)))) {
             orderAssignService.addOrderAssign(resultOrder);

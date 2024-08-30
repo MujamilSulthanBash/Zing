@@ -1,6 +1,8 @@
 package com.i2i.zing.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
@@ -49,6 +51,8 @@ public class OrderServiceImpl implements OrderService {
     CartService cartService;
 
     private static final Logger logger = LogManager.getLogger();
+
+    private static Map<String, String> otpStore = new HashMap<>();
 
     @Override
     public APIResponse addOrder(OrderDto orderDto) {

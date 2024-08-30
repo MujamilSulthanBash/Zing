@@ -51,4 +51,15 @@ public interface OrderService {
      * @return APIResponse value to acknowledge deletion.
      */
     APIResponse deleteOrder(String orderId);
+
+    /**
+     * <p>
+     *     Verifies OTP of the order delivered to the customer
+     *     and changes the status accordingly.
+     * </p>
+     *
+     * @param verifyOtpDto - {@link VerifyOtpDto} to verify order.
+     *
+     */
+
 }

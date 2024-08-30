@@ -1,5 +1,6 @@
 package com.i2i.zing.service;
 
+import com.i2i.zing.common.DeliveryStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
@@ -52,4 +53,14 @@ public interface OrderAssignService {
      * @return APIResponse value to acknowledge update.
      */
     APIResponse updateOrderAssign(OrderAssignDto orderAssignDto);
+
+    /**
+     * <p>
+     *     Updates the delivery status internally after delivery.
+     * </p>
+     *
+     * @param status - String value to update.
+     * @param OrderId - string value to fetch assigned record.
+     */
+    void updateOrderStatus(String status, String OrderId);
 }

@@ -2,8 +2,9 @@ package com.i2i.zing.service;
 
 import org.springframework.stereotype.Service;
 
-import com.i2i.zing.dto.OrderDto;
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.OrderDto;
+import com.i2i.zing.model.Order;
 
 /**
  * <p>
@@ -45,21 +46,22 @@ public interface OrderService {
 
     /**
      * <p>
-     *     Removes the Order from user view by changing boolean value.
+     *     Fetches the Order and returns the Order.
      * </p>
-     * @param orderId - String to remove Order.
-     * @return APIResponse value to acknowledge deletion.
+     *
+     * @param orderId - String value to display the Order.
+     * @return OrderDto value to display the Order.
      */
-    APIResponse deleteOrder(String orderId);
+    Order getOrderById(String orderId);
 
     /**
      * <p>
-     *     Verifies OTP of the order delivered to the customer
-     *     and changes the status accordingly.
+     *     Verifies the order by checking the otp, if correct returns updates
+     *     corresponding status.
      * </p>
      *
-     * @param verifyOtpDto - {@link VerifyOtpDto} to verify order.
-     *
+     * @param orderId - String value to check.
+     * @return APIResponse value to acknowledge status.
      */
-
+    APIResponse verifyOrder(String orderId);
 }

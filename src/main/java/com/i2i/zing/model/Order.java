@@ -63,4 +63,7 @@ public class Order {
 
     @LastModifiedDate
     private Date modifiedDate;
+
+    @Column(name = "otp")
+    private String otp;
 }

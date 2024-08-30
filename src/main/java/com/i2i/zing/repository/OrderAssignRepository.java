@@ -3,6 +3,7 @@ package com.i2i.zing.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.zing.model.OrderAssign;
@@ -21,7 +22,7 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
      *     status using boolean value.
      * </p>
      *
-     * @return List<Order> for displaying available orders.
+     * @return List<OrderAssign> for displaying available orderAssigns.
      */
     List<OrderAssign> findByIsDeletedFalse();
 
@@ -31,7 +32,18 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
      *     using boolean value.
      * </p>
      * @param id - String value to fetch the Order assign.
-     * @return Order to display the order.
+     * @return OrderAssign to display the orderAssign.
      */
     OrderAssign findByAssignIdAndIsDeletedFalse(String id);
+
+    /**
+     * <p>
+     *     Fetches the Order assigns by checking their related
+     *     order using query.
+     * </p>
+     * @param orderId - String value to fetch the Order assign.
+     * @return OrderAssign to display the orderAssign.
+     */
+    @Query(value = "FROM OrderAssign a LEFT JOIN FETCH Order o ON a.order.id = :orderId")
+    OrderAssign findByOrderId(String orderId);
 }

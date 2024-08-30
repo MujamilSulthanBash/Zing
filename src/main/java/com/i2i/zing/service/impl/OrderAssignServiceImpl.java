@@ -1,13 +1,11 @@
 package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.i2i.zing.model.Customer;
-import com.i2i.zing.model.DeliveryPerson;
-import com.i2i.zing.model.Order;
-import com.i2i.zing.model.OrderAssign;
-import com.i2i.zing.model.User;
+import com.i2i.zing.model.*;
 import com.i2i.zing.service.CustomerService;
 import com.i2i.zing.service.DeliveryPersonService;
 import org.apache.logging.log4j.LogManager;
@@ -45,6 +43,8 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     CustomerService customerService;
 
     private static final Logger logger = LogManager.getLogger();
+
+    private static Map<String, String> otpStore = new HashMap<>();
 
     @Override
     public void addOrderAssign(Order order) {
@@ -113,5 +113,16 @@ public class OrderAssignServiceImpl implements OrderAssignService {
         apiResponse.setData(orderAssign);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
+    }
+
+    @Override
+    public void updateOrderStatus(String status, String orderId) {
+        OrderAssign orderAssign = orderAssignRepository.findByOrderId(orderId);
+        if (null == orderAssign) {
+            logger.warn("There is no assigning record related to order : {} to update.", orderId);
+            throw new EntityNotFoundException("There is no assigning record related to order : " + orderId + " to update.");
+        }
+        orderAssign.setDeliveryStatus(DeliveryStatus.valueOf(status));
+        orderAssignRepository.save(orderAssign);
     }
 }

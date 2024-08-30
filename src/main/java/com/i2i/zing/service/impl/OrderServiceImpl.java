@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
@@ -50,9 +51,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     CartService cartService;
 
-    private static final Logger logger = LogManager.getLogger();
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    private static Map<String, String> otpStore = new HashMap<>();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     public APIResponse addOrder(OrderDto orderDto) {
@@ -67,12 +68,14 @@ public class OrderServiceImpl implements OrderService {
         }
         Cart cart = cartService.getCartAsModel(orderDto.getCartId());
         Order order = OrderMapper.convertToOrder(orderDto);
+        String otp = String.valueOf(OtpGenerator.generateOtp());
         Double sum = 0.0;
         for (CartItem cartItem : cart.getCartItems()) {
             sum += cartItem.getTotalPrice();
         }
         order.setCart(cart);
         order.setOrderAmount(sum);
+        order.setOtp(encoder.encode(otp));
         Order resultOrder = orderRepository.save(order);
         apiResponse.setData(OrderMapper.convertToOrderDto(resultOrder));
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -85,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
         String subject = "Order Acknowledgement";
         String body = "Your order " + resultOrder.getOrderId() + " has been successfully placed."
                        + "Your One Time Password for the order verification is "
-                       + String.valueOf(OtpGenerator.generateOtp());
+                       + otp;
         emailSenderService.sendEmail(resultOrder.getCart().getCustomer().getUser().getEmailId(), subject, body);
         cartService.addCart(resultOrder.getCart().getCustomer());
         return apiResponse;
@@ -108,24 +111,26 @@ public class OrderServiceImpl implements OrderService {
             logger.warn("Order with Id : {} not found", orderId);
             throw new EntityNotFoundException("Order with Id : " + orderId + " not found");
         }
-        apiResponse.setData(order);
+        apiResponse.setData(OrderMapper.convertToOrderDto(order));
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
 
     @Override
-    public APIResponse deleteOrder(String orderId) {
-        APIResponse apiResponse = new APIResponse();
+    public Order getOrderById(String orderId) {
         Order order = orderRepository.findByOrderIdAndIsDeletedFalse(orderId);
         if (null == order) {
-            logger.warn("Order with Id : {} not found to update.", orderId);
-            throw new EntityNotFoundException("Order with Id : " + orderId + " not found to update.");
+            logger.warn("Order with Id : {} not found to verify", orderId);
+            throw new EntityNotFoundException("Order with Id : " + orderId + " not found to verify");
         }
-        order.setDeleted(true);
-        orderRepository.save(order);
-        apiResponse.setData("Order with ID : " + orderId + " has been deleted");
+        return order;
+    }
+
+    @Override
+    public APIResponse verifyOrder(String orderId) {
+        APIResponse apiResponse = new APIResponse();
+        orderAssignService.updateOrderStatus("DELIVERED", orderId);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
-
 }

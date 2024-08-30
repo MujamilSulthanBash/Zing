@@ -21,9 +21,11 @@ import com.i2i.zing.service.DarkStoreService;
  * </p>
  */
 @Controller
-@RequestMapping("zing/api/v1/darkstores")
+@RequestMapping("zing/api/v1/admin/darkstores")
 public class DarkStoreController {
+
     private static final Logger logger = LogManager.getLogger();
+
     @Autowired
     DarkStoreService darkStoreService;
 

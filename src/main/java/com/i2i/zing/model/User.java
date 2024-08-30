@@ -53,4 +53,5 @@ public class User {
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
+
 }

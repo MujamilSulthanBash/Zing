@@ -26,4 +26,7 @@ public interface DeliveryPersonService {
      * @return - Delivery Person as Entity Object
      */
     DeliveryPerson getDeliveryPersonById(String userId);
+
+    boolean verifyOrder(String orderId, String otp);
+
 }

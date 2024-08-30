@@ -52,8 +52,8 @@ public class CartServiceImpl implements CartService {
         APIResponse apiResponse = new APIResponse();
         Cart cart = cartRepository.findByCartId(cartId);
         if (null == cart) {
-            logger.warn("Cart with Id : {} not found.", cartId);
-            throw new EntityNotFoundException("Cart with Id : " + cartId + " not found.");
+            logger.warn("An Error Occurred while getting Cart with Id : {} not found.", cartId);
+            throw new EntityNotFoundException("Cart Not found with Id : " + cartId);
         }
         apiResponse.setData(cart);
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -75,7 +75,7 @@ public class CartServiceImpl implements CartService {
         APIResponse apiResponse = new APIResponse();
         Cart cart = cartRepository.findByCartId(cartId);
         if (null == cart) {
-            logger.warn("Cart with Id : {} not found to fetch items.", cartId);
+            logger.warn("An Error Occurred while Getting Items by Cart with Id : {} not found", cartId);
             throw new EntityNotFoundException("Cart with Id : " + cartId + " not found to fetch Items.");
         }
         apiResponse.setData(cart.getCartItems().stream()

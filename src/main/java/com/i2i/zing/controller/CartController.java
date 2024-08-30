@@ -1,14 +1,13 @@
 package com.i2i.zing.controller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.service.CartService;
-
 /**
  * <p>
  *     This class is the Controller for Cart Operations
@@ -18,7 +17,6 @@ import com.i2i.zing.service.CartService;
 @RestController
 @RequestMapping("zing/api/v1/customers/carts")
 public class CartController {
-    private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     CartService cartService;
@@ -33,9 +31,6 @@ public class CartController {
     @GetMapping("/{cartId}")
     public ResponseEntity<APIResponse> getCart(String cartId) {
         APIResponse apiResponse = cartService.getCart(cartId);
-        if (null == apiResponse.getData()) {
-            logger.warn("Error while Getting the Cart By Id");
-        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

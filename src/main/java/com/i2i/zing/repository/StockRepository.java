@@ -14,6 +14,6 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 
     Stock findByIsDeletedFalseAndStockId(String stockId);
 
-    @Query("SELECT s FROM Stock s LEFT JOIN FETCH s.darkstore d WHERE d.location = :location")
+    @Query("SELECT s FROM Stock s LEFT JOIN FETCH s.darkstore d WHERE d.location = :location And s.quantity > 0")
     List<Stock> findStocksByLocation(String location);
 }

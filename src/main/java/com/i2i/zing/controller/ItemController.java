@@ -1,15 +1,26 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.dto.ItemRequestDto;
-import com.i2i.zing.dto.ItemResponseDto;
-import com.i2i.zing.dto.LocationRequestDto;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.i2i.zing.dto.ItemRequestDto;
+import com.i2i.zing.dto.ItemResponseDto;
+import com.i2i.zing.dto.LocationRequestDto;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.service.ItemService;
+
+import java.util.NoSuchElementException;
+
 /**
  * <p>
  *     This class is the Controller for Item Operations
@@ -19,6 +30,7 @@ import com.i2i.zing.service.ItemService;
 @Controller
 @RequestMapping("zing/api/v1/items")
 public class ItemController {
+    private static final Logger logger = LogManager.getLogger();
     @Autowired
     ItemService itemService;
 
@@ -26,12 +38,17 @@ public class ItemController {
      * <p>
      *     This method add the Item to the Database table
      * </p>
+     *
      * @param itemRequestDto {@link ItemRequestDto} - Item as Dto Object
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
     public ResponseEntity<APIResponse> addItem(@RequestBody ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = itemService.addItem(itemRequestDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while adding Item to the Database..");
+        }
+        logger.info("Item Added Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -45,6 +62,9 @@ public class ItemController {
     @GetMapping("/showitems")
     public ResponseEntity<APIResponse> getItemsByLocation(@RequestBody LocationRequestDto locationRequestDto) {
         APIResponse apiResponse = itemService.getItemsByLocation(locationRequestDto.getLocation());
+        if (null == apiResponse.getData()) {
+            logger.warn("No Items found in that Location..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -58,8 +78,10 @@ public class ItemController {
      */
     @GetMapping("/{itemId}")
     public ResponseEntity<APIResponse> getItemById(@PathVariable String itemId) {
-        System.out.println(itemId);
         APIResponse apiResponse = itemService.getItemById(itemId);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while getting the item by ID :{}", itemId);
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -74,6 +96,11 @@ public class ItemController {
     @DeleteMapping("/{itemId}")
     public ResponseEntity<APIResponse> deleteItem(String itemId) {
         APIResponse apiResponse = itemService.deleteItem(itemId);
+        if (null != apiResponse.getData()) {
+            logger.warn("An Error occurred while Deleting the Item with Id : {}", itemId);
+            throw new NoSuchElementException("Item Not found with Id :" + itemId);
+        }
+        logger.info("Dark Store deleted Successfully with Id : {}", itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

@@ -3,7 +3,6 @@ package com.i2i.zing.configuration;
 import java.util.List;
 import java.util.Map;
 
-import com.i2i.zing.exception.UnAuthorizedExecption;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -13,10 +12,12 @@ import io.jsonwebtoken.Jwts;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import com.i2i.zing.exception.UnAuthorizedExecption;
+
 /**
  * <p>
- * This class is used to authorize and authenticate the api endpoints
- * before the controller execution
+ *     This class is used to authorize and authenticate the api endpoints
+ *     before the controller execution
  * </p>
  */
 @Component
@@ -28,8 +29,8 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     /**
      * <p>
-     * Filters the incoming request and verifies the JWT token.
-     * If the token is valid, checks if the user has the required role to access the requested API.
+     *     Filters the incoming request and verifies the JWT token.
+     *     If the token is valid, checks if the user has the required role to access the requested API.
      * </p>
      *
      * @param request  the incoming request
@@ -61,7 +62,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     /**
      * <p>
-     * This method checks return a boolean if the token valid or not
+     *     This method checks return a boolean if the token valid or not
      * </p>
      *
      * @param token - Token generate by the JWT for Login
@@ -81,7 +82,7 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     /**
      * <p>
-     * This method is checks the token and request URI are valid or not
+     *     This method is checks the token and request URI are valid or not
      * </p>
      *
      * @param token      - Token generate by the JWT for Login
@@ -99,8 +100,8 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     /**
      * <p>
-     * This method checks which are the roles to be access
-     * the request URI by the permission.
+     *     This method checks which are the roles to be access
+     *     the request URI by the permission.
      * </p>
      *
      * @param roles      - Roles of the User like (Customer, DeliveryPerson)

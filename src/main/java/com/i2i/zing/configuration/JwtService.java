@@ -16,7 +16,7 @@ import com.i2i.zing.model.User;
 
 /**
  * <p>
- * This class generate the jwt and check the token is valid or not.
+ *     This class generate the jwt and check the token is valid or not.
  * </p>
  */
 @Service
@@ -27,7 +27,7 @@ public class JwtService {
 
     /**
      * <p>
-     * This method is responsible for generating jwt token.
+     *     This method is responsible for generating jwt token.
      * </p>
      *
      * @param user - {@link User} details.

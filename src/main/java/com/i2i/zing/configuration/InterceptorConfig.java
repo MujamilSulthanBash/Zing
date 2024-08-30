@@ -15,6 +15,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     private JwtInterceptor jwtInterceptor;
 
+    /**
+     * <p>
+     *     This method add Interceptor in the registry
+     * </p>
+     * @param registry - as InterceptorRegistry Object
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(jwtInterceptor);

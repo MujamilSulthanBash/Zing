@@ -1,4 +1,4 @@
-package com.i2i.zing.exeception;
+package com.i2i.zing.exception;
 
 /**
  * <p>

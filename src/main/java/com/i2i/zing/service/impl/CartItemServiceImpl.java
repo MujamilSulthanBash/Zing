@@ -1,7 +1,6 @@
 package com.i2i.zing.service.impl;
 
 import com.i2i.zing.dto.CartItemRequestDto;
-import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.dto.ItemResponseDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.exeception.EntityNotFoundException;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.repository.CartItemRepository;

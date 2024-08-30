@@ -1,11 +1,22 @@
 package com.i2i.zing.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.i2i.zing.common.PaymentMethod;
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.Set;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * <p>
@@ -34,6 +45,5 @@ public class Cart {
     private Double totalAmount;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.MERGE)
-    @JsonIgnore
     private Set<CartItem> cartItems;
 }

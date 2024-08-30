@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.exeception.EntityNotFoundException;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.mapper.CartMapper;
 import com.i2i.zing.model.Cart;

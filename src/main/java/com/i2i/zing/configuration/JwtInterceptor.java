@@ -3,7 +3,7 @@ package com.i2i.zing.configuration;
 import java.util.List;
 import java.util.Map;
 
-import com.i2i.zing.exeception.UnAuthorizedExecption;
+import com.i2i.zing.exception.UnAuthorizedExecption;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

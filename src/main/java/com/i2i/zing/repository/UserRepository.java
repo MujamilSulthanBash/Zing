@@ -45,6 +45,7 @@ public interface UserRepository extends JpaRepository<User, String> {
      * @param location - Location of the User.
      * @return - List of {@link User} details.
      */
-    @Query(value = "SELECT d FROM DeliveryPerson d LEFT JOIN FETCH d.user u WHERE u.location = :location")
+    //"SELECT d FROM DeliveryPerson d LEFT JOIN FETCH d.user u WHERE u.location = :location
+    @Query(value = "FROM User u RIGHT JOIN FETCH DeliveryPerson d ON d.user.id = u.id WHERE u.location = :location")
     List<User> findUsersByLocation(String location);
 }

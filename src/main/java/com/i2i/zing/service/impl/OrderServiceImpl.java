@@ -16,8 +16,8 @@ import org.springframework.stereotype.Service;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.PaymentMethod;
 import com.i2i.zing.dto.OrderDto;
-import com.i2i.zing.exeception.EntityAlreadyExistsException;
-import com.i2i.zing.exeception.EntityNotFoundException;
+import com.i2i.zing.exception.EntityAlreadyExistsException;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderMapper;
 import com.i2i.zing.model.Order;
 import com.i2i.zing.repository.OrderRepository;
@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
         order.setCart(cart);
         order.setOrderAmount(sum);
         Order resultOrder = orderRepository.save(order);
-        apiResponse.setData(resultOrder);
+        apiResponse.setData(OrderMapper.convertToOrderDto(resultOrder));
         apiResponse.setStatus(HttpStatus.OK.value());
         logger.debug("Checking payment method and status to assign order.");
         if ((sum > 50.0) && ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
@@ -123,4 +123,5 @@ public class OrderServiceImpl implements OrderService {
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
+
 }

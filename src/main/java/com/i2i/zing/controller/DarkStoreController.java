@@ -32,8 +32,11 @@ public class DarkStoreController {
      */
     @PostMapping
     public ResponseEntity<APIResponse> addDarkStore(@RequestBody DarkStoreRequestDto darkStoreRequestDto) {
-        logger.debug("Dark Store Adding..");
         APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreRequestDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while adding Dark Store to the Database..");
+        }
+        logger.info("Dark Store Created Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -47,6 +50,9 @@ public class DarkStoreController {
     @GetMapping
     public ResponseEntity<APIResponse> getDarkStores() {
         APIResponse apiResponse = darkStoreService.getDarkStores();
+        if (null == apiResponse.getData()) {
+            logger.warn("No DarkStores Found..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -61,6 +67,9 @@ public class DarkStoreController {
     @GetMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> getDarkStoreById(String darkStoreId) {
         APIResponse apiResponse = darkStoreService.getDarkStoreById(darkStoreId);
+        if (null == apiResponse.getData()) {
+            logger.warn("No Dark Store found with Id : {}", darkStoreId);
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -76,6 +85,10 @@ public class DarkStoreController {
     @DeleteMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> deleteDarkStore(String darkStoreId) {
         APIResponse apiResponse = darkStoreService.deleteDarkStore(darkStoreId);
+        if (null != apiResponse.getData()) {
+            logger.warn("An Error occurred while Deleting the DarkStore with Id : {}", darkStoreId);
+        }
+        logger.info("Dark Store deleted Successfully with Id : {}", darkStoreId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

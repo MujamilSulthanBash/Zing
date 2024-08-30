@@ -34,8 +34,11 @@ public class CategoryController {
      */
     @PostMapping
     public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
-        logger.debug("Category Adding..");
         APIResponse apiResponse = categoryService.addCategory(categoryRequestDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while adding Category with Name :{}", categoryRequestDto.getName());
+        }
+        logger.info("Category Created Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -49,6 +52,9 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<APIResponse> getCategories() {
         APIResponse apiResponse = categoryService.getCategories();
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while getting Categories from the Database..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -63,6 +69,9 @@ public class CategoryController {
     @GetMapping("/{categoryId}")
     public ResponseEntity<APIResponse> getCategoryById(@PathVariable String categoryId) {
         APIResponse apiResponse = categoryService.getCategoryById(categoryId);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while getting Category from the Database with Id :{}", categoryId);
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -77,6 +86,10 @@ public class CategoryController {
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<APIResponse> deleteCategory(@PathVariable String categoryId) {
         APIResponse apiResponse = categoryService.deleteCategory(categoryId);
+        if (null != apiResponse.getData()) {
+            logger.warn("An Error occurred while Deleting the Category with Id : {}", categoryId);
+        }
+        logger.info("Category deleted Successfully with Id : {}", categoryId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -84,6 +97,9 @@ public class CategoryController {
     @GetMapping("/{categoryId}/items")
     public ResponseEntity<APIResponse> getItemsByCategoryId(@PathVariable String categoryId) {
         APIResponse apiResponse = categoryService.getItemsByCategoryId(categoryId);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while getting Items by Category with Id :{}", categoryId);
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

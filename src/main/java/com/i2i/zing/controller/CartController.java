@@ -33,6 +33,9 @@ public class CartController {
     @GetMapping("/{cartId}")
     public ResponseEntity<APIResponse> getCart(String cartId) {
         APIResponse apiResponse = cartService.getCart(cartId);
+        if (null == apiResponse.getData()) {
+            logger.warn("Error while Getting the Cart By Id");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

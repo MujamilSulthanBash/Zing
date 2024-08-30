@@ -33,6 +33,10 @@ public class StockController {
     @PostMapping
     public ResponseEntity<APIResponse> addStock(@RequestBody StockRequestDto stockRequestDto) {
         APIResponse apiResponse = stockService.addStock(stockRequestDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while adding Stock to the Database..");
+        }
+        logger.info("Stock Created Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -46,6 +50,9 @@ public class StockController {
     @GetMapping
     public ResponseEntity<APIResponse> getStocks() {
         APIResponse apiResponse = stockService.getStocks();
+        if (null == apiResponse.getData()) {
+            logger.warn("Stock is Empty add More Stocks to the Database..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -60,6 +67,9 @@ public class StockController {
     @GetMapping("/{stockId}")
     public ResponseEntity<APIResponse> getStockById(String stockId) {
         APIResponse apiResponse = stockService.getStockById(stockId);
+        if (null == apiResponse.getData()) {
+            logger.warn("Stock not found with Id : {}", stockId);
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -74,6 +84,10 @@ public class StockController {
     @DeleteMapping("/{stockId}")
     public ResponseEntity<APIResponse> deleteStock(String stockId) {
         APIResponse apiResponse = stockService.deleteStock(stockId);
+        if (null != apiResponse.getData()) {
+            logger.warn("An Error occurred while Deleting the DarkStore with Id : {}", stockId);
+        }
+        logger.info("Stock deleted Successfully with Id : {}", stockId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

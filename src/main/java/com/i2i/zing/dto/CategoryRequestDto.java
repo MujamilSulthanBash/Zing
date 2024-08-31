@@ -1,14 +1,13 @@
 package com.i2i.zing.dto;
 
-import java.util.Set;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import com.i2i.zing.model.Item;
 
 /**
  * <p>
@@ -24,6 +23,11 @@ import com.i2i.zing.model.Item;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CategoryRequestDto {
+
+    @NotBlank (message = "Name must not be blank..")
+    @Pattern(regexp = "[a-zA-Z\\s]+$")
     private String name;
+
+    @NotBlank (message = "Description must not be empty..")
     private String description;
 }

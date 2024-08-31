@@ -1,5 +1,17 @@
 package com.i2i.zing.service.impl;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.time.LocalDate;
+import java.time.ZoneId;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+import com.i2i.zing.dto.ItemDisplayResponseDto;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.dto.ItemResponseDto;
@@ -9,15 +21,6 @@ import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.ItemRepository;
 import com.i2i.zing.service.ItemService;
 import com.i2i.zing.service.StockService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -40,13 +43,20 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public APIResponse getItemsByLocation(String location) {
         APIResponse apiResponse = new APIResponse();
-        List<String> result = new ArrayList<>();
+        Map<String, ItemDisplayResponseDto> items = new HashMap<>();
         List<Stock> stocks = stockService.getStocksByLocation(location);
         for (Stock stock : stocks) {
-            String itemName = stock.getItem().getItemName();
-            result.add(itemName);
+            ItemDisplayResponseDto itemDto = ItemMapper.convertEntityToDisplayResponseDto(stock.getItem());
+            itemDto.setQuantity(stock.getQuantity());
+            if (itemDto.getQuantity() <= 5) {
+                itemDto.setStatus("Limited Stock :" + itemDto.getQuantity());
+            }
+            if (itemDto.getQuantity() > 5) {
+                itemDto.setStatus("In Stock.");
+            }
+            items.put(stock.getItem().getItemName(), itemDto);
         }
-        apiResponse.setData(result);
+        apiResponse.setData(items);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

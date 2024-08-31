@@ -54,9 +54,40 @@ public interface StockService {
      */
     APIResponse deleteStock(String stockId);
 
+    /**
+     * <p>
+     *     This method Reduce the Stock item after Order Placed
+     * </p>
+     * @param cartItems - Set of Cart Items
+     * @return APIResponse Details like Status, Data.
+     */
     APIResponse reduceStocks(Set<CartItem> cartItems);
 
+    /**
+     * <p>
+     *     This method update the stock Details of the Particular Stock
+     * </p>
+     * @param stockRequestDto {@link StockRequestDto} - Stock as Dto Object
+     * @return
+     */
     APIResponse updateStock(StockRequestDto stockRequestDto);
 
+    /**
+     * <p>
+     *     This method get the Stock Details by the Location
+     * </p>
+     * @param location - Location of the User
+     * @return List of Stock Details
+     */
     List<Stock> getStocksByLocation(String location);
+
+    /**
+     * <p>
+     *     This method get the Stock Details of the Particular Item
+     *     by Item Id
+     * </p>
+     * @param itemId - To Identify the Item
+     * @return Stock as Entity Object
+     */
+    Stock getStockByItemId(String itemId);
 }

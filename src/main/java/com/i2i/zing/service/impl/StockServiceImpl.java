@@ -60,6 +60,11 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
+    public Stock getStockByItemId(String itemId) {
+        return stockRepository.findStockByItemId(itemId);
+    }
+
+    @Override
     public APIResponse getStockById(String stockId) {
         APIResponse apiResponse = new APIResponse();
         Stock stock = stockRepository.findByIsDeletedFalseAndStockId(stockId);

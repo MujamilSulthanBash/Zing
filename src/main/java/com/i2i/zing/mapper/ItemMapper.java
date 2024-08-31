@@ -1,6 +1,7 @@
 package com.i2i.zing.mapper;
 
 import com.i2i.zing.dto.ItemCreationDto;
+import com.i2i.zing.dto.ItemDisplayResponseDto;
 import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.dto.ItemResponseDto;
 import com.i2i.zing.model.Category;
@@ -29,6 +30,13 @@ public class ItemMapper {
         return itemCreationDto;
     }
 
+    /**
+     * <p>
+     *     This method convert the Entity Object to Response Dto
+     * </p>
+     * @param item - Item as Entity Object
+     * @return ItemResponseDto {@link ItemResponseDto} - as Dto Object
+     */
     public static ItemResponseDto convertEntityToResponseDto(Item item) {
         ItemResponseDto itemResponseDto = ItemResponseDto.builder()
                 .itemId(item.getItemId())
@@ -39,7 +47,21 @@ public class ItemMapper {
         return itemResponseDto;
     }
 
-
+    /**
+     * <p>
+     *     This method convert the Entity to Displayable Response Dto
+     * </p>
+     * @param item - Item as entity Object
+     * @return ItemDisplayResponseDto {@link ItemDisplayResponseDto} - as Dto Object
+     */
+    public static ItemDisplayResponseDto convertEntityToDisplayResponseDto(Item item) {
+        ItemDisplayResponseDto itemDisplayResponseDto = ItemDisplayResponseDto.builder()
+                .name(item.getItemName())
+                .price(item.getPrice())
+                .categoryName(item.getCategory().getName())
+                .build();
+        return itemDisplayResponseDto;
+    }
 
     /**
      * <p>
@@ -59,6 +81,13 @@ public class ItemMapper {
         return item;
     }
 
+    /**
+     * <p>
+     *     This method convert the Dto Object to Entity as Response
+     * </p>
+     * @param itemResponseDto {@link ItemResponseDto} - as Dto Object
+     * @return Item as Entity Object
+     */
     public static Item convertDtoToResponseEntity(ItemResponseDto itemResponseDto) {
         Item item = Item.builder()
                 .itemName(itemResponseDto.getName())

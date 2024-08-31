@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * Configuration class for setting up interceptors in the Spring MVC application.
- * Implements WebMvcConfigurer to customize the default MVC configuration.
+ * Implements WebMvcConfigure to customize the default MVC configuration.
  */
 @Component
 public class InterceptorConfig implements WebMvcConfigurer {

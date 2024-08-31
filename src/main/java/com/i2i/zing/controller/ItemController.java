@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  * </p>
  */
 @Controller
-@RequestMapping("zing/api/v1/items")
+@RequestMapping("zing/api/v1/darkstores/items")
 public class ItemController {
     private static final Logger logger = LogManager.getLogger();
     @Autowired

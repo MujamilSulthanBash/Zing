@@ -40,4 +40,5 @@ public class ExceptionResponse {
     public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
+
 }

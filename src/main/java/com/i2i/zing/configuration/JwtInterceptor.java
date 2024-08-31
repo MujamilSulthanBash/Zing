@@ -112,8 +112,8 @@ public class JwtInterceptor implements HandlerInterceptor {
         Map<String, List<String>> uriRoleMap = Map.of(
                 "/zing/api/v1", List.of("ADMIN"),
                 "/zing/api/v1/customers/", List.of("CUSTOMER", "ADMIN"),
-                "/zing/api/v1/categories/", List.of("CUSTOMER", "ADMIN"),
-                "/zing/api/v1/deliverypersons/", List.of("DELIVERYPERSON", "ADMIN")
+                "/zing/api/v1/deliverypersons/", List.of("DELIVERYPERSON", "ADMIN"),
+                "/zing/api/v1/darkstores/", List.of("MANAGER","ADMIN")
         );
         System.out.println(requestURI);
         for (Map.Entry<String, List<String>> entry : uriRoleMap.entrySet()) {

@@ -17,7 +17,7 @@ import com.i2i.zing.service.StockService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/stocks")
+@RequestMapping("zing/api/v1/darkstores/stocks")
 public class StockController {
     private static final Logger logger = LogManager.getLogger();
     @Autowired

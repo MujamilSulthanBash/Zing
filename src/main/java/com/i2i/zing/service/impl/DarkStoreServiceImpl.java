@@ -1,10 +1,15 @@
 package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import com.i2i.zing.common.UserRole;
 import com.i2i.zing.dto.DarkStoreDto;
+import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
+import com.i2i.zing.service.RoleService;
 import com.i2i.zing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,11 +31,36 @@ public class DarkStoreServiceImpl implements DarkStoreService {
     @Autowired
     UserService userService;
 
+    @Autowired
+    RoleService roleService;
+
     @Override
     public APIResponse addDarkStore(DarkStoreDto darkStoreDto) {
         APIResponse apiResponse = new APIResponse();
+        Role role = roleService.retrieveRoleByName(UserRole.MANAGER);
+        if (userService.checkByEmailId(darkStoreDto.getEmailId())) {
+            User user = userService.retrieveByEmail(darkStoreDto.getEmailId());
+            boolean isRoleExist = false;
+            for (Role existingRole : user.getRoles()) {
+                if (existingRole.getRoleId().equals(role.getRoleId())) {
+                    isRoleExist = true;
+                    break;
+                }
+            }
+            if (isRoleExist) {
+                apiResponse.setStatus(HttpStatus.FOUND.value());
+                return apiResponse;
+            }
+            user.getRoles().add(role);
+            userService.createUser(user);
+            apiResponse.setStatus(HttpStatus.CREATED.value());
+            return apiResponse;
+        }
         DarkStore darkStore = DarkStoreMapper.convertDtoToEntity(darkStoreDto);
         User user = DarkStoreMapper.convertDtoToUser(darkStoreDto);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        user.setRoles(roles);
         User savedUser = userService.createUser(user);
         darkStore.setUser(savedUser);
         darkStoreRepository.save(darkStore);

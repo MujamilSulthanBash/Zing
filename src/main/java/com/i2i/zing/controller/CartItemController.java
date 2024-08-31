@@ -25,7 +25,9 @@ import com.i2i.zing.service.CartItemService;
 @RestController
 @RequestMapping("zing/api/v1/customers/cart/cartitems")
 public class CartItemController {
+
     private static final Logger logger = LogManager.getLogger();
+
     @Autowired
     CartItemService cartItemService;
 

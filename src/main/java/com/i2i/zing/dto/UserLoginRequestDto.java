@@ -1,5 +1,9 @@
 package com.i2i.zing.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,6 +16,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserLoginRequestDto {
+    @NotBlank
+    @Size(min = 10, max = 40, message = "Mail id should contain only 10 to 40 letters.")
+    @Pattern(regexp =  "^(.+)@(.+)$", message = "Given mailId is not in expected order pattern.")
     private String emailId;
+
+    @NotBlank
+    @Size(min = 4, max = 15, message = "Password should contain  4 to 15 characters.")
     private String password;
 }

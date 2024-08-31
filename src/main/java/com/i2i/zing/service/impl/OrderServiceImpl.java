@@ -3,7 +3,6 @@ package com.i2i.zing.service.impl;
 import java.util.List;
 import java.util.Objects;
 
-import com.i2i.zing.dto.VerifyOrderDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,13 @@ import org.springframework.stereotype.Service;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.PaymentMethod;
 import com.i2i.zing.dto.OrderDto;
+import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.exception.EntityAlreadyExistsException;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderMapper;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
+import com.i2i.zing.model.Stock;
 import com.i2i.zing.model.Order;
 import com.i2i.zing.repository.OrderRepository;
 import com.i2i.zing.service.StockService;
@@ -69,27 +70,41 @@ public class OrderServiceImpl implements OrderService {
         Order order = OrderMapper.convertToOrder(orderDto);
         String otp = String.valueOf(OtpGenerator.generateOtp());
         Double sum = 0.0;
+        for (CartItem cartItem : cart.getCartItems() ) {
+            Stock stock = stockService.getStockByItemId(cartItem.getItem().getItemId());
+            if (cartItem.getQuantity() > stock.getQuantity()) {
+                apiResponse.setData("Cart Item with Id : " + cartItem.getItem().getItemId() + " is out of stock." +
+                                     "Please try later after 1 Hour.");
+                apiResponse.setStatus(HttpStatus.NO_CONTENT.value());
+                return apiResponse;
+            }
+        }
         for (CartItem cartItem : cart.getCartItems()) {
             sum += cartItem.getTotalPrice();
         }
-        order.setCart(cart);
-        order.setOrderAmount(sum);
-        order.setOtp(encoder.encode(otp));
-        Order resultOrder = orderRepository.save(order);
-        apiResponse.setData(OrderMapper.convertToOrderDto(resultOrder));
-        apiResponse.setStatus(HttpStatus.OK.value());
-        logger.debug("Checking payment method and amount to assign order.");
-        if ((sum > 50.0) && ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
-                (resultOrder.getPaymentMethod().equals(PaymentMethod.CASHON)))) {
-            orderAssignService.addOrderAssign(resultOrder);
+        if (sum > 50.0) {
+            order.setCart(cart);
+            order.setOrderAmount(sum);
+            order.setOtp(encoder.encode(otp));
+            Order resultOrder = orderRepository.save(order);
+            apiResponse.setData(OrderMapper.convertToOrderDto(resultOrder));
+            apiResponse.setStatus(HttpStatus.OK.value());
+            logger.debug("Checking payment method and amount to assign order.");
+            if ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
+                    (resultOrder.getPaymentMethod().equals(PaymentMethod.CASHON))) {
+                orderAssignService.addOrderAssign(resultOrder);
+            }
+            stockService.reduceStocks(resultOrder.getCart().getCartItems());
+            String subject = "Order Acknowledgement";
+            String body = "Your order " + resultOrder.getOrderId() + " has been successfully placed."
+                    + "Your One Time Password for the order verification is "
+                    + otp;
+            emailSenderService.sendEmail(resultOrder.getCart().getCustomer().getUser().getEmailId(), subject, body);
+            cartService.addCart(resultOrder.getCart().getCustomer());
+            return apiResponse;
         }
-        stockService.reduceStocks(resultOrder.getCart().getCartItems());
-        String subject = "Order Acknowledgement";
-        String body = "Your order " + resultOrder.getOrderId() + " has been successfully placed."
-                       + "Your One Time Password for the order verification is "
-                       + otp;
-        emailSenderService.sendEmail(resultOrder.getCart().getCustomer().getUser().getEmailId(), subject, body);
-        cartService.addCart(resultOrder.getCart().getCustomer());
+        apiResponse.setData("Order amount must be greater than 50.");
+        apiResponse.setStatus(HttpStatus.FORBIDDEN.value());
         return apiResponse;
     }
 

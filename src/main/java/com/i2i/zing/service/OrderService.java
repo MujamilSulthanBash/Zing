@@ -63,5 +63,5 @@ public interface OrderService {
      * @param orderId - String value to check.
      * @return APIResponse value to acknowledge status.
      */
-    APIResponse verifyOrder(String orderId);
+    APIResponse updateOrderStatus(String orderId);
 }

@@ -25,8 +25,9 @@ public class DarkStore {
     @Column(name = "id")
     private String darkStoreId;
 
-    @Column(name = "location")
-    private String location;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "darkstore", fetch = FetchType.EAGER)
     private Set<Stock> stocks;

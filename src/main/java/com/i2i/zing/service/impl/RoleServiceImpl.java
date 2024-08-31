@@ -24,7 +24,7 @@ public class RoleServiceImpl implements RoleService {
             roles.add(Role.builder().roleName(UserRole.ADMIN).build());
             roles.add(Role.builder().roleName(UserRole.CUSTOMER).build());
             roles.add(Role.builder().roleName(UserRole.DELIVERYPERSON).build());
-
+            roles.add(Role.builder().roleName(UserRole.MANAGER).build());
             roleRepository.saveAll(roles);
         }
     }

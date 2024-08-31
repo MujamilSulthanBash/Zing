@@ -1,0 +1,16 @@
+package com.i2i.zing.dto;
+
+import lombok.*;
+
+@Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class DarkStoreDto {
+    private String userName;
+    private String emailId;
+    private String contactNumber;
+    private String location;
+    private String password;
+}

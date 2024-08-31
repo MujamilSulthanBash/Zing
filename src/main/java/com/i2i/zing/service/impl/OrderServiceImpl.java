@@ -127,7 +127,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public APIResponse verifyOrder(String orderId) {
+    public APIResponse updateOrderStatus(String orderId) {
         APIResponse apiResponse = new APIResponse();
         orderAssignService.updateOrderStatus("DELIVERED", orderId);
         apiResponse.setStatus(HttpStatus.OK.value());

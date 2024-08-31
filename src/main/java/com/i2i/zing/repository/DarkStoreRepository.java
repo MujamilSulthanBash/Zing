@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface DarkStoreRepository extends JpaRepository<DarkStore, String> {
+
     /**
      * This method return the list of DarkStores
      * from the Database if the DarkStore not deleted.
@@ -23,4 +24,5 @@ public interface DarkStoreRepository extends JpaRepository<DarkStore, String> {
      * @return DarkStore as Entity Object
      */
     DarkStore findByIsDeletedFalseAndDarkStoreId(String darkStoreId);
+
 }

@@ -1,8 +1,12 @@
 package com.i2i.zing.service.impl;
 
+import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.model.Order;
 import com.i2i.zing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.model.DeliveryPerson;
@@ -18,6 +22,8 @@ public class DeliveryPersonServiceImpl implements DeliveryPersonService {
     @Autowired
     private OrderService orderService;
 
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     public void createDeliveryPerson(DeliveryPerson deliveryPerson) {
         deliveryPersonRepository.save(deliveryPerson);
     }
@@ -28,8 +34,14 @@ public class DeliveryPersonServiceImpl implements DeliveryPersonService {
     }
 
     @Override
-    public boolean verifyOrder(String orderId, String otp) {
-        return false;
+    public APIResponse verifyOrder(VerifyOrderDto verifyOrderDto) {
+        APIResponse apiResponse = new APIResponse();
+        Order order = orderService.getOrderById(verifyOrderDto.getOrderId());
+        if (encoder.matches(verifyOrderDto.getOtp(), order.getOtp())) {
+            return orderService.updateOrderStatus(verifyOrderDto.getOrderId());
+        }
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        return apiResponse;
     }
 
 }

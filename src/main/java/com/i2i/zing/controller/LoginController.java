@@ -1,6 +1,6 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.dto.VerifyEmailDto;
+import com.i2i.zing.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,9 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CustomerRequestDto;
-import com.i2i.zing.dto.DeliveryPersonRequestDto;
-import com.i2i.zing.dto.UserLoginRequestDto;
 import com.i2i.zing.service.LoginService;
 
 @RestController

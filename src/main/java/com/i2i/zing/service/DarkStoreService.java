@@ -1,6 +1,6 @@
 package com.i2i.zing.service;
 
-import com.i2i.zing.dto.DarkStoreRequestDto;
+import com.i2i.zing.dto.DarkStoreDto;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
@@ -19,10 +19,11 @@ public interface DarkStoreService {
      * <p>
      *     This method add the Store Details to the Database
      * </p>
-     * @param darkStoreRequestDto {@link DarkStoreRequestDto} - Store Details as Dto Object
+     * @param darkStoreDto {@link DarkStoreDto} - Store Details as Dto Object
      * @return APIResponse Details like Status, Data.
      */
-    APIResponse addDarkStore(DarkStoreRequestDto darkStoreRequestDto);
+    APIResponse addDarkStore(DarkStoreDto darkStoreDto);
+
 
     /**
      * <p>

@@ -1,6 +1,9 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.service.OrderAssignService;
+import com.i2i.zing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +19,17 @@ import com.i2i.zing.service.DeliveryPersonService;
 public class DeliveryPersonController {
 
     @Autowired
-    private DeliveryPersonService deliveryPersonService;
+    private OrderService orderService;
+
+    @Autowired
+    private OrderAssignService orderAssignService;
 
     @PostMapping("/orders/validate")
     public ResponseEntity<APIResponse> verifyOrder(@RequestBody VerifyOrderDto verifyOrderDto) {
-        APIResponse apiResponse = deliveryPersonService.verifyOrder(verifyOrderDto);
+        APIResponse apiResponse = orderService.updateOrderStatus(verifyOrderDto);
+        if (apiResponse.getStatus() == HttpStatus.OK.value()) {
+            orderAssignService.updateOrderStatus("DELIVERED", verifyOrderDto.getOrderId());
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

@@ -29,6 +29,4 @@ public interface DeliveryPersonService {
      */
     DeliveryPerson getDeliveryPersonById(String userId);
 
-    APIResponse verifyOrder(VerifyOrderDto verifyOrderDto);
-
 }

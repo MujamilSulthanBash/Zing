@@ -1,5 +1,6 @@
 package com.i2i.zing.service;
 
+import com.i2i.zing.dto.VerifyOrderDto;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
@@ -60,8 +61,8 @@ public interface OrderService {
      *     corresponding status.
      * </p>
      *
-     * @param orderId - String value to check.
+     * @param verifyOrderDto - String value to check.
      * @return APIResponse value to acknowledge status.
      */
-    APIResponse updateOrderStatus(String orderId);
+    APIResponse updateOrderStatus(VerifyOrderDto verifyOrderDto);
 }

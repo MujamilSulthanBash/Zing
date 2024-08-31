@@ -1,10 +1,9 @@
 package com.i2i.zing.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
+import com.i2i.zing.dto.VerifyOrderDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,10 +126,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public APIResponse updateOrderStatus(String orderId) {
+    public APIResponse updateOrderStatus(VerifyOrderDto verifyOrderDto) {
         APIResponse apiResponse = new APIResponse();
-        orderAssignService.updateOrderStatus("DELIVERED", orderId);
-        apiResponse.setStatus(HttpStatus.OK.value());
+        Order order = orderRepository.findByOrderIdAndIsDeletedFalse(verifyOrderDto.getOrderId());
+        if (encoder.matches(verifyOrderDto.getOtp(), order.getOtp())) {
+            apiResponse.setStatus(HttpStatus.OK.value());
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         return apiResponse;
     }
 }

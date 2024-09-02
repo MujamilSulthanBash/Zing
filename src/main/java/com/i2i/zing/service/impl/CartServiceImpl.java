@@ -15,6 +15,7 @@ import com.i2i.zing.mapper.CartMapper;
 import com.i2i.zing.model.Customer;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
+import com.i2i.zing.model.Customer;
 import com.i2i.zing.repository.CartRepository;
 import com.i2i.zing.service.CartService;
 

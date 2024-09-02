@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.*;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.CategoryMapper;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Category;
@@ -12,12 +13,15 @@ import com.i2i.zing.model.Category;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.repository.CategoryRepository;
 import com.i2i.zing.service.CategoryService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
+    private static final Logger logger = LogManager.getLogger();
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -25,6 +29,10 @@ public class CategoryServiceImpl implements CategoryService {
         APIResponse apiResponse = new APIResponse();
         Category category = CategoryMapper.convertDtoToCreationEntity(categoryRequestDto);
         CategoryCreationDto categoryCreationDto = CategoryMapper.convertEntityToCreationDto(categoryRepository.save(category));
+        if (null == categoryCreationDto) {
+            logger.warn("An Error Occurred while Adding Category :");
+        }
+        logger.info("Category Added Successfully..");
         apiResponse.setData(categoryCreationDto);
         apiResponse.setStatus(HttpStatus.CREATED.value());
         return apiResponse;
@@ -40,6 +48,9 @@ public class CategoryServiceImpl implements CategoryService {
         }
         apiResponse.setData(result);
         apiResponse.setStatus(HttpStatus.OK.value());
+        if (categories.isEmpty()) {
+            logger.warn("Categories List is Empty..");
+        }
         return apiResponse;
     }
 
@@ -50,6 +61,10 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryResponseDto categoryResponseDto = CategoryMapper.convertEntityToResponseDto(category);
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(categoryResponseDto);
+        if (null == categoryResponseDto) {
+            logger.warn("An Error Occurred while getting Category with Id : {} not found.", categoryId);
+            throw new EntityNotFoundException("Category Not found with Id : " + categoryId);
+        }
         return apiResponse;
     }
 
@@ -61,6 +76,7 @@ public class CategoryServiceImpl implements CategoryService {
         categoryRepository.save(category);
         apiResponse.setData(category);
         apiResponse.setStatus(HttpStatus.OK.value());
+        logger.info("Category Deleted Successfully..");
         return apiResponse;
     }
 
@@ -74,6 +90,10 @@ public class CategoryServiceImpl implements CategoryService {
         }
         apiResponse.setData(itemResponseDtos);
         apiResponse.setStatus(HttpStatus.OK.value());
+        if (itemResponseDtos.isEmpty()) {
+            logger.warn("Items List is Empty..");
+            throw new EntityNotFoundException("Category Not found with Id : " + categoryId);
+        }
         return apiResponse;
     }
 }

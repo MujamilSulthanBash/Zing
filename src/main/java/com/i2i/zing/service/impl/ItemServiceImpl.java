@@ -7,6 +7,9 @@ import java.util.Map;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
+import com.i2i.zing.exception.EntityNotFoundException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,7 @@ import com.i2i.zing.service.StockService;
 
 @Service
 public class ItemServiceImpl implements ItemService {
+    private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     ItemRepository itemRepository;
@@ -37,6 +41,9 @@ public class ItemServiceImpl implements ItemService {
         Item item = ItemMapper.convertDtoToEntity(itemRequestDto);
         apiResponse.setData(ItemMapper.convertEntityToDto(itemRepository.save(item)));
         apiResponse.setStatus(HttpStatus.CREATED.value());
+        if (null == apiResponse.getData()) {
+            logger.warn("An error Occurred while Adding Item..");
+        }
         return apiResponse;
     }
 
@@ -58,6 +65,9 @@ public class ItemServiceImpl implements ItemService {
         }
         apiResponse.setData(items);
         apiResponse.setStatus(HttpStatus.OK.value());
+        if (stocks.isEmpty()) {
+            logger.warn("Stock List is Empty..");
+        }
         return apiResponse;
     }
 
@@ -67,6 +77,10 @@ public class ItemServiceImpl implements ItemService {
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
         apiResponse.setData(ItemMapper.convertEntityToResponseDto(item));
         apiResponse.setStatus(HttpStatus.OK.value());
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error Occurred while getting Item with Id : {} not found.", itemId);
+            throw new EntityNotFoundException("Item Not found with Id : " + itemId);
+        }
         return apiResponse;
     }
 
@@ -74,6 +88,10 @@ public class ItemServiceImpl implements ItemService {
     public ItemResponseDto getItemDtoById(String itemId) {
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
         ItemResponseDto itemResponseDto = ItemMapper.convertEntityToResponseDto(item);
+        if (null == itemResponseDto) {
+            logger.warn("An Error Occurred while getting Item with Id : {}", itemId);
+            throw new EntityNotFoundException("Item Not found with Id : " + itemId);
+        }
         return itemResponseDto;
     }
 

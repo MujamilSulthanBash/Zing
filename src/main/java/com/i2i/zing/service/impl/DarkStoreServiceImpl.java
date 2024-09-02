@@ -7,10 +7,13 @@ import java.util.Set;
 
 import com.i2i.zing.common.UserRole;
 import com.i2i.zing.dto.DarkStoreDto;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
 import com.i2i.zing.service.RoleService;
 import com.i2i.zing.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,7 @@ import com.i2i.zing.service.DarkStoreService;
 
 @Service
 public class DarkStoreServiceImpl implements DarkStoreService {
+    private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     DarkStoreRepository darkStoreRepository;
@@ -65,6 +69,9 @@ public class DarkStoreServiceImpl implements DarkStoreService {
         darkStore.setUser(savedUser);
         darkStoreRepository.save(darkStore);
         apiResponse.setStatus(HttpStatus.CREATED.value());
+        if (null == darkStore) {
+            logger.warn("An Error Occurred while Adding DarkStore..");
+        }
         return apiResponse;
     }
 
@@ -78,6 +85,9 @@ public class DarkStoreServiceImpl implements DarkStoreService {
         }
         apiResponse.setData(result);
         apiResponse.setStatus(HttpStatus.OK.value());
+        if (result.isEmpty()) {
+            logger.warn("Dark Store List is Empty..");
+        }
         return apiResponse;
     }
 
@@ -85,9 +95,12 @@ public class DarkStoreServiceImpl implements DarkStoreService {
     public APIResponse getDarkStoreById(String darkStoreId) {
         APIResponse apiResponse = new APIResponse();
         DarkStore darkStore = darkStoreRepository.findByIsDeletedFalseAndDarkStoreId(darkStoreId);
-        DarkStoreMapper.convertEntityToDto(darkStore);
         apiResponse.setData(darkStore);
         apiResponse.setStatus(HttpStatus.OK.value());
+        if (null == darkStore) {
+            logger.warn("An Error Occurred while getting DarkStore with Id : {} ", darkStoreId);
+            throw new EntityNotFoundException("DarkStore Not found with Id : " + darkStoreId);
+        }
         return apiResponse;
     }
 

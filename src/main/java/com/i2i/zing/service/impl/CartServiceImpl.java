@@ -57,7 +57,7 @@ public class CartServiceImpl implements CartService {
             logger.warn("An Error Occurred while getting Cart with Id : {} not found.", cartId);
             throw new EntityNotFoundException("Cart Not found with Id : " + cartId);
         }
-        apiResponse.setData(cart);
+        apiResponse.setData(CartMapper.convertEntityToDto(cart));
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

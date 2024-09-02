@@ -56,7 +56,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
             System.out.println(user.getUserId());
             DeliveryPerson d1 = deliveryPersonService.getDeliveryPersonById(user.getUserId());
 //            deliveryPeoples.add(deliveryPersonService.getDeliveryPersonById(user.getUserId()));
-            System.out.println(d1.getDeliveryPersonId());
+            System.out.println(d1);
         }
 
         System.out.println(deliveryPeoples.size());

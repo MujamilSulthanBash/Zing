@@ -1,6 +1,7 @@
 package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.ItemDisplayResponseDto;
 import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.dto.ItemUpdateDto;
 import org.springframework.stereotype.Service;
@@ -47,7 +48,7 @@ public interface ItemService {
      * @param itemId - To Identify the Item
      * @return APIResponse Details like Status, Data.
      */
-    ItemUpdateDto getItemDtoById(String itemId);
+    ItemDisplayResponseDto getItemDtoById(String itemId);
 
     /**
      * <p>

@@ -90,7 +90,7 @@ public class CategoryServiceImpl implements CategoryService {
         }
         apiResponse.setData(itemUpdateDtos);
         apiResponse.setStatus(HttpStatus.OK.value());
-        if (itemResponseDtos.isEmpty()) {
+        if (itemUpdateDtos.isEmpty()) {
             logger.warn("Items List is Empty..");
             throw new EntityNotFoundException("Category Not found with Id : " + categoryId);
         }

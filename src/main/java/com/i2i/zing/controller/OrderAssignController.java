@@ -4,7 +4,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.OrderAssignDto;
@@ -17,7 +21,7 @@ import com.i2i.zing.service.OrderAssignService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/orderAssign")
+@RequestMapping("zing/api/v1/admins/orderAssign")
 public class OrderAssignController {
 
     @Autowired

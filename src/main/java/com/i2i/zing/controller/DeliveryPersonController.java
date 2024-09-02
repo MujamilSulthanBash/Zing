@@ -1,7 +1,5 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.service.OrderAssignService;
-import com.i2i.zing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.VerifyOrderDto;
-import com.i2i.zing.service.DeliveryPersonService;
+import com.i2i.zing.service.OrderAssignService;
+import com.i2i.zing.service.OrderService;
 
 @RestController
 @RequestMapping("zing/api/v1/deliverypersons")

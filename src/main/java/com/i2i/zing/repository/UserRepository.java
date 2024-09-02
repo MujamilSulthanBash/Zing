@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, String> {
      * @param name - name of the user.
      * @return boolean true if the user is already present else return false.
      */
-    boolean existsByUserName(String name);
+    boolean existsByUserNameAndIsDeletedFalse(String name);
 
     /**
      * <p>

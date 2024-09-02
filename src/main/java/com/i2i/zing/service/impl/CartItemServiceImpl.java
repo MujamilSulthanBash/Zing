@@ -1,7 +1,5 @@
 package com.i2i.zing.service.impl;
 
-import com.i2i.zing.dto.CartItemRequestDto;
-import com.i2i.zing.dto.ItemResponseDto;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.CartItemRequestDto;
+import com.i2i.zing.dto.ItemUpdateDto;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.model.CartItem;
@@ -18,6 +18,7 @@ import com.i2i.zing.service.ItemService;
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
+
     @Autowired
     CartItemRepository cartItemRepository;
 
@@ -30,8 +31,8 @@ public class CartItemServiceImpl implements CartItemService {
     public APIResponse addCartItem(CartItemRequestDto cartItemRequestDto) {
         APIResponse apiResponse = new APIResponse();
         CartItem cartItem = CartItemMapper.convertToCartItem(cartItemRequestDto);
-        ItemResponseDto itemResponseDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
-        cartItem.setTotalPrice((double)cartItem.getQuantity() * itemResponseDto.getPrice());
+        ItemUpdateDto itemUpdateDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
+        cartItem.setTotalPrice((double) cartItem.getQuantity() * itemUpdateDto.getPrice());
         CartItem resultCart = cartItemRepository.save(cartItem);
         apiResponse.setData(resultCart);
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -85,4 +86,5 @@ public class CartItemServiceImpl implements CartItemService {
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
+
 }

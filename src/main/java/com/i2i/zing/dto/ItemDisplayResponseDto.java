@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ItemDisplayResponseDto {
     private String name;
-    private int price;
+    private double price;
     private String categoryName;
     private int quantity;
     private String status;

@@ -84,11 +84,11 @@ public class CategoryServiceImpl implements CategoryService {
     public APIResponse getItemsByCategoryId(String categoryId) {
         APIResponse apiResponse = new APIResponse();
         Category category = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryId);
-        List<ItemResponseDto> itemResponseDtos = new ArrayList<>();
+        List<ItemUpdateDto> itemUpdateDtos = new ArrayList<>();
         for (Item item : category.getItems()) {
-            itemResponseDtos.add(ItemMapper.convertEntityToResponseDto(item));
+            itemUpdateDtos.add(ItemMapper.convertEntityToResponseDto(item));
         }
-        apiResponse.setData(itemResponseDtos);
+        apiResponse.setData(itemUpdateDtos);
         apiResponse.setStatus(HttpStatus.OK.value());
         if (itemResponseDtos.isEmpty()) {
             logger.warn("Items List is Empty..");

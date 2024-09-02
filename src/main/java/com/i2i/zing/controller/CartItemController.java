@@ -1,7 +1,5 @@
 package com.i2i.zing.controller;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,10 +21,8 @@ import com.i2i.zing.service.CartItemService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/customers/cart/cartitems")
+@RequestMapping("zing/api/v1/customers/carts/cartitems")
 public class CartItemController {
-
-    private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     CartItemService cartItemService;

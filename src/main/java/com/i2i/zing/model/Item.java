@@ -34,7 +34,7 @@ public class Item {
     private String itemName;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")

@@ -10,6 +10,6 @@ import lombok.*;
 public class ItemCreationDto {
     private String itemId;
     private String name;
-    private int price;
+    private double price;
     private String categoryName;
 }

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.i2i.zing.dto.ItemRequestDto;
-import com.i2i.zing.dto.ItemResponseDto;
+import com.i2i.zing.dto.ItemUpdateDto;
 import com.i2i.zing.dto.LocationRequestDto;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.service.ItemService;
@@ -106,8 +106,8 @@ public class ItemController {
     }
 
     @PutMapping
-    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemResponseDto itemResponseDto) {
-        APIResponse apiResponse = itemService.updateItem(itemResponseDto);
+    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemUpdateDto itemUpdateDto) {
+        APIResponse apiResponse = itemService.updateItem(itemUpdateDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

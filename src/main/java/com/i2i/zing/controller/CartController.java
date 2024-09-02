@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.service.CartService;
+
 /**
  * <p>
  *     This class is the Controller for Cart Operations
@@ -49,4 +50,5 @@ public class CartController {
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
+
 }

@@ -1,7 +1,5 @@
 package com.i2i.zing.service;
 
-import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.model.DeliveryPerson;
 
 /**

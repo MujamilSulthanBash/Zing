@@ -22,7 +22,8 @@ public class DeliveryPersonServiceImpl implements DeliveryPersonService {
 
     @Override
     public DeliveryPerson getDeliveryPersonById(String userId) {
-        return deliveryPersonRepository.findByDeliveryPersonId(userId);
+//        return deliveryPersonRepository.findByDeliveryPersonId(userId);
+        return deliveryPersonRepository.findById(userId).orElse(null);
     }
 
 }

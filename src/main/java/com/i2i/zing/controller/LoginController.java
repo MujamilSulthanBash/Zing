@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CustomerRequestDto;
@@ -30,7 +31,7 @@ public class LoginController {
      * @return - APIResponse (Status Code, Data)
      */
     @PostMapping("customers/signup")
-    public ResponseEntity<APIResponse> customerSignUp(@RequestBody CustomerRequestDto customerRequestDto) {
+    public ResponseEntity<APIResponse> customerSignUp(@Valid @RequestBody CustomerRequestDto customerRequestDto) {
         APIResponse apiResponse = loginService.customerSignUp(customerRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -45,7 +46,7 @@ public class LoginController {
      * @return - APIResponse (Status COde, Data)
      */
     @PostMapping("deliverypersons/signup")
-    public ResponseEntity<APIResponse> deliveryPersonSignup(@RequestBody DeliveryPersonRequestDto deliveryPersonRequestDto) {
+    public ResponseEntity<APIResponse> deliveryPersonSignup(@Valid @RequestBody DeliveryPersonRequestDto deliveryPersonRequestDto) {
         APIResponse apiResponse = loginService.deliveryPersonSignup(deliveryPersonRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -59,7 +60,7 @@ public class LoginController {
      * @return - APIResponse (Status Code, Data)
      */
     @PostMapping("users/login")
-    public ResponseEntity<APIResponse> userLogin(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+    public ResponseEntity<APIResponse> userLogin(@Valid @RequestBody UserLoginRequestDto userLoginRequestDto) {
         APIResponse apiResponse = loginService.userLogin(userLoginRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -73,14 +74,14 @@ public class LoginController {
      * @return - APIResponse (Status Code, Data)
      */
     @PostMapping("customers/verify")
-    public ResponseEntity<APIResponse> verifyCustomerMail(@RequestBody VerifyEmailDto verifyEmailDto) {
+    public ResponseEntity<APIResponse> verifyCustomerMail(@Valid @RequestBody VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = loginService.verifyCustomerEmail(verifyEmailDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
 
     @PostMapping("deliverypersons/verify")
-    public ResponseEntity<APIResponse> verifyDeliveryPersonsMail(@RequestBody VerifyEmailDto verifyEmailDto) {
+    public ResponseEntity<APIResponse> verifyDeliveryPersonsMail(@Valid @RequestBody VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = loginService.verifyDeliveryPersonEmail(verifyEmailDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

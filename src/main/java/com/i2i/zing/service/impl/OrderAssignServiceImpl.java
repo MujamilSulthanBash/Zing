@@ -1,9 +1,6 @@
 package com.i2i.zing.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.i2i.zing.model.*;
 import com.i2i.zing.service.CustomerService;
@@ -53,26 +50,33 @@ public class OrderAssignServiceImpl implements OrderAssignService {
         System.out.println(customer.getUser().getUserId());
         System.out.println(customer.getUser().getLocation());
         List<User> users = userService.getUserByLocation(customer.getUser().getLocation());
-        System.out.println(users.size());
         logger.debug("Revoked deliveryPersonService to get deliveryPerson list.");
         List<DeliveryPerson> deliveryPeoples = new ArrayList<>();
         for (User user : users) {
-            deliveryPeoples.add(deliveryPersonService.getDeliveryPersonById(user.getUserId()));
+            System.out.println(user.getUserId());
+            DeliveryPerson d1 = deliveryPersonService.getDeliveryPersonById(user.getUserId());
+//            deliveryPeoples.add(deliveryPersonService.getDeliveryPersonById(user.getUserId()));
+            System.out.println(d1.getDeliveryPersonId());
         }
-        for (int i = 0; i < deliveryPeoples.size(); i++) {
-            for (int j = i; j < deliveryPeoples.size()-1; j++) {
-                if (deliveryPeoples.get(i).getOrderAssign().size() < deliveryPeoples.get(j).getOrderAssign().size()) {
-                    DeliveryPerson temp = deliveryPeoples.get(j);
-                    deliveryPeoples.set(j,deliveryPeoples.get(i));
-                    deliveryPeoples.set(i, temp);
-                }
-            }
-        }
+
+        System.out.println(deliveryPeoples.size());
+        System.out.println(deliveryPeoples.getFirst().getAadharNumber());
+//        for (int i = 0; i < deliveryPeoples.size(); i++) {
+//            for (int j = i; j < deliveryPeoples.size()-1; j++) {
+//                if (deliveryPeoples.get(i).getOrderAssign().size() < deliveryPeoples.get(j).getOrderAssign().size()) {
+//                    DeliveryPerson temp = deliveryPeoples.get(j);
+//                    deliveryPeoples.set(j,deliveryPeoples.get(i));
+//                    deliveryPeoples.set(i, temp);
+//                }
+//            }
+//        }
+        deliveryPeoples.sort(Comparator.comparingInt(dp -> dp.getOrderAssign().size()));
+        System.out.println(deliveryPeoples.getFirst().getDeliveryPersonId());
         logger.debug("Assigned delivery Person.");
         OrderAssign orderAssign = OrderAssign.builder()
                 .order(order)
                 .deliveryPerson(deliveryPeoples.getFirst())
-                .deliveryStatus(DeliveryStatus.PENDING)
+                .deliveryStatus(DeliveryStatus.ACCEPTED)
                 .build();
         OrderAssign resultOrderAssign = orderAssignRepository.save(orderAssign);
     }

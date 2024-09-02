@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.retrieveRoleByName(UserRole.ADMIN));
         user.setRoles(roles);
-        if( ! userRepository.existsByUserName("ADMIN")) {
+        if( ! userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")) {
             userRepository.save(user);
         }
     }
@@ -62,4 +62,5 @@ public class UserServiceImpl implements UserService {
     public List<User> getUserByLocation(String location) {
         return userRepository.findUsersByLocation(location);
     }
+
 }

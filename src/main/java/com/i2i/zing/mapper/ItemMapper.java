@@ -3,7 +3,7 @@ package com.i2i.zing.mapper;
 import com.i2i.zing.dto.ItemCreationDto;
 import com.i2i.zing.dto.ItemDisplayResponseDto;
 import com.i2i.zing.dto.ItemRequestDto;
-import com.i2i.zing.dto.ItemResponseDto;
+import com.i2i.zing.dto.ItemUpdateDto;
 import com.i2i.zing.model.Category;
 import com.i2i.zing.model.Item;
 /**
@@ -35,16 +35,16 @@ public class ItemMapper {
      *     This method convert the Entity Object to Response Dto
      * </p>
      * @param item - Item as Entity Object
-     * @return ItemResponseDto {@link ItemResponseDto} - as Dto Object
+     * @return ItemResponseDto {@link ItemUpdateDto} - as Dto Object
      */
-    public static ItemResponseDto convertEntityToResponseDto(Item item) {
-        ItemResponseDto itemResponseDto = ItemResponseDto.builder()
+    public static ItemUpdateDto convertEntityToResponseDto(Item item) {
+        ItemUpdateDto itemUpdateDto = ItemUpdateDto.builder()
                 .itemId(item.getItemId())
                 .name(item.getItemName())
                 .price(item.getPrice())
                 .categoryName(item.getCategory().getName())
                 .build();
-        return itemResponseDto;
+        return itemUpdateDto;
     }
 
     /**
@@ -85,15 +85,15 @@ public class ItemMapper {
      * <p>
      *     This method convert the Dto Object to Entity as Response
      * </p>
-     * @param itemResponseDto {@link ItemResponseDto} - as Dto Object
+     * @param itemUpdateDto {@link ItemUpdateDto} - as Dto Object
      * @return Item as Entity Object
      */
-    public static Item convertDtoToResponseEntity(ItemResponseDto itemResponseDto) {
+    public static Item convertDtoToResponseEntity(ItemUpdateDto itemUpdateDto) {
         Item item = Item.builder()
-                .itemName(itemResponseDto.getName())
-                .price(itemResponseDto.getPrice())
+                .itemName(itemUpdateDto.getName())
+                .price(itemUpdateDto.getPrice())
                 .category(Category.builder()
-                        .name(itemResponseDto.getCategoryName())
+                        .name(itemUpdateDto.getCategoryName())
                         .build())
                 .build();
         return item;

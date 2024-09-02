@@ -2,31 +2,33 @@ package com.i2i.zing.service.impl;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
-import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.model.CartItem;
-import com.i2i.zing.service.CartService;
-import com.i2i.zing.service.StockService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockRequestDto;
 import com.i2i.zing.mapper.StockMapper;
+import com.i2i.zing.model.CartItem;
+import com.i2i.zing.service.StockService;
 import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.StockRepository;
 
 @Service
 public class StockServiceImpl implements StockService {
+
     private static final Logger logger = LogManager.getLogger();
-    @Autowired
-    StockRepository stockRepository;
 
     @Autowired
-    CartService cartService;
+    StockRepository stockRepository;
 
     @Autowired
     EmailSenderService emailSenderService;
@@ -122,4 +124,5 @@ public class StockServiceImpl implements StockService {
         apiResponse.setData(modifiedDateTime);
         return apiResponse;
     }
+
 }

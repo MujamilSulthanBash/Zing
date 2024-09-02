@@ -1,5 +1,7 @@
 package com.i2i.zing.service;
 
+import java.util.List;
+
 import com.i2i.zing.model.DeliveryPerson;
 
 /**
@@ -25,6 +27,6 @@ public interface DeliveryPersonService {
      * @param userId - To Identify the User
      * @return - Delivery Person as Entity Object
      */
-    DeliveryPerson getDeliveryPersonById(String userId);
+    List<DeliveryPerson> getDeliveryPersonById(String userId);
 
 }

@@ -1,9 +1,13 @@
 package com.i2i.zing.repository;
 
+import com.i2i.zing.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.zing.model.DeliveryPerson;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,13 +16,15 @@ import com.i2i.zing.model.DeliveryPerson;
  */
 @Repository
 public interface DeliveryPersonRepository extends JpaRepository<DeliveryPerson, String> {
+
     /**
      * <p>
-     *     This method retrieve the Delivery Person Object by
-     *     Delivery Person ID
+     *     This method is responsible for get the users by their location
      * </p>
-     * @param deliveryPersonId - To identify the Delivery Person
-     * @return - Delivery Person as Entity Object
+     * @param location - Location of the User.
+     * @return - List of {@link User} details.
      */
-    DeliveryPerson findByDeliveryPersonId(String deliveryPersonId);
+    @Query(value = "FROM DeliveryPerson d LEFT JOIN FETCH User u ON d.user.id = u.id WHERE u.location = :location")
+    List<DeliveryPerson> findDeliverPersonByLocation(String location);
+
 }

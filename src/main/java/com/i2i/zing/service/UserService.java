@@ -1,7 +1,5 @@
 package com.i2i.zing.service;
 
-import java.util.List;
-
 import com.i2i.zing.model.User;
 
 /**
@@ -45,14 +43,5 @@ public interface UserService {
      * @return - User as Entity Object
      */
     User createUser(User user);
-
-    /**
-     * <p>
-     *     This method return the List of Users by their Location
-     * </p>
-     * @param location - Location of the Users
-     * @return - To Identify the User Location
-     */
-    List<User> getUserByLocation(String location);
 
 }

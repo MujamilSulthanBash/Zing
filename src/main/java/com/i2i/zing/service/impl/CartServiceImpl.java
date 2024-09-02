@@ -2,7 +2,6 @@ package com.i2i.zing.service.impl;
 
 import java.util.List;
 
-import com.i2i.zing.model.Customer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +12,7 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.mapper.CartMapper;
+import com.i2i.zing.model.Customer;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.repository.CartRepository;
@@ -25,6 +25,7 @@ import com.i2i.zing.service.CartService;
  */
 @Service
 public class CartServiceImpl implements CartService {
+
     @Autowired
     CartRepository cartRepository;
 
@@ -93,4 +94,5 @@ public class CartServiceImpl implements CartService {
         }
         return cart.getCartItems().stream().toList();
     }
+
 }

@@ -1,13 +1,16 @@
 package com.i2i.zing.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.zing.model.User;
 
+/**
+ * <p>
+ *     This interface has Abstract methods for User Operations
+ *     like exist by Username and Email Id
+ * </p>
+ */
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
@@ -38,13 +41,4 @@ public interface UserRepository extends JpaRepository<User, String> {
      */
     User findByEmailIdIgnoreCase(String email);
 
-    /**
-     * <p>
-     *     This method is responsible for get the users by their location
-     * </p>
-     * @param location - Location of the User.
-     * @return - List of {@link User} details.
-     */
-    @Query(value = "FROM User u RIGHT JOIN FETCH DeliveryPerson d ON d.user.id = u.id WHERE u.location = :location")
-    List<User> findUsersByLocation(String location);
 }

@@ -3,6 +3,7 @@ package com.i2i.zing.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,7 +46,7 @@ public class CartController {
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{cartId}/cartItems")
-    public ResponseEntity<APIResponse> getItemsOfCart(String cartId) {
+    public ResponseEntity<APIResponse> getItemsOfCart(@PathVariable String cartId) {
         APIResponse apiResponse = cartService.getCartItemsOfCart(cartId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

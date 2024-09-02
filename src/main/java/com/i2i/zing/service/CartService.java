@@ -2,11 +2,9 @@ package com.i2i.zing.service;
 
 import java.util.List;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.Customer;
-import org.springframework.stereotype.Service;
-
-import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.model.CartItem;
 
 /**
@@ -14,12 +12,11 @@ import com.i2i.zing.model.CartItem;
  * Passes value for insertion,deletion and retrieval on Cart.
  * </p>
  */
-@Service
 public interface CartService {
 
     /**
      * <p>
-     *     passes the value for insertion into the collection.
+     * passes the value for insertion into the collection.
      * </p>
      *
      * @param customer - {@link Customer} value to set Cart Id.
@@ -28,7 +25,7 @@ public interface CartService {
 
     /**
      * <p>
-     *    Retrieves get the Carts allotted for all customers
+     * Retrieves get the Carts allotted for all customers
      * </p>
      *
      * @return APIResponse value to display Cart list.
@@ -37,7 +34,7 @@ public interface CartService {
 
     /**
      * <p>
-     *     Fetches the Cart and returns the Cart.
+     * Fetches the Cart and returns the Cart.
      * </p>
      *
      * @param cartId - String value to display the Cart.
@@ -47,7 +44,7 @@ public interface CartService {
 
     /**
      * <p>
-     *     Fetches the Cart and returns the Cart as model for internal operation.
+     * Fetches the Cart and returns the Cart as model for internal operation.
      * </p>
      *
      * @param cartId - String value to display the Cart.
@@ -57,8 +54,9 @@ public interface CartService {
 
     /**
      * <p>
-     *     Fetches all items added for a particular cart.
+     * Fetches all items added for a particular cart.
      * </p>
+     *
      * @param cartId - String value to fetch items.
      * @return @APIResponse value to display items.
      */
@@ -66,11 +64,13 @@ public interface CartService {
 
     /**
      * <p>
-     *     Fetches all items added for a particular cart
-     *     as object for intenal operation..
+     * Fetches all items added for a particular cart
+     * as object for intenal operation..
      * </p>
+     *
      * @param cartId - String value to fetch items.
      * @return @APIResponse value to display items.
      */
     List<CartItem> getCartItemsOfCartAsObject(String cartId);
+
 }

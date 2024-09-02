@@ -1,10 +1,10 @@
 package com.i2i.zing.service.impl;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.i2i.zing.model.*;
-import com.i2i.zing.service.CustomerService;
-import com.i2i.zing.service.DeliveryPersonService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,13 @@ import com.i2i.zing.common.DeliveryStatus;
 import com.i2i.zing.dto.OrderAssignDto;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderAssignMapper;
+import com.i2i.zing.model.Customer;
+import com.i2i.zing.model.DeliveryPerson;
+import com.i2i.zing.model.Order;
+import com.i2i.zing.model.OrderAssign;
+import com.i2i.zing.service.CustomerService;
+import com.i2i.zing.service.DeliveryPersonService;
+import com.i2i.zing.service.UserService;
 import com.i2i.zing.repository.OrderAssignRepository;
 import com.i2i.zing.service.OrderAssignService;
 
@@ -31,7 +38,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     OrderAssignRepository orderAssignRepository;
 
     @Autowired
-    UserServiceImpl userService;
+    UserService userService;
 
     @Autowired
     DeliveryPersonService deliveryPersonService;
@@ -41,37 +48,15 @@ public class OrderAssignServiceImpl implements OrderAssignService {
 
     private static final Logger logger = LogManager.getLogger();
 
-    private static Map<String, String> otpStore = new HashMap<>();
+    private static final Map<String, String> otpStore = new HashMap<>();
 
     @Override
     public void addOrderAssign(Order order) {
         logger.debug("Revoked userService to get use list.");
         Customer customer = customerService.getCustomer(order.getCart().getCustomer().getCustomerId());
-        System.out.println(customer.getUser().getUserId());
-        System.out.println(customer.getUser().getLocation());
-        List<User> users = userService.getUserByLocation(customer.getUser().getLocation());
+        List<DeliveryPerson> deliveryPeoples= deliveryPersonService.getDeliveryPersonById(customer.getUser().getLocation());
         logger.debug("Revoked deliveryPersonService to get deliveryPerson list.");
-        List<DeliveryPerson> deliveryPeoples = new ArrayList<>();
-        for (User user : users) {
-            System.out.println(user.getUserId());
-            DeliveryPerson d1 = deliveryPersonService.getDeliveryPersonById(user.getUserId());
-//            deliveryPeoples.add(deliveryPersonService.getDeliveryPersonById(user.getUserId()));
-            System.out.println(d1);
-        }
-
-        System.out.println(deliveryPeoples.size());
-        System.out.println(deliveryPeoples.getFirst().getAadharNumber());
-//        for (int i = 0; i < deliveryPeoples.size(); i++) {
-//            for (int j = i; j < deliveryPeoples.size()-1; j++) {
-//                if (deliveryPeoples.get(i).getOrderAssign().size() < deliveryPeoples.get(j).getOrderAssign().size()) {
-//                    DeliveryPerson temp = deliveryPeoples.get(j);
-//                    deliveryPeoples.set(j,deliveryPeoples.get(i));
-//                    deliveryPeoples.set(i, temp);
-//                }
-//            }
-//        }
         deliveryPeoples.sort(Comparator.comparingInt(dp -> dp.getOrderAssign().size()));
-        System.out.println(deliveryPeoples.getFirst().getDeliveryPersonId());
         logger.debug("Assigned delivery Person.");
         OrderAssign orderAssign = OrderAssign.builder()
                 .order(order)
@@ -129,4 +114,5 @@ public class OrderAssignServiceImpl implements OrderAssignService {
         orderAssign.setDeliveryStatus(DeliveryStatus.valueOf(status));
         orderAssignRepository.save(orderAssign);
     }
+
 }

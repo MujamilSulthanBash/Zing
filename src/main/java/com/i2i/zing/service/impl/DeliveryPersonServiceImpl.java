@@ -8,6 +8,8 @@ import com.i2i.zing.model.DeliveryPerson;
 import com.i2i.zing.repository.DeliveryPersonRepository;
 import com.i2i.zing.service.DeliveryPersonService;
 
+import java.util.List;
+
 @Service
 public class DeliveryPersonServiceImpl implements DeliveryPersonService {
 
@@ -21,9 +23,8 @@ public class DeliveryPersonServiceImpl implements DeliveryPersonService {
     }
 
     @Override
-    public DeliveryPerson getDeliveryPersonById(String userId) {
-//        return deliveryPersonRepository.findByDeliveryPersonId(userId);
-        return deliveryPersonRepository.findById(userId).orElse(null);
+    public List<DeliveryPerson> getDeliveryPersonById(String userId) {
+        return deliveryPersonRepository.findDeliverPersonByLocation(userId);
     }
 
 }

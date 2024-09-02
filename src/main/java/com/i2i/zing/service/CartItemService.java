@@ -4,6 +4,7 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CartItemRequestDto;
 
 public interface CartItemService {
+
     /**
      * <p>
      *     passes the value for insertion into the collection.
@@ -51,4 +52,5 @@ public interface CartItemService {
      * @param cartItemRequestDto {@link CartItemRequestDto} value to update cart Item.
      */
     APIResponse updateCartItem(CartItemRequestDto cartItemRequestDto);
+
 }

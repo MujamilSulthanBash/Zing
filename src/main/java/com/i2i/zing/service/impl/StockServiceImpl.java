@@ -87,7 +87,7 @@ public class StockServiceImpl implements StockService {
         return apiResponse;
     }
 
-    public APIResponse reduceStocks(Set<CartItem> cartItems) {
+    public void reduceStocks(Set<CartItem> cartItems) {
         APIResponse apiResponse = new APIResponse();
         final String to = "aravind.sureshkumar@ideas2it.com";
         for (CartItem cartItem : cartItems) {
@@ -108,7 +108,6 @@ public class StockServiceImpl implements StockService {
                 }
             }
         }
-        return apiResponse;
     }
 
     @Override

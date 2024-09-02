@@ -3,25 +3,30 @@ package com.i2i.zing.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.*;
-import com.i2i.zing.exception.EntityNotFoundException;
-import com.i2i.zing.mapper.CategoryMapper;
-import com.i2i.zing.mapper.ItemMapper;
-import com.i2i.zing.model.Category;
-
-import com.i2i.zing.model.Item;
-import com.i2i.zing.repository.CategoryRepository;
-import com.i2i.zing.service.CategoryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.CategoryCreationDto;
+import com.i2i.zing.dto.CategoryRequestDto;
+import com.i2i.zing.dto.CategoryResponseDto;
+import com.i2i.zing.dto.ItemUpdateDto;
+import com.i2i.zing.exception.EntityNotFoundException;
+import com.i2i.zing.mapper.CategoryMapper;
+import com.i2i.zing.mapper.ItemMapper;
+import com.i2i.zing.model.Category;
+import com.i2i.zing.model.Item;
+import com.i2i.zing.repository.CategoryRepository;
+import com.i2i.zing.service.CategoryService;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
+
     private static final Logger logger = LogManager.getLogger();
+
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -96,4 +101,5 @@ public class CategoryServiceImpl implements CategoryService {
         }
         return apiResponse;
     }
+
 }

@@ -5,10 +5,8 @@ import java.util.Map;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

@@ -4,7 +4,6 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.ItemDisplayResponseDto;
 import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.dto.ItemUpdateDto;
-import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
  *     delete the Items
  * </p>
  */
-@Service
 public interface ItemService {
     /**
      * <p>
@@ -67,4 +65,5 @@ public interface ItemService {
      * @return APIResponse Details Like Status, Data.
      */
     APIResponse updateItem(ItemUpdateDto itemUpdateDto);
+
 }

@@ -1,13 +1,12 @@
 package com.i2i.zing.service.impl;
 
-import com.i2i.zing.model.Cart;
-import com.i2i.zing.service.CartService;
-import com.i2i.zing.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.Membership;
 import com.i2i.zing.model.Customer;
+import com.i2i.zing.service.CartService;
+import com.i2i.zing.service.CustomerService;
 import com.i2i.zing.repository.CustomerRepository;
 
 @Service

@@ -43,8 +43,24 @@ public interface LoginService {
      */
     APIResponse userLogin(UserLoginRequestDto userLoginRequestDto);
 
+    /**
+     * <p>
+     *     This method verify the Customer Email Id
+     *     valid or not
+     * </p>
+     * @param verifyEmailDto {@link VerifyEmailDto} - Details like Email ID and Password
+     * @return APIResponse (Status Code, Data, Error)
+     */
     APIResponse verifyCustomerEmail(VerifyEmailDto verifyEmailDto);
 
+    /**
+     * <p>
+     *     This method verify the Delivery Person Email Id
+     *     Valid or not
+     * </p>
+     * @param verifyEmailDto {@link VerifyEmailDto} - Details like Email and Password
+     * @return APIResponse (Status Code, Data, Error)
+     */
     APIResponse verifyDeliveryPersonEmail(VerifyEmailDto verifyEmailDto);
 
 }

@@ -8,15 +8,21 @@ import java.util.Random;
  * </p>
  */
 public class OtpGenerator {
+
+    /**
+     * This method is responsible for generate random 4 digits number.
+     * @return four digits number.
+     */
     public static char[] generateOtp() {
         String numbers = "0123456789";
         int len = 4;
-        Random rndm_method = new Random();
+        Random random = new Random();
         char[] otp = new char[len];
 
         for (int i = 0; i < len; i++) {
-            otp[i] = numbers.charAt(rndm_method.nextInt(numbers.length()));
+            otp[i] = numbers.charAt(random.nextInt(numbers.length()));
         }
         return otp;
     }
+
 }

@@ -21,7 +21,7 @@ import com.i2i.zing.service.CartItemService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/customers/carts/cartitems")
+@RequestMapping("zing/api/v1/customers/carts/cart-items")
 public class CartItemController {
 
     @Autowired
@@ -101,5 +101,6 @@ public class CartItemController {
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
+
 }
 

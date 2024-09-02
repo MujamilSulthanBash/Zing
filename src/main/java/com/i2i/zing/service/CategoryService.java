@@ -1,9 +1,8 @@
 package com.i2i.zing.service;
 
-import org.springframework.stereotype.Service;
-
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CategoryRequestDto;
+
 /**
  * <p>
  *     This interface has Abstract methods to implements the
@@ -11,7 +10,6 @@ import com.i2i.zing.dto.CategoryRequestDto;
  *     delete
  * </p>
  */
-@Service
 public interface CategoryService {
 
     /**
@@ -57,4 +55,5 @@ public interface CategoryService {
      * @return APIResponse Details like Status, Data.
      */
     APIResponse getItemsByCategoryId(String categoryId);
+
 }

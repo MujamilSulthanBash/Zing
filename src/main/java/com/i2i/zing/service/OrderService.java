@@ -1,9 +1,7 @@
 package com.i2i.zing.service;
 
-import com.i2i.zing.dto.VerifyOrderDto;
-import org.springframework.stereotype.Service;
-
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.dto.OrderDto;
 import com.i2i.zing.model.Order;
 
@@ -12,7 +10,6 @@ import com.i2i.zing.model.Order;
  *    Passes value for insertion,deletion and retrieval on Order.
  * </p>
  */
-@Service
 public interface OrderService {
     /**
      * <p>
@@ -65,4 +62,5 @@ public interface OrderService {
      * @return APIResponse value to acknowledge status.
      */
     APIResponse updateOrderStatus(VerifyOrderDto verifyOrderDto);
+
 }

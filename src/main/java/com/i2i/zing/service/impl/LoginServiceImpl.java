@@ -58,6 +58,7 @@ public class LoginServiceImpl implements LoginService {
 
     private static Map<String, DeliveryPersonRequestDto> secondaryCacheMemory = new HashMap<>();
 
+    @Override
     public APIResponse customerSignUp(CustomerRequestDto customerRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Role role = roleService.retrieveRoleByName(UserRole.CUSTOMER);
@@ -89,6 +90,7 @@ public class LoginServiceImpl implements LoginService {
         return apiResponse;
     }
 
+    @Override
     public APIResponse deliveryPersonSignup(DeliveryPersonRequestDto deliveryPersonRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Role role = roleService.retrieveRoleByName(UserRole.DELIVERYPERSON);
@@ -241,6 +243,14 @@ public class LoginServiceImpl implements LoginService {
         return apiResponse;
     }
 
+    /**
+     * <p>
+     *     This method send the Email to the Recipent
+     *     with Login Otp
+     * </p>
+     * @param email - Email of the User
+     * @return Boolean Value if the Email Available in the Database
+     */
     private boolean sendMail(String email) {
         for (Map.Entry<String, String> entry : otpStore.entrySet()) {
             if (entry.getKey().equals(email)) {
@@ -256,6 +266,15 @@ public class LoginServiceImpl implements LoginService {
         return true;
     }
 
+    /**
+     * <p>
+     *     This method verify the Otp that sent to the
+     *     Email Id provided
+     * </p>
+     * @param email - Email id of the User
+     * @param otp - Provided by the User to Login
+     * @return boolean value if the Otp Valid for the Email
+     */
     private boolean verifyOtp(String email, String otp) {
         for (Map.Entry<String, String> entry : otpStore.entrySet()) {
             if (entry.getKey().equals(email) && entry.getValue().equals(otp)) {

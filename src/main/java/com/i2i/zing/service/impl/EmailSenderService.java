@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class EmailSenderService {
+
     @Autowired
     private JavaMailSender mailSender;
 
@@ -31,4 +32,5 @@ public class EmailSenderService {
         mailSender.send(message);
         logger.info("Email Sent successfully to Id :{}", to);
     }
+
 }

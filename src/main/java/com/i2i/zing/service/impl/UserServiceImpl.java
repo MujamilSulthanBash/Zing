@@ -1,7 +1,6 @@
 package com.i2i.zing.service.impl;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,11 +55,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user) {
         return userRepository.save(user);
-    }
-
-    @Override
-    public List<User> getUserByLocation(String location) {
-        return userRepository.findUsersByLocation(location);
     }
 
 }

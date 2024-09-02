@@ -1,19 +1,14 @@
 package com.i2i.zing.service;
 
-import com.i2i.zing.common.DeliveryStatus;
-import org.springframework.stereotype.Service;
-
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.OrderAssignDto;
 import com.i2i.zing.model.Order;
-import com.i2i.zing.model.OrderAssign;
 
 /**
  * <p>
  * Passes value for insertion,deletion and retrieval on OrderAssign.
  * </p>
  */
-@Service
 public interface OrderAssignService {
     /**
      * <p>
@@ -63,4 +58,5 @@ public interface OrderAssignService {
      * @param OrderId - string value to fetch assigned record.
      */
     void updateOrderStatus(String status, String OrderId);
+
 }

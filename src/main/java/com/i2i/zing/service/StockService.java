@@ -1,13 +1,12 @@
 package com.i2i.zing.service;
 
+import java.util.List;
+import java.util.Set;
+
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockRequestDto;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Stock;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Set;
 
 /**
  * <p>
@@ -16,7 +15,6 @@ import java.util.Set;
  *     delete Stocks
  * </p>
  */
-@Service
 public interface StockService {
 
     /**
@@ -56,19 +54,19 @@ public interface StockService {
 
     /**
      * <p>
-     *     This method Reduce the Stock item after Order Placed
+     * This method Reduce the Stock item after Order Placed
      * </p>
+     *
      * @param cartItems - Set of Cart Items
-     * @return APIResponse Details like Status, Data.
      */
-    APIResponse reduceStocks(Set<CartItem> cartItems);
+    void reduceStocks(Set<CartItem> cartItems);
 
     /**
      * <p>
      *     This method update the stock Details of the Particular Stock
      * </p>
      * @param stockRequestDto {@link StockRequestDto} - Stock as Dto Object
-     * @return
+     * @return APIResponse details like status and data.
      */
     APIResponse updateStock(StockRequestDto stockRequestDto);
 
@@ -90,4 +88,5 @@ public interface StockService {
      * @return Stock as Entity Object
      */
     Stock getStockByItemId(String itemId);
+
 }

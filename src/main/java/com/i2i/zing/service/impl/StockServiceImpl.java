@@ -114,7 +114,7 @@ public class StockServiceImpl implements StockService {
     public APIResponse updateStock(StockRequestDto stockRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Stock stock = StockMapper.convertDtoToEntity(stockRequestDto);
-        Stock existingStock = stockRepository.findByIsDeletedFalseAndStockId(stockRequestDto.getItemId());
+        Stock existingStock = stockRepository.findByIsDeletedFalseAndStockId(stockRequestDto.getStockId());
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingStock.setModifiedDate(modifiedDate);

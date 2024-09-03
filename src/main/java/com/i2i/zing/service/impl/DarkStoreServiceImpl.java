@@ -111,7 +111,7 @@ public class DarkStoreServiceImpl implements DarkStoreService {
         DarkStore darkStore = darkStoreRepository.findByIsDeletedFalseAndDarkStoreId(darkStoreId);
         darkStore.setDeleted(true);
         darkStoreRepository.save(darkStore);
-        apiResponse.setData("Dark store Deleted Successfully.." + darkStoreId);
+        apiResponse.setData("Dark store Deleted Successfully : " + darkStoreId);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }

@@ -59,6 +59,7 @@ public class StockController {
         if (null == apiResponse.getData()) {
             logger.warn("Stock is Empty add More Stocks to the Database..");
         }
+        logger.info("Stock Retrieved Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -76,6 +77,7 @@ public class StockController {
         if (null == apiResponse.getData()) {
             logger.warn("Stock not found with Id : {}", stockId);
         }
+        logger.info("Stock Retrieved Successfully with Id : {}", stockId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -108,6 +110,7 @@ public class StockController {
     @PutMapping
     public ResponseEntity<APIResponse> updateStock(@RequestBody StockRequestDto stockRequestDto) {
         APIResponse apiResponse = stockService.updateStock(stockRequestDto);
+        logger.info("Stock Updated Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

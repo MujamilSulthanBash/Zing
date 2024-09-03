@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -65,6 +66,7 @@ public class ItemController {
         if (null == apiResponse.getData()) {
             logger.warn("No Items found in that Location..");
         }
+        logger.info("Items Retrieved by Successfully by this Location : {}", locationRequestDto.getLocation());
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -82,6 +84,7 @@ public class ItemController {
         if (null == apiResponse.getData()) {
             logger.warn("An Error Occurred while getting the item by ID :{}", itemId);
         }
+        logger.info("Item Retrieved By Successfully with Id : {}", itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -100,7 +103,7 @@ public class ItemController {
             logger.warn("An Error occurred while Deleting the Item with Id : {}", itemId);
             throw new NoSuchElementException("Item Not found with Id :" + itemId);
         }
-        logger.info("Dark Store deleted Successfully with Id : {}", itemId);
+        logger.info("Item deleted Successfully with Id : {}", itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -108,6 +111,10 @@ public class ItemController {
     @PutMapping
     public ResponseEntity<APIResponse> updateItem(@RequestBody ItemUpdateDto itemUpdateDto) {
         APIResponse apiResponse = itemService.updateItem(itemUpdateDto);
+        if (null == apiResponse.getData()) {
+            logger.warn("An Error occurred while Updating the Item with Id :" + itemUpdateDto.getItemId());
+        }
+        logger.info("Item Updated Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

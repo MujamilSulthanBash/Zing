@@ -79,9 +79,9 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryId);
         category.setDeleted(true);
         categoryRepository.save(category);
-        apiResponse.setData(category);
+        apiResponse.setData("Category Deleted Successfully : " + categoryId);
         apiResponse.setStatus(HttpStatus.OK.value());
-        logger.info("Category Deleted Successfully..");
+        logger.info("Category Deleted Successfully : " + categoryId);
         return apiResponse;
     }
 

@@ -37,6 +37,9 @@ public class DarkStoreController {
     public ResponseEntity<APIResponse> addDarkStore(@RequestBody DarkStoreDto darkStoreDto) {
         logger.debug("Dark Store Adding..");
         APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreDto);
+        if (null != apiResponse.getData()) {
+            logger.info("Dark Store Added Successfully..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -50,6 +53,9 @@ public class DarkStoreController {
     @GetMapping
     public ResponseEntity<APIResponse> getDarkStores() {
         APIResponse apiResponse = darkStoreService.getDarkStores();
+        if (null != apiResponse.getData()) {
+            logger.info("Dark Stores Retrieved Successfully..");
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -64,6 +70,9 @@ public class DarkStoreController {
     @GetMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> getDarkStoreById(String darkStoreId) {
         APIResponse apiResponse = darkStoreService.getDarkStoreById(darkStoreId);
+        if (null != apiResponse.getData()) {
+            logger.info("DarkStore Retrieved Successfully with Id :{}", darkStoreId);
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -79,6 +88,9 @@ public class DarkStoreController {
     @DeleteMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> deleteDarkStore(String darkStoreId) {
         APIResponse apiResponse = darkStoreService.deleteDarkStore(darkStoreId);
+        if (null == apiResponse.getData()) {
+            logger.info("Dark Store Deleted Successfully with Id :{}", darkStoreId);
+        }
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

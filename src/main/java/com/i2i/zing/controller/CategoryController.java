@@ -62,6 +62,7 @@ public class CategoryController {
         if (null == apiResponse.getData()) {
             logger.warn("An Error Occurred while getting Categories from the Database..");
         }
+        logger.info("Categories Retrieved Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -79,6 +80,7 @@ public class CategoryController {
         if (null == apiResponse.getData()) {
             logger.warn("An Error Occurred while getting Category from the Database with Id :{}", categoryId);
         }
+        logger.info("Category Retrieved Successfully with Id : {}", categoryId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -107,6 +109,7 @@ public class CategoryController {
         if (null == apiResponse.getData()) {
             logger.warn("An Error Occurred while getting Items by Category with Id :{}", categoryId);
         }
+        logger.info("Items Retrieved By Category..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

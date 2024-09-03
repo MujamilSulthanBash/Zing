@@ -5,6 +5,7 @@ import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.model.User;
 
 public class UserMapper {
+
     public static User userEntity(CustomerRequestDto customerRequestDto) {
         return User.builder()
                 .userName(customerRequestDto.getUserName())
@@ -25,7 +26,7 @@ public class UserMapper {
                 .build();
     }
 
-    public static User userEntity(DeliveryPersonRequestDto deliveryPersonRequestDto) {
+    public static User getUserEntityFromDeliveryPerson(DeliveryPersonRequestDto deliveryPersonRequestDto) {
         return User.builder()
                 .userName(deliveryPersonRequestDto.getUserName())
                 .emailId(deliveryPersonRequestDto.getEmailId())

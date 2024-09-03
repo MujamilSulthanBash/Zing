@@ -52,11 +52,11 @@ public class LoginServiceImpl implements LoginService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    private static Map<String, String> otpStore = new HashMap<>();
+    private static final Map<String, String> otpStore = new HashMap<>();
 
-    private static Map<String, CustomerRequestDto> primaryCacheMemory = new HashMap<>();
+    private static final Map<String, CustomerRequestDto> primaryCacheMemory = new HashMap<>();
 
-    private static Map<String, DeliveryPersonRequestDto> secondaryCacheMemory = new HashMap<>();
+    private static final Map<String, DeliveryPersonRequestDto> secondaryCacheMemory = new HashMap<>();
 
     @Override
     public APIResponse customerSignUp(CustomerRequestDto customerRequestDto) {
@@ -65,26 +65,47 @@ public class LoginServiceImpl implements LoginService {
         User user = UserMapper.userEntity(customerRequestDto);
         if (userService.checkByEmailId(customerRequestDto.getEmailId())) {
             User checkUser = userService.retrieveByEmail(customerRequestDto.getEmailId());
-            boolean checkRole = checkRole(checkUser.getRoles(), role.getRoleId());
-            if (!checkRole) {
+            boolean isRoleCheck = false;
+            for (Role checkRole : checkUser.getRoles()) {
+                if (checkRole.getRoleId().equals(role.getRoleId())) {
+                    isRoleCheck = true;
+                    break;
+                }
+            }
+            if (!isRoleCheck) {
                 Set<Role> roles = checkUser.getRoles();
                 roles.add(role);
                 user.setRoles(roles);
                 user.setUserId(checkUser.getUserId());
                 user.setPassword(checkUser.getPassword());
                 User savedUser = userService.createUser(user);
-                createCustomer(savedUser);
+                Customer customer = new Customer();
+                customer.setUser(savedUser);
+                customerService.createCustomer(customer);
                 apiResponse.setStatus(HttpStatus.OK.value());
                 return apiResponse;
             }
             apiResponse.setStatus(HttpStatus.FOUND.value());
             return apiResponse;
         }
-        if (! sendMail(customerRequestDto.getEmailId())) {
+        boolean isMailSend = true;
+        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
+            if (entry.getKey().equals(customerRequestDto.getEmailId())) {
+                isMailSend = false;
+                break;
+            }
+        }
+        if (!isMailSend) {
             apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             apiResponse.setData("Please verify your email !");
             return apiResponse;
         }
+        String to = customerRequestDto.getEmailId();
+        String subject = "Login OTP";
+        String otp = String.valueOf(OtpGenerator.generateOtp());
+        String body = "Your One Time Password for SignUp verification is " + otp;
+        otpStore.put(customerRequestDto.getEmailId(), otp);
+        emailSenderService.sendEmail(to, subject, body);
         primaryCacheMemory.put(customerRequestDto.getEmailId(), customerRequestDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
@@ -94,94 +115,56 @@ public class LoginServiceImpl implements LoginService {
     public APIResponse deliveryPersonSignup(DeliveryPersonRequestDto deliveryPersonRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Role role = roleService.retrieveRoleByName(UserRole.DELIVERYPERSON);
-        User user = UserMapper.userEntity(deliveryPersonRequestDto);
+        User user = UserMapper.getUserEntityFromDeliveryPerson(deliveryPersonRequestDto);
         if (userService.checkByEmailId(deliveryPersonRequestDto.getEmailId())) {
             User checkUser = userService.retrieveByEmail(deliveryPersonRequestDto.getEmailId());
-            boolean checkRole = checkRole(checkUser.getRoles(), role.getRoleId());
-            if (!checkRole) {
+            boolean isRoleCheck = false;
+            for (Role checkRole : checkUser.getRoles()) {
+                if (checkRole.getRoleId().equals(role.getRoleId())) {
+                    isRoleCheck = true;
+                    break;
+                }
+            }
+            if (!isRoleCheck) {
                 Set<Role> roles = checkUser.getRoles();
                 roles.add(role);
                 user.setRoles(roles);
                 user.setUserId(checkUser.getUserId());
                 user.setPassword(checkUser.getPassword());
                 User savedUser = userService.createUser(user);
-                createDeliveryPerson(deliveryPersonRequestDto, savedUser);
+                DeliveryPerson deliveryPerson = new DeliveryPerson();
+                deliveryPerson.setAadharNumber(deliveryPersonRequestDto.getAadharNumber());
+                deliveryPerson.setLicenseNumber(deliveryPersonRequestDto.getLicenseNumber());
+                deliveryPerson.setVehicleNumber(deliveryPersonRequestDto.getVehicleNumber());
+                deliveryPerson.setUser(savedUser);
+                deliveryPersonService.createDeliveryPerson(deliveryPerson);
                 apiResponse.setStatus(HttpStatus.OK.value());
                 return apiResponse;
             }
             apiResponse.setStatus(HttpStatus.FOUND.value());
             return apiResponse;
         }
-        if (! sendMail(deliveryPersonRequestDto.getEmailId())) {
+        boolean isMailSend = true;
+        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
+            if (entry.getKey().equals(deliveryPersonRequestDto.getEmailId())) {
+                isMailSend = false;
+                break;
+            }
+        }
+        if (!isMailSend) {
             apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
             apiResponse.setData("Please verify your email !");
             return apiResponse;
         }
+        String to = deliveryPersonRequestDto.getEmailId();
+        String subject = "Login OTP";
+        String otp = String.valueOf(OtpGenerator.generateOtp());
+        String body = "Your One Time Password for SignUp verification is " + otp;
+        otpStore.put(deliveryPersonRequestDto.getEmailId(), otp);
+        emailSenderService.sendEmail(to, subject, body);
         secondaryCacheMemory.put(deliveryPersonRequestDto.getEmailId(), deliveryPersonRequestDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
-    }
-
-    /**
-     * <p>
-     *     This method is responsible for create customer account.
-     * </p>
-     * @param user - {@link User} details.
-     */
-    private void createCustomer(User user) {
-        Customer customer = new Customer();
-        customer.setUser(user);
-        customerService.createCustomer(customer);
-    }
-
-    /**
-     * <p>
-     *     This method is responsible for create Delivery person account.
-     * </p>
-     * @param deliveryPersonRequestDto - {@link DeliveryPersonRequestDto} details.
-     * @param user - {@link User} details.
-     */
-    private void createDeliveryPerson(DeliveryPersonRequestDto deliveryPersonRequestDto, User user) {
-        DeliveryPerson deliveryPerson = new DeliveryPerson();
-        deliveryPerson.setAadharNumber(deliveryPersonRequestDto.getAadharNumber());
-        deliveryPerson.setLicenseNumber(deliveryPersonRequestDto.getLicenseNumber());
-        deliveryPerson.setVehicleNumber(deliveryPersonRequestDto.getVehicleNumber());
-        deliveryPerson.setUser(user);
-        deliveryPersonService.createDeliveryPerson(deliveryPerson);
-    }
-
-    /**
-     * <p>
-     *     This method is responsible for create a user account.
-     * </p>
-     * @param customerRequestDto - {@link CustomerRequestDto} details.
-     * @param role - {@link Role} details.
-     * @return saved {@link User} details.
-     */
-    private User createUser(CustomerRequestDto customerRequestDto, Role role) {
-        User user = UserMapper.userEntity(customerRequestDto);
-        user.setPassword(encoder.encode(customerRequestDto.getPassword()));
-        Set<Role> roles = new HashSet<>();
-        roles.add(role);
-        user.setRoles(roles);
-        return userService.createUser(user);
-    }
-
-    /**
-     * <p>
-     *     This method is responsible for check the role is present or not.
-     * </p>
-     * @param roles - set of {@link Role} details.
-     * @param roleId - {@link Role} role id.
-     * @return true if the role is already present else return false.
-     */
-    private boolean checkRole(Set<Role> roles, String roleId) {
-        for (Role checkRole : roles) {
-            if (checkRole.getRoleId().equals(roleId)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override
@@ -205,12 +188,26 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public APIResponse verifyCustomerEmail(VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = new APIResponse();
-        if (verifyOtp(verifyEmailDto.getEmail(), verifyEmailDto.getOtp())) {
+        boolean verifyOtp = false;
+        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
+            if (entry.getKey().equals(verifyEmailDto.getEmail()) && entry.getValue().equals(verifyEmailDto.getOtp())) {
+                otpStore.remove(entry.getKey());
+                verifyOtp = true;
+            }
+        }
+        if (verifyOtp) {
             Role role = roleService.retrieveRoleByName(UserRole.CUSTOMER);
             for (Map.Entry<String, CustomerRequestDto> entry : primaryCacheMemory.entrySet()) {
                 if (entry.getKey().equals(verifyEmailDto.getEmail())) {
-                    User savedUser = createUser(entry.getValue(), role);
-                    createCustomer(savedUser);
+                    User user = UserMapper.userEntity(entry.getValue());
+                    user.setPassword(encoder.encode(entry.getValue().getPassword()));
+                    Set<Role> roles = new HashSet<>();
+                    roles.add(role);
+                    user.setRoles(roles);
+                    User savedUser = userService.createUser(user);
+                    Customer customer = new Customer();
+                    customer.setUser(savedUser);
+                    customerService.createCustomer(customer);
                     apiResponse.setStatus(HttpStatus.OK.value());
                     return apiResponse;
                 }
@@ -225,13 +222,30 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public APIResponse verifyDeliveryPersonEmail(VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = new APIResponse();
-        if (verifyOtp(verifyEmailDto.getEmail(), verifyEmailDto.getOtp())) {
+        boolean verifyOtp = false;
+        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
+            if (entry.getKey().equals(verifyEmailDto.getEmail()) && entry.getValue().equals(verifyEmailDto.getOtp())) {
+                otpStore.remove(entry.getKey());
+                verifyOtp = true;
+            }
+        }
+        if (verifyOtp) {
             Role role = roleService.retrieveRoleByName(UserRole.DELIVERYPERSON);
             for (Map.Entry<String, DeliveryPersonRequestDto> entry : secondaryCacheMemory.entrySet()) {
                 if (entry.getKey().equals(verifyEmailDto.getEmail())) {
                     DeliveryPersonRequestDto deliveryPersonRequestDto = entry.getValue();
-                    User savedUser = createUser(UserMapper.customerDto(deliveryPersonRequestDto), role);
-                    createDeliveryPerson(deliveryPersonRequestDto, savedUser);
+                    User user = UserMapper.userEntity(UserMapper.customerDto(deliveryPersonRequestDto));
+                    user.setPassword(encoder.encode(deliveryPersonRequestDto.getPassword()));
+                    Set<Role> roles = new HashSet<>();
+                    roles.add(role);
+                    user.setRoles(roles);
+                    User savedUser = userService.createUser(user);
+                    DeliveryPerson deliveryPerson = new DeliveryPerson();
+                    deliveryPerson.setAadharNumber(deliveryPersonRequestDto.getAadharNumber());
+                    deliveryPerson.setLicenseNumber(deliveryPersonRequestDto.getLicenseNumber());
+                    deliveryPerson.setVehicleNumber(deliveryPersonRequestDto.getVehicleNumber());
+                    deliveryPerson.setUser(savedUser);
+                    deliveryPersonService.createDeliveryPerson(deliveryPerson);
                     apiResponse.setStatus(HttpStatus.OK.value());
                     return apiResponse;
                 }
@@ -241,48 +255,6 @@ public class LoginServiceImpl implements LoginService {
         }
         apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
         return apiResponse;
-    }
-
-    /**
-     * <p>
-     *     This method send the Email to the Recipent
-     *     with Login Otp
-     * </p>
-     * @param email - Email of the User
-     * @return Boolean Value if the Email Available in the Database
-     */
-    private boolean sendMail(String email) {
-        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
-            if (entry.getKey().equals(email)) {
-                return false;
-            }
-        }
-        String to = email;
-        String subject = "Login OTP";
-        String otp = String.valueOf(OtpGenerator.generateOtp());
-        String body = "Your One Time Password for SignUp verification is " + otp;
-        otpStore.put(email, otp);
-        emailSenderService.sendEmail(to, subject, body);
-        return true;
-    }
-
-    /**
-     * <p>
-     *     This method verify the Otp that sent to the
-     *     Email Id provided
-     * </p>
-     * @param email - Email id of the User
-     * @param otp - Provided by the User to Login
-     * @return boolean value if the Otp Valid for the Email
-     */
-    private boolean verifyOtp(String email, String otp) {
-        for (Map.Entry<String, String> entry : otpStore.entrySet()) {
-            if (entry.getKey().equals(email) && entry.getValue().equals(otp)) {
-                otpStore.remove(entry.getKey());
-                return true;
-            }
-        }
-        return false;
     }
 
 }

@@ -77,11 +77,15 @@ public class CategoryServiceImpl implements CategoryService {
     public APIResponse deleteCategory(String categoryId) {
         APIResponse apiResponse = new APIResponse();
         Category category = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryId);
+        if (null == category) {
+            logger.warn("Category Not found with Id : {}", categoryId);
+            throw new EntityNotFoundException("Category Not found to delete with Id : " + categoryId);
+        }
         category.setDeleted(true);
         categoryRepository.save(category);
         apiResponse.setData("Category Deleted Successfully : " + categoryId);
         apiResponse.setStatus(HttpStatus.OK.value());
-        logger.info("Category Deleted Successfully : " + categoryId);
+        logger.info("Category Deleted Successfully : {}", categoryId);
         return apiResponse;
     }
 

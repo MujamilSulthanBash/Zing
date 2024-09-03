@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.i2i.zing.dto.StockResponseDto;
+import com.i2i.zing.exception.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +39,7 @@ public class StockServiceImpl implements StockService {
     public APIResponse addStock(StockRequestDto stockRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Stock stock = StockMapper.convertDtoToEntity(stockRequestDto);
-        StockMapper.convertEntityToDto(stockRepository.save(stock));
+        StockResponseDto stockResponseDto = StockMapper.convertEntityToDto(stockRepository.save(stock));
         apiResponse.setData(stock);
         apiResponse.setStatus(HttpStatus.CREATED.value());
         return apiResponse;
@@ -46,10 +48,13 @@ public class StockServiceImpl implements StockService {
     @Override
     public APIResponse getStocks() {
         APIResponse apiResponse = new APIResponse();
-        List<StockRequestDto> result = new ArrayList<>();
+        List<StockResponseDto> result = new ArrayList<>();
         List<Stock> stocks = stockRepository.findByIsDeletedFalse();
         for (Stock stock : stocks) {
             result.add(StockMapper.convertEntityToDto(stock));
+        }
+        if (result.isEmpty()) {
+            logger.warn("Stock List is Empty..");
         }
         apiResponse.setData(result);
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -70,6 +75,10 @@ public class StockServiceImpl implements StockService {
     public APIResponse getStockById(String stockId) {
         APIResponse apiResponse = new APIResponse();
         Stock stock = stockRepository.findByIsDeletedFalseAndStockId(stockId);
+        if (null == stock) {
+            logger.warn("Stock Not found with Id :{}", stockId);
+            throw new EntityNotFoundException("Stock Not found with Id :" + stockId);
+        }
         StockMapper.convertEntityToDto(stock);
         apiResponse.setData(stock);
         apiResponse.setStatus(HttpStatus.OK.value());
@@ -80,6 +89,10 @@ public class StockServiceImpl implements StockService {
     public APIResponse deleteStock(String stockId) {
         APIResponse apiResponse = new APIResponse();
         Stock stock = stockRepository.findByIsDeletedFalseAndStockId(stockId);
+        if (null == stock) {
+            logger.warn("Stock Not found to delete with Id :{}", stockId);
+            throw new EntityNotFoundException("Stock Not found to delete with Id :" + stockId);
+        }
         stock.setDeleted(true);
         stockRepository.save(stock);
         apiResponse.setData("Stock Deleted Successfully : " + stockId);
@@ -115,6 +128,10 @@ public class StockServiceImpl implements StockService {
         APIResponse apiResponse = new APIResponse();
         Stock stock = StockMapper.convertDtoToEntity(stockRequestDto);
         Stock existingStock = stockRepository.findByIsDeletedFalseAndStockId(stockRequestDto.getStockId());
+        if (null == existingStock) {
+            logger.warn("Stock Not found to update with Id :{}", stockRequestDto.getStockId());
+            throw new EntityNotFoundException("Stock Not found with Id :" + stockRequestDto.getStockId());
+        }
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingStock.setModifiedDate(modifiedDate);

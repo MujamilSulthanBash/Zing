@@ -1,9 +1,6 @@
 package com.i2i.zing.service.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 
@@ -40,6 +37,13 @@ public class ItemServiceImpl implements ItemService {
     public APIResponse addItem(ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Item item = ItemMapper.convertDtoToEntity(itemRequestDto);
+        List<Item> items = itemRepository.findByIsDeletedFalse();
+        for (Item iterator : items) {
+            if (Objects.equals(iterator.getItemName(), item.getItemName())) {
+                logger.warn("Item with name {} already exists. Please provide alter name.", item.getItemName());
+                throw new EntityNotFoundException("Item with name " + item.getItemName() + " already exists. Please provide alter name.");
+            }
+        }
         apiResponse.setData(ItemMapper.convertEntityToDto(itemRepository.save(item)));
         apiResponse.setStatus(HttpStatus.CREATED.value());
         if (null == apiResponse.getData()) {
@@ -100,6 +104,10 @@ public class ItemServiceImpl implements ItemService {
     public APIResponse deleteItem(String itemId) {
         APIResponse apiResponse = new APIResponse();
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
+        if (null == item) {
+            logger.warn("Item Not found with Id :{}", itemId);
+            throw new EntityNotFoundException("Item Not found with Id : " + itemId);
+        }
         item.setDeleted(true);
         itemRepository.save(item);
         apiResponse.setData("Item Deleted Successfully : " + itemId);
@@ -112,6 +120,10 @@ public class ItemServiceImpl implements ItemService {
         APIResponse apiResponse = new APIResponse();
         Item item = ItemMapper.convertDtoToResponseEntity(itemUpdateDto);
         Item existingItem = itemRepository.findByIsDeletedFalseAndItemId(itemUpdateDto.getItemId());
+        if (null == existingItem) {
+            logger.warn("Item Not found to Update with Id :{}", itemUpdateDto.getItemId());
+            throw new EntityNotFoundException("Item Not found with Id : " + itemUpdateDto.getItemId());
+        }
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingItem.setModifiedDate(modifiedDate);

@@ -12,6 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StockResponseDto {
+    private String stockId;
     private String darkStoreId;
     private String itemId;
     private int quantity;

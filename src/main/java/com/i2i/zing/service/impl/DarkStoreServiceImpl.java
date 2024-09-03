@@ -109,6 +109,10 @@ public class DarkStoreServiceImpl implements DarkStoreService {
     public APIResponse deleteDarkStore(String darkStoreId) {
         APIResponse apiResponse = new APIResponse();
         DarkStore darkStore = darkStoreRepository.findByIsDeletedFalseAndDarkStoreId(darkStoreId);
+        if (null == darkStore) {
+            logger.warn("Dark Store Not found with ID :{}", darkStoreId);
+            throw new EntityNotFoundException("Dark Store Not found with Id : " + darkStoreId);
+        }
         darkStore.setDeleted(true);
         darkStoreRepository.save(darkStore);
         apiResponse.setData("Dark store Deleted Successfully : " + darkStoreId);

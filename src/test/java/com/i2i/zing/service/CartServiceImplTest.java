@@ -1,9 +1,9 @@
 package com.i2i.zing.service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.validation.constraints.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,16 +12,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.isNotNull;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.Membership;
-import com.i2i.zing.dto.CartItemRequestDto;
-import com.i2i.zing.dto.CartResponseDto;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.Customer;
 import com.i2i.zing.model.CartItem;
@@ -38,15 +35,12 @@ public class CartServiceImplTest {
     private CartRepository cartRepository;
 
     private Cart cart;
-    private CartItem cartItem;
-    private Customer customer;
-    private CartResponseDto cartResponseDto;
-    private CartItemRequestDto cartItemRequestDto;
     private String cartId;
+
     @BeforeEach
     public void setUp() {
         cartId = "1c";
-        customer = Customer.builder()
+        Customer customer = Customer.builder()
                 .customerId("1cu")
                 .memberShip(Membership.SILVER)
                 .carts(Set.of(Cart.builder()
@@ -64,7 +58,8 @@ public class CartServiceImplTest {
                         .quantity(2)
                         .build()))
                 .build();
-        cartItem = CartItem.builder()
+        Set<CartItem> cartItems = new HashSet<>();
+        CartItem cartItem = CartItem.builder()
                 .id("1ci")
                 .cart(cart)
                 .item(Item.builder()
@@ -72,26 +67,73 @@ public class CartServiceImplTest {
                 .totalPrice(12.0)
                 .quantity(2)
                 .build();
-        cartResponseDto = CartResponseDto.builder()
-                          .cartId("1c")
-                          .customerId("1cu")
-                          .build();
-        cartItemRequestDto = CartItemRequestDto.builder()
-                             .cartItemId("1ci")
-                             .cartId("1c")
-                             .itemId("1i")
-                             .quantity(2)
-                             .totalPrice(12.0)
-                             .build();
+        cartItems.add(cartItem);
+        cart.setCartItems(cartItems);
     }
 
     @Test
     public void testGetCarts() {
-//        Customer customer1 = Customer.builder().customerId("1c").build();
-//        Cart cart = Cart.builder().cartId(cartId).customer(customer1).build();
         when(cartRepository.findAll()).thenReturn(List.of(cart));
         APIResponse apiResponse = cartServiceImpl.getCarts();
         assertEquals(apiResponse.getStatus(), HttpStatus.OK.value());
-        assertEquals(apiResponse.getData(), isNotNull());
+        assertThat(apiResponse.getData()).isNotNull();
+    }
+
+    @Test
+    public void testGetCartSuccess() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(cart);
+        APIResponse apiResponse = cartServiceImpl.getCart(cartId);
+        assertEquals(apiResponse.getStatus(), HttpStatus.OK.value());
+        assertThat(apiResponse.getData()).isNotNull();
+    }
+
+    @Test
+    public void testGetCartFailure() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(null);
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCart(cartId));
+        assertEquals("Cart Not found with Id : " + cartId, thrown.getMessage());
+    }
+
+    @Test
+    public void testGetCartAsModelSuccess() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(cart);
+        Cart cart = cartServiceImpl.getCartAsModel(cartId);
+        assertEquals(cart.getCartId(), cartId);
+    }
+
+    @Test
+    public void testGetCartAsModelFailure() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(null);
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCart(cartId));
+        assertEquals("Cart Not found with Id : " + cartId, thrown.getMessage());
+    }
+
+    @Test
+    public void testGetCartItemsOfCartSuccess() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(cart);
+        APIResponse apiResponse = cartServiceImpl.getCartItemsOfCart(cartId);
+        assertEquals(apiResponse.getStatus(), HttpStatus.OK.value());
+        assertThat(apiResponse.getData()).isNotNull();
+    }
+
+    @Test
+    public void testGetCartItemsOfCartFailure() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(null);
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCartItemsOfCart(cartId));
+        assertEquals("Cart with Id : " + cartId + " not found to fetch Items.", thrown.getMessage());
+    }
+
+    @Test
+    public void testGetCartItemsOfCartAsObjectSuccess() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(cart);
+        List<CartItem> cartItems = cartServiceImpl.getCartItemsOfCartAsObject(cartId);
+        assertEquals( 1, cartItems.size());
+    }
+
+    @Test
+    public void testGetCartItemsOfCartAsObjectFailure() {
+        when(cartRepository.findByCartId(cartId)).thenReturn(null);
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCartItemsOfCartAsObject(cartId));
+        assertEquals("Cart with Id : " + cartId + " not found to fetch Items.", thrown.getMessage());
     }
 }

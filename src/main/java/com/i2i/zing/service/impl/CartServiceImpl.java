@@ -12,7 +12,6 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.mapper.CartMapper;
-import com.i2i.zing.model.Customer;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Customer;
@@ -34,7 +33,6 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addCart(Customer customer) {
-        APIResponse apiResponse = new APIResponse();
         Cart cart = new Cart();
         cart.setCustomer(customer);
         cartRepository.save(cart);

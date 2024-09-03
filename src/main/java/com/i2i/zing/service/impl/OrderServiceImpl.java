@@ -88,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
             order.setOtp(encoder.encode(otp));
             Order resultOrder = orderRepository.save(order);
             apiResponse.setData(OrderMapper.convertToOrderDto(resultOrder));
-            apiResponse.setStatus(HttpStatus.OK.value());
+            apiResponse.setStatus(HttpStatus.CREATED.value());
             logger.debug("Checking payment method and amount to assign order.");
             if ((resultOrder.getPaymentMethod().equals(PaymentMethod.UPI)) ||
                     (resultOrder.getPaymentMethod().equals(PaymentMethod.CASHON))) {

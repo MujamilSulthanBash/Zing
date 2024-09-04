@@ -7,15 +7,15 @@ import com.i2i.zing.model.Order;
 
 /**
  * <p>
- *    Passes value for insertion,deletion and retrieval on Order.
+ * Passes value for insertion,deletion and retrieval on Order.
  * </p>
  */
 public interface OrderService {
     /**
      * <p>
-     *     Passes the value for insertion into the collection, revokes method to
-     *     assign deliveryPerson, revokes stock reduction method to notify the
-     *     stock level and revokes mail sender the notify customers.
+     * Passes the value for insertion into the collection, revokes method to
+     * assign deliveryPerson, revokes stock reduction method to notify the
+     * stock level and revokes mail sender the notify customers.
      * </p>
      *
      * @param orderDto - {@link OrderDto} value to set order Id.
@@ -25,7 +25,7 @@ public interface OrderService {
 
     /**
      * <p>
-     *     Fetches all the Orders in application.
+     * Fetches all the Orders in application.
      * </p>
      *
      * @return APIResponse value to display Order list.
@@ -34,7 +34,7 @@ public interface OrderService {
 
     /**
      * <p>
-     *     Fetches the Order and returns the Order.
+     * Fetches the Order and returns the Order.
      * </p>
      *
      * @param orderId - String value to display the Order.
@@ -44,7 +44,7 @@ public interface OrderService {
 
     /**
      * <p>
-     *     Fetches the Order and returns the Order.
+     * Fetches the Order and returns the Order.
      * </p>
      *
      * @param orderId - String value to display the Order.
@@ -54,8 +54,8 @@ public interface OrderService {
 
     /**
      * <p>
-     *     Verifies the order by checking the otp, if correct returns updates
-     *     corresponding status.
+     * Verifies the order by checking the otp, if correct returns updates
+     * corresponding status.
      * </p>
      *
      * @param verifyOrderDto - String value to check.

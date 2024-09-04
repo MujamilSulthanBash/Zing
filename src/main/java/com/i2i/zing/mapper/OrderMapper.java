@@ -8,16 +8,17 @@ import com.i2i.zing.model.Order;
 
 /**
  * <p>
- *     Converts the json objects according to application operations.
- *     e.g., (dto object -> json object, json object -> dto object)
+ * Converts the json objects according to application operations.
+ * e.g., (dto object -> json object, json object -> dto object)
  * </p>
  */
 public class OrderMapper {
 
     /**
      * <p>
-     *     Converts the entity to displayable dto format.
+     * Converts the entity to displayable dto format.
      * </p>
+     *
      * @param order {@link Order} for conversion into dto.
      * @return OrderDto to display.
      */
@@ -32,8 +33,9 @@ public class OrderMapper {
 
     /**
      * <p>
-     *     Converts input dto to entity for creating Order.
+     * Converts input dto to entity for creating Order.
      * </p>
+     *
      * @param orderDto {@link OrderDto} to convert into entity.
      * @return Order to for internal usage.
      */

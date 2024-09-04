@@ -10,15 +10,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>
+ * This class represents the dto for Location
+ * Details like Location
+ * </p>
+ */
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationRequestDto {
-
     @NotBlank
     @Size(min = 6, max = 10, message = "location should contain only 6 to 10 letters.")
-    @Pattern(regexp = "^(GUINDY|VELACHERRY)$",message = "location should contain either PAID or UNPAID.")
+    @Pattern(regexp = "^(GUINDY|VELACHERRY)$", message = "location should contain either PAID or UNPAID.")
     String location;
 }

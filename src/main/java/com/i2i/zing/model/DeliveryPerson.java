@@ -1,5 +1,7 @@
 package com.i2i.zing.model;
 
+import java.util.Set;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,13 +19,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
-
 /**
  * <p>
- *     Represents blueprint for the Delivery person datatype.
- *     Contains details of delivery person such as Id, name, vehicle Number.
- *     Includes the number of orders allotted for him.
+ * Represents blueprint for the Delivery person datatype.
+ * Contains details of delivery person such as Id, name, vehicle Number.
+ * Includes the number of orders allotted for him.
  * </p>
  */
 @Entity
@@ -36,9 +36,7 @@ import java.util.Set;
 public class DeliveryPerson {
     @Id
     @Column(name = "id")
-    @GeneratedValue(
-            strategy = GenerationType.UUID
-    )
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String deliveryPersonId;
 
     @Column(name = "vehicle_number", nullable = false, length = 10)

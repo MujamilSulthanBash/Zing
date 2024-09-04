@@ -9,9 +9,9 @@ import com.i2i.zing.model.DarkStore;
 
 /**
  * <p>
- *     This interface has Abstract methods for
- *     Dark Store Operations like get all the DarkStores
- *     and DarkStore Object
+ * This interface has Abstract methods for
+ * Dark Store Operations like get all the DarkStores
+ * and DarkStore Object
  * </p>
  */
 @Repository
@@ -19,18 +19,20 @@ public interface DarkStoreRepository extends JpaRepository<DarkStore, String> {
 
     /**
      * <p>
-     *     This method return the list of DarkStores
-     *     from the Database if the DarkStore not deleted.
+     * This method return the list of DarkStores
+     * from the Database if the DarkStore not deleted.
      * </p>
+     *
      * @return List of DarkStores
      */
     List<DarkStore> findByIsDeletedFalse();
 
     /**
      * <p>
-     *     This method return a specific DarkStore by DarkStore
-     *     ID given by the User
+     * This method return a specific DarkStore by DarkStore
+     * ID given by the User
      * </p>
+     *
      * @param darkStoreId - To Identify DarkStore
      * @return DarkStore as Entity Object
      */

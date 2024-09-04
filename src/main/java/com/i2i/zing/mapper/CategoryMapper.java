@@ -7,16 +7,17 @@ import com.i2i.zing.model.Category;
 
 /**
  * <p>
- *     Converts the json objects according to application operations.
- *     e.g., (dto object -> json object, json object -> dto object)
+ * Converts the json objects according to application operations.
+ * e.g., (dto object -> json object, json object -> dto object)
  * </p>
  */
 public class CategoryMapper {
 
     /**
      * <p>
-     *     This method convert the Entity to Response Dto
+     * This method convert the Entity to Response Dto
      * </p>
+     *
      * @param category - Entity Object
      * @return CategoryResponseDto - Response as Dto Object
      */
@@ -31,8 +32,9 @@ public class CategoryMapper {
 
     /**
      * <p>
-     *     This method convert the Entity to Creation Dto
+     * This method convert the Entity to Creation Dto
      * </p>
+     *
      * @param category - Category as Entity Object
      * @return - CategoryCreationDto as Dto Object
      */
@@ -46,16 +48,17 @@ public class CategoryMapper {
 
     /**
      * <p>
-     *     This method convert the Request Dto to Entity Object
+     * This method convert the Request Dto to Entity Object
      * </p>
+     *
      * @param categoryRequestDto {@link CategoryRequestDto} - Category Details as Dto Object
      * @return Category as Entity Object
      */
     public static Category convertDtoToCreationEntity(CategoryRequestDto categoryRequestDto) {
-        Category category = Category.builder()
+        return Category.builder()
                 .name(categoryRequestDto.getName())
                 .description(categoryRequestDto.getDescription())
                 .build();
-        return category;
     }
+
 }

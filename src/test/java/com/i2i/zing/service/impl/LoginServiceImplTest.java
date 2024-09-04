@@ -1,5 +1,16 @@
 package com.i2i.zing.service.impl;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.configuration.JwtService;
 import com.i2i.zing.dto.CustomerRequestDto;
@@ -9,15 +20,10 @@ import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.mapper.UserMapperTest;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
-import com.i2i.zing.service.*;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.mockito.*;
-import org.springframework.http.HttpStatus;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import com.i2i.zing.service.CustomerService;
+import com.i2i.zing.service.DeliveryPersonService;
+import com.i2i.zing.service.RoleService;
+import com.i2i.zing.service.UserService;
 
 class LoginServiceImplTest {
 
@@ -206,4 +212,5 @@ class LoginServiceImplTest {
         when(roleService.retrieveRoleByName(any())).thenReturn(role);
         APIResponse apiResponse = loginService.verifyCustomerEmail(verifyEmailDto);
     }
+
 }

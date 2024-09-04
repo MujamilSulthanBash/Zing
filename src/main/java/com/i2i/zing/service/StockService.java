@@ -10,17 +10,18 @@ import com.i2i.zing.model.Stock;
 
 /**
  * <p>
- *     This interface has Abstract methods to implements the
- *     methods for Stock Operations like add, retrieve and
- *     delete Stocks
+ * This interface has Abstract methods to implements the
+ * methods for Stock Operations like add, retrieve and
+ * delete Stocks
  * </p>
  */
 public interface StockService {
 
     /**
      * <p>
-     *     This method add the Stock to the Database
+     * This method add the Stock to the Database
      * </p>
+     *
      * @param stockRequestDto {@link StockRequestDto} - Stock Details as Dto Object
      * @return APIResponse Details like Status, Data.
      */
@@ -28,16 +29,18 @@ public interface StockService {
 
     /**
      * <p>
-     *     This method get all the Details of Stock from the Database
+     * This method get all the Details of Stock from the Database
      * </p>
+     *
      * @return APIResponse Details like Status, Data.
      */
     APIResponse getStocks();
 
     /**
      * <p>
-     *     This method get the Stock Details by the Stock ID
+     * This method get the Stock Details by the Stock ID
      * </p>
+     *
      * @param stockId - To Identify the Stock
      * @return APIResponse Details like Status, Data.
      */
@@ -45,8 +48,9 @@ public interface StockService {
 
     /**
      * <p>
-     *     This method delete the Stock by the Stock ID
+     * This method delete the Stock by the Stock ID
      * </p>
+     *
      * @param stockId - To Identify the Stock
      * @return APIResponse Details like Status, Data.
      */
@@ -63,8 +67,9 @@ public interface StockService {
 
     /**
      * <p>
-     *     This method update the stock Details of the Particular Stock
+     * This method update the stock Details of the Particular Stock
      * </p>
+     *
      * @param stockRequestDto {@link StockRequestDto} - Stock as Dto Object
      * @return APIResponse details like status and data.
      */
@@ -72,8 +77,9 @@ public interface StockService {
 
     /**
      * <p>
-     *     This method get the Stock Details by the Location
+     * This method get the Stock Details by the Location
      * </p>
+     *
      * @param location - Location of the User
      * @return List of Stock Details
      */
@@ -81,9 +87,10 @@ public interface StockService {
 
     /**
      * <p>
-     *     This method get the Stock Details of the Particular Item
-     *     by Item Id
+     * This method get the Stock Details of the Particular Item
+     * by Item Id
      * </p>
+     *
      * @param itemId - To Identify the Item
      * @return Stock as Entity Object
      */

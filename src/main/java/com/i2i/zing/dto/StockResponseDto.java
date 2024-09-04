@@ -6,6 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>
+ * This class represents the Dto for Stock
+ * Details like Stock Id, Dark Store Id, Item Id
+ * and Quantity of the Item
+ * </p>
+ */
 @Builder
 @Getter
 @Setter

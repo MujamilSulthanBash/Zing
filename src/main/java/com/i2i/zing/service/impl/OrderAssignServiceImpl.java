@@ -22,7 +22,6 @@ import com.i2i.zing.model.Order;
 import com.i2i.zing.model.OrderAssign;
 import com.i2i.zing.service.CustomerService;
 import com.i2i.zing.service.DeliveryPersonService;
-import com.i2i.zing.service.UserService;
 import com.i2i.zing.repository.OrderAssignRepository;
 import com.i2i.zing.service.OrderAssignService;
 
@@ -51,7 +50,7 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     public void addOrderAssign(Order order) {
         logger.debug("Revoked userService to get use list.");
         Customer customer = customerService.getCustomer(order.getCart().getCustomer().getCustomerId());
-        List<DeliveryPerson> deliveryPeoples= deliveryPersonService.getDeliveryPersonByLocation(customer.getUser().getLocation());
+        List<DeliveryPerson> deliveryPeoples = deliveryPersonService.getDeliveryPersonByLocation(customer.getUser().getLocation());
         logger.debug("Revoked deliveryPersonService to get deliveryPerson list.");
         deliveryPeoples.sort(Comparator.comparingInt(dp -> dp.getOrderAssign().size()));
         logger.debug("Assigned delivery Person.");

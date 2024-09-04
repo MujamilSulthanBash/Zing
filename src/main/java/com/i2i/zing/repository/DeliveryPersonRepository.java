@@ -1,17 +1,17 @@
 package com.i2i.zing.repository;
 
-import com.i2i.zing.model.User;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.zing.model.DeliveryPerson;
-
-import java.util.List;
+import com.i2i.zing.model.User;
 
 /**
  * <p>
- *     This interface has abstract methods for Delivery Person Operations
+ * This interface has abstract methods for Delivery Person Operations
  * </p>
  */
 @Repository
@@ -19,8 +19,9 @@ public interface DeliveryPersonRepository extends JpaRepository<DeliveryPerson, 
 
     /**
      * <p>
-     *     This method is responsible for get the users by their location
+     * This method is responsible for get the users by their location
      * </p>
+     *
      * @param location - Location of the User.
      * @return - List of {@link User} details.
      */

@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,10 +26,10 @@ import lombok.Setter;
 
 /**
  * <p>
- *     This class represents the Roles of the Users
- *     in the Applications such as Customer and Delivery Person
- *     It contains the Details like Name, Email ID, Contact Number
- *     Location
+ * This class represents the Roles of the Users
+ * in the Applications such as Customer and Delivery Person
+ * It contains the Details like Name, Email ID, Contact Number
+ * Location
  * </p>
  */
 @Entity
@@ -69,5 +70,4 @@ public class User {
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
-
 }

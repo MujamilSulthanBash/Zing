@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,8 +24,6 @@ import com.i2i.zing.model.Category;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.ItemRepository;
-import com.i2i.zing.service.impl.ItemServiceImpl;
-import com.i2i.zing.service.impl.StockServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class ItemServiceImplTest {

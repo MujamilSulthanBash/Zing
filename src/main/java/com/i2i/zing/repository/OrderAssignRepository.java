@@ -10,16 +10,16 @@ import com.i2i.zing.model.OrderAssign;
 
 /**
  * <p>
- *    Inserts, deletes, updates and fetches data of the OrderAssign
- *    from the database.
+ * Inserts, deletes, updates and fetches data of the OrderAssign
+ * from the database.
  * </p>
  */
 @Repository
 public interface OrderAssignRepository extends JpaRepository<OrderAssign, String> {
     /**
      * <p>
-     *     Fetches the orderAssigns record by checking their deletion
-     *     status using boolean value.
+     * Fetches the orderAssigns record by checking their deletion
+     * status using boolean value.
      * </p>
      *
      * @return List<OrderAssign> for displaying available orderAssigns.
@@ -28,9 +28,10 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
 
     /**
      * <p>
-     *     Fetches the Order assigns by checking their deletion status
-     *     using boolean value.
+     * Fetches the Order assigns by checking their deletion status
+     * using boolean value.
      * </p>
+     *
      * @param id - String value to fetch the Order assign.
      * @return OrderAssign to display the orderAssign.
      */
@@ -38,12 +39,14 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
 
     /**
      * <p>
-     *     Fetches the Order assigns by checking their related
-     *     order using query.
+     * Fetches the Order assigns by checking their related
+     * order using query.
      * </p>
+     *
      * @param orderId - String value to fetch the Order assign.
      * @return OrderAssign to display the orderAssign.
      */
     @Query(value = "FROM OrderAssign a LEFT JOIN FETCH Order o ON a.order.id = :orderId")
     OrderAssign findByOrderId(String orderId);
+
 }

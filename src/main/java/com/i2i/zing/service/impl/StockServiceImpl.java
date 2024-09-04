@@ -111,10 +111,10 @@ public class StockServiceImpl implements StockService {
                 if (Objects.equals(itemId, stock.getItem().getItemId())) {
                     stock.setQuantity(stock.getQuantity() - quantity);
                     stockRepository.save(stock);
-                    if(stock.getQuantity() <= 10) {
+                    if (stock.getQuantity() <= 10) {
                         String subject = "Stock Refilling Alert";
                         String body = "Stock level at darkStore " + stock.getDarkstore().getDarkStoreId()
-                                       + " needs to be refilled. The current last reading : " + stock.getQuantity();
+                                + " needs to be refilled. The current last reading : " + stock.getQuantity();
                         emailSenderService.sendEmail(to, subject, body);
                         logger.warn("Item {} has Minimum Stock Add more..", stock.getItem().getItemName());
                     }

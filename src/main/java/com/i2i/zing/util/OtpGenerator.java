@@ -4,13 +4,14 @@ import java.util.Random;
 
 /**
  * <p>
- *     Generates otp for customers when they place the orders.
+ * Generates otp for customers when they place the orders.
  * </p>
  */
 public class OtpGenerator {
 
     /**
      * This method is responsible for generate random 4 digits number.
+     *
      * @return four digits number.
      */
     public static char[] generateOtp() {

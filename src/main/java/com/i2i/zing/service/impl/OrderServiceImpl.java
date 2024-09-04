@@ -70,11 +70,11 @@ public class OrderServiceImpl implements OrderService {
         Order order = OrderMapper.convertToOrder(orderDto);
         String otp = String.valueOf(OtpGenerator.generateOtp());
         Double sum = 0.0;
-        for (CartItem cartItem : cart.getCartItems() ) {
+        for (CartItem cartItem : cart.getCartItems()) {
             Stock stock = stockService.getStockByItemId(cartItem.getItem().getItemId());
             if (cartItem.getQuantity() > stock.getQuantity()) {
                 apiResponse.setData("Cart Item with Id : " + cartItem.getItem().getItemId() + " is out of stock." +
-                                     "Please try later after 1 Hour.");
+                        "Please try later after 1 Hour.");
                 apiResponse.setStatus(HttpStatus.NO_CONTENT.value());
                 return apiResponse;
             }

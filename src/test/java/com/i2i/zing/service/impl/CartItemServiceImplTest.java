@@ -1,10 +1,12 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import com.i2i.zing.service.CartService;
+import com.i2i.zing.service.ItemService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +29,6 @@ import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.repository.CartItemRepository;
-import com.i2i.zing.service.impl.CartItemServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class CartItemServiceImplTest {

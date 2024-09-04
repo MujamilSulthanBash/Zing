@@ -12,8 +12,8 @@ import lombok.Setter;
 
 /**
  * <p>
- *     This class represents the Dto for
- *     Stock details like Stock ID, DarkStore ID, item id, quantity.
+ * This class represents the Dto for
+ * Stock details like Stock ID, DarkStore ID, item id, quantity.
  * </p>
  */
 @Builder
@@ -22,7 +22,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StockRequestDto {
-
     @NotBlank
     @Size(min = 3, max = 40, message = "stockId should contain 3 to 40 characters.")
     private String stockId;

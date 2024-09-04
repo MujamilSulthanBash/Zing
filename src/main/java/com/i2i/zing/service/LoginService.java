@@ -8,8 +8,8 @@ import com.i2i.zing.dto.VerifyEmailDto;
 
 /**
  * <p>
- *     This interface has abstract methods for
- *     Login Operations
+ * This interface has abstract methods for
+ * Login Operations
  * </p>
  */
 public interface LoginService {
@@ -45,9 +45,10 @@ public interface LoginService {
 
     /**
      * <p>
-     *     This method verify the Customer Email Id
-     *     valid or not
+     * This method verify the Customer Email Id
+     * valid or not
      * </p>
+     *
      * @param verifyEmailDto {@link VerifyEmailDto} - Details like Email ID and Password
      * @return APIResponse (Status Code, Data, Error)
      */
@@ -55,9 +56,10 @@ public interface LoginService {
 
     /**
      * <p>
-     *     This method verify the Delivery Person Email Id
-     *     Valid or not
+     * This method verify the Delivery Person Email Id
+     * Valid or not
      * </p>
+     *
      * @param verifyEmailDto {@link VerifyEmailDto} - Details like Email and Password
      * @return APIResponse (Status Code, Data, Error)
      */

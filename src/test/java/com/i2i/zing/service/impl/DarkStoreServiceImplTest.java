@@ -1,8 +1,7 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.List;
 
-import com.i2i.zing.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,9 +17,9 @@ import static org.mockito.Mockito.when;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.DarkStoreDto;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.repository.DarkStoreRepository;
-import com.i2i.zing.service.impl.DarkStoreServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class DarkStoreServiceImplTest {
@@ -82,4 +81,5 @@ public class DarkStoreServiceImplTest {
         APIResponse apiResponse = darkStoreService.deleteDarkStore("1");
         assertEquals(apiResponse.getData(), "Dark store Deleted Successfully : " + darkStore.getDarkStoreId());
     }
+
 }

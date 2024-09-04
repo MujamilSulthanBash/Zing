@@ -1,10 +1,11 @@
 package com.i2i.zing.mapper;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.i2i.zing.dto.DarkStoreDto;
 import com.i2i.zing.dto.DarkStoreRequestDto;
 import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.model.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * <p>
@@ -25,31 +26,14 @@ public class DarkStoreMapper {
      * @return DarkStoreRequestDto to display.
      */
     public static DarkStoreRequestDto convertEntityToDto(DarkStore darkStore) {
-        DarkStoreRequestDto darkStoreRequestDto = DarkStoreRequestDto.builder()
+        return DarkStoreRequestDto.builder()
                 .darkStoreId(darkStore.getDarkStoreId())
                 .build();
-        return darkStoreRequestDto;
-    }
-
-    /**
-     * <p>
-     * Converts the Dto to entity object.
-     * </p>
-     *
-     * @param darkStoreRequestDto {@link DarkStoreRequestDto} for conversion into dto.
-     * @return DarkStore to display.
-     */
-    public static DarkStore convertDtoToEntity(DarkStoreRequestDto darkStoreRequestDto) {
-        DarkStore darkStore = DarkStore.builder()
-                .darkStoreId(darkStoreRequestDto.getDarkStoreId())
-                .build();
-        return darkStore;
     }
 
     public static DarkStore convertDtoToEntity(DarkStoreDto darkStoreDto) {
-        DarkStore darkStore = DarkStore.builder()
+        return DarkStore.builder()
                 .build();
-        return darkStore;
     }
 
     public static User convertDtoToUser(DarkStoreDto darkStoreDto) {

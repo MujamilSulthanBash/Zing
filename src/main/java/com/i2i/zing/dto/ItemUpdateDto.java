@@ -3,12 +3,19 @@ package com.i2i.zing.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>
+ * This class represents the Dto for Item
+ * details like Id, name, price and CategoryName
+ * </p>
+ */
 @Builder
 @Getter
 @Setter
@@ -23,8 +30,9 @@ public class ItemUpdateDto {
     private String name;
 
     @NotBlank
-    @Size(min = 10 , max = 500, message = "price should contain 10 to 500 .")
+    @Size(min = 10, max = 500, message = "price should contain 10 to 500 .")
     @Pattern(regexp = "^[1-5]{1}[0-9]{2}$", message = "price should contain only numbers.")
     private double price;
+
     private String categoryName;
 }

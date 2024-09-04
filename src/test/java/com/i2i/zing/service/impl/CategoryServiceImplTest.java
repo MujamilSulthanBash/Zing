@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -25,7 +25,6 @@ import com.i2i.zing.dto.CategoryResponseDto;
 import com.i2i.zing.model.Category;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.repository.CategoryRepository;
-import com.i2i.zing.service.impl.CategoryServiceImpl;
 
 
 @ExtendWith(MockitoExtension.class)

@@ -6,6 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>
+ * This class represents the Dto for Item
+ * Details like Item name, price, Quantity, Status
+ * Category Name
+ * </p>
+ */
 @Builder
 @Getter
 @Setter

@@ -2,11 +2,11 @@ package com.i2i.zing.exception;
 
 /**
  * <p>
- *     Defines the blueprint for exception when fields which are not available
- *     given as a input.
+ * Defines the blueprint for exception when fields which are not available
+ * given as a input.
  * </p>
  */
-public class EntityNotFoundException extends RuntimeException{
+public class EntityNotFoundException extends RuntimeException {
     public EntityNotFoundException(String message) {
         super(message);
     }

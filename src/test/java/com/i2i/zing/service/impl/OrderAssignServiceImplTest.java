@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.List;
 import java.util.Set;
@@ -16,13 +16,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
-import com.i2i.zing.common.*;
+import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.common.DeliveryStatus;
+import com.i2i.zing.common.Membership;
+import com.i2i.zing.common.PaymentMethod;
+import com.i2i.zing.common.PaymentStatus;
 import com.i2i.zing.dto.OrderAssignDto;
 import com.i2i.zing.exception.EntityNotFoundException;
-import com.i2i.zing.model.*;
+import com.i2i.zing.model.Cart;
+import com.i2i.zing.model.CartItem;
+import com.i2i.zing.model.Customer;
+import com.i2i.zing.model.DeliveryPerson;
+import com.i2i.zing.model.Item;
+import com.i2i.zing.model.Order;
+import com.i2i.zing.model.OrderAssign;
+import com.i2i.zing.model.User;
 import com.i2i.zing.repository.OrderAssignRepository;
-import com.i2i.zing.service.impl.OrderAssignServiceImpl;
-
+import com.i2i.zing.service.CustomerService;
+import com.i2i.zing.service.DeliveryPersonService;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderAssignServiceImplTest {
@@ -151,4 +162,5 @@ public class OrderAssignServiceImplTest {
         EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> orderAssignServiceImpl.updateOrderAssign(orderAssignDto1));
         assertEquals("There is no assigning record with ID : " + orderAssignDto1.getAssignId() + " to update.", thrown.getMessage());
     }
+
 }

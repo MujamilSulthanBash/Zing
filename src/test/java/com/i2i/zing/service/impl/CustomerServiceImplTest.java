@@ -1,9 +1,5 @@
 package com.i2i.zing.service.impl;
 
-import com.i2i.zing.mapper.UserMapperTest;
-import com.i2i.zing.model.Customer;
-import com.i2i.zing.repository.CustomerRepository;
-import com.i2i.zing.service.CartService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -12,6 +8,11 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+
+import com.i2i.zing.mapper.UserMapperTest;
+import com.i2i.zing.model.Customer;
+import com.i2i.zing.repository.CustomerRepository;
+import com.i2i.zing.service.CartService;
 
 class CustomerServiceImplTest {
 
@@ -44,4 +45,5 @@ class CustomerServiceImplTest {
         when(customerRepository.getReferenceById(customer.getCustomerId())).thenReturn(customer);
         assertEquals(customerService.getCustomer(customer.getCustomerId()).getCustomerId(), customer.getCustomerId());
     }
+
 }

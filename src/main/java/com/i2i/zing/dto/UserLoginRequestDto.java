@@ -10,6 +10,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>
+ * This class represents the Dto for User Login
+ * Request Details like Email ID and Password
+ * </p>
+ */
 @Builder
 @Getter
 @Setter
@@ -18,7 +24,7 @@ import lombok.Setter;
 public class UserLoginRequestDto {
     @NotBlank
     @Size(min = 10, max = 40, message = "Mail id should contain only 10 to 40 letters.")
-    @Pattern(regexp =  "^(.+)@(.+)$", message = "Given mailId is not in expected order pattern.")
+    @Pattern(regexp = "^(.+)@(.+)$", message = "Given mailId is not in expected order pattern.")
     private String emailId;
 
     @NotBlank

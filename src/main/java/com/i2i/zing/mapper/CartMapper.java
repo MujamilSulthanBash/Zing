@@ -2,7 +2,6 @@ package com.i2i.zing.mapper;
 
 import com.i2i.zing.dto.CartResponseDto;
 import com.i2i.zing.model.Cart;
-import com.i2i.zing.model.Customer;
 
 /**
  * <p>
@@ -25,4 +24,5 @@ public class CartMapper {
                 .customerId(cart.getCustomer().getCustomerId())
                 .build();
     }
+
 }

@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,8 +32,9 @@ import com.i2i.zing.model.Order;
 import com.i2i.zing.model.Stock;
 import com.i2i.zing.model.User;
 import com.i2i.zing.repository.OrderRepository;
-import com.i2i.zing.service.impl.EmailSenderService;
-import com.i2i.zing.service.impl.OrderServiceImpl;
+import com.i2i.zing.service.CartService;
+import com.i2i.zing.service.OrderAssignService;
+import com.i2i.zing.service.StockService;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceImplTest {
@@ -160,4 +161,5 @@ public class OrderServiceImplTest {
         EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> orderServiceImpl.getOrderById(orderId));
         assertEquals("Order with Id : " + orderId + " not found to verify.", thrown.getMessage());
     }
+
 }

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- *     Sends the mail to destined user once they successfully signed up
- *     and place their orders along with verification otp.
+ * Sends the mail to destined user once they successfully signed up
+ * and place their orders along with verification otp.
  * </p>
  */
 @Service

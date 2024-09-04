@@ -7,14 +7,14 @@ import com.i2i.zing.model.Item;
 
 /**
  * <p>
- *     Converts the json objects according to application operations.
- *     e.g., (dto object -> json object, json object -> dto object)
+ * Converts the json objects according to application operations.
+ * e.g., (dto object -> json object, json object -> dto object)
  * </p>
  */
 public class CartItemMapper {
     /**
      * <p>
-     *     Converts the entity to displayable dto format.
+     * Converts the entity to displayable dto format.
      * </p>
      *
      * @param cartItem {@link CartItem} for conversion into dto.
@@ -32,7 +32,7 @@ public class CartItemMapper {
 
     /**
      * <p>
-     *     Converts input dto to entity for creating cartItem.
+     * Converts input dto to entity for creating cartItem.
      * </p>
      *
      * @param cartItemRequestDto {@link CartItemRequestDto} to convert into entity.
@@ -50,7 +50,7 @@ public class CartItemMapper {
 
     /**
      * <p>
-     *     Converts input dto to entity for updating cartItem.
+     * Converts input dto to entity for updating cartItem.
      * </p>
      *
      * @param cartItemRequestDto {@link CartItemRequestDto} to convert into entity.
@@ -66,4 +66,5 @@ public class CartItemMapper {
                 .quantity(cartItemRequestDto.getQuantity())
                 .build();
     }
+
 }

@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,8 +16,6 @@ import static org.mockito.Mockito.when;
 import com.i2i.zing.common.UserRole;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.repository.RoleRepository;
-import com.i2i.zing.service.impl.RoleServiceImpl;
-
 
 @ExtendWith(MockitoExtension.class)
 public class RoleServiceImplTest {
@@ -71,4 +69,5 @@ public class RoleServiceImplTest {
         when(roleRepository.findByRoleName(UserRole.ADMIN)).thenReturn(null);
         roleService.retrieveRoleByName(UserRole.ADMIN);
     }
+
 }

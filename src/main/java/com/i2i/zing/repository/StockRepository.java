@@ -10,27 +10,29 @@ import com.i2i.zing.model.Stock;
 
 /**
  * <p>
- *     This interface has Abstract methods for
- *     Stock Operations like get all the Stock , get the Stock
- *     By Id, get the Stocks by the Location
- *     find the Stock by the item ID
+ * This interface has Abstract methods for
+ * Stock Operations like get all the Stock , get the Stock
+ * By Id, get the Stocks by the Location
+ * find the Stock by the item ID
  * </p>
  */
 @Repository
 public interface StockRepository extends JpaRepository<Stock, String> {
     /**
      * <p>
-     *     This method get the List of Stocks in the
-     *     Database if the Stock is not Deleted.
+     * This method get the List of Stocks in the
+     * Database if the Stock is not Deleted.
      * </p>
+     *
      * @return List of Stocks
      */
     List<Stock> findByIsDeletedFalse();
 
     /**
      * <p>
-     *     This method get the Stock by Stock Id
+     * This method get the Stock by Stock Id
      * </p>
+     *
      * @param stockId - To Identify the Stock
      * @return Stock as Entity Object
      */
@@ -38,9 +40,10 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 
     /**
      * <p>
-     *     This method get all the Stocks by the
-     *     Location
+     * This method get all the Stocks by the
+     * Location
      * </p>
+     *
      * @param location - To Identify the Stock by the Location based
      * @return List of Stock by the Location
      */
@@ -49,8 +52,9 @@ public interface StockRepository extends JpaRepository<Stock, String> {
 
     /**
      * <p>
-     *     This method get the Stock by Item Id
+     * This method get the Stock by Item Id
      * </p>
+     *
      * @param itemId - To Identify the Item
      * @return Stock as Entity Object
      */

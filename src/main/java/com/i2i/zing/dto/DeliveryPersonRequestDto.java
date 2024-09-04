@@ -9,6 +9,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * <p>
+ * This class represents the Dto for
+ * Delivery Person Signup Credentials like Username,
+ * password, location, Contact Number, vehicle Number
+ * Aadhaar Number and License Number
+ * </p>
+ */
 @Builder
 @Getter
 @Setter

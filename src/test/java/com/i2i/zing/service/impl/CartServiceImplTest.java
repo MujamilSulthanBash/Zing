@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
@@ -24,7 +24,6 @@ import com.i2i.zing.model.Customer;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.repository.CartRepository;
-import com.i2i.zing.service.impl.CartServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class CartServiceImplTest {

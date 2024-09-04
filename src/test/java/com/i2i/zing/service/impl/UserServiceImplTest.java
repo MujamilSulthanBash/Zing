@@ -1,4 +1,4 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +18,7 @@ import com.i2i.zing.common.UserRole;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
 import com.i2i.zing.repository.UserRepository;
-import com.i2i.zing.service.impl.UserServiceImpl;
+import com.i2i.zing.service.RoleService;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
@@ -85,4 +85,5 @@ public class UserServiceImplTest {
 
         assertEquals(createdUser, user);
     }
+
 }

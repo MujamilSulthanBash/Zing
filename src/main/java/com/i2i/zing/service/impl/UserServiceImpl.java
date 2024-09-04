@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.retrieveRoleByName(UserRole.ADMIN));
         user.setRoles(roles);
-        if( ! userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")) {
+        if (!userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")) {
             user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
         }

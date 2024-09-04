@@ -3,8 +3,19 @@ package com.i2i.zing.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+/**
+ * <p>
+ * This class represents the Dto for Dark Store Manager
+ * and DarkStore Details like Username, EmailId, contact Number,
+ * Location and Password
+ * </p>
+ */
 @Builder
 @Getter
 @Setter

@@ -1,5 +1,10 @@
 package com.i2i.zing.mapper;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import com.i2i.zing.common.UserRole;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
@@ -8,10 +13,6 @@ import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.model.Customer;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class UserMapperTest {
 

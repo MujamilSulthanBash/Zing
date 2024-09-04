@@ -14,8 +14,8 @@ import lombok.Setter;
 
 /**
  * <p>
- *     This class represents the Dto for
- *     OrderAssign details like assign id , delivery person id, delivery status.
+ * This class represents the Dto for
+ * OrderAssign details like assign id , delivery person id, delivery status.
  * </p>
  */
 @Builder
@@ -34,7 +34,7 @@ public class OrderAssignDto {
 
     @NotBlank
     @Size(min = 8, max = 9, message = "stockId should contain 8 to 9 letters.")
-    @Pattern(regexp = "^(PENDING|ACCEPTED|PICKEDUP|DELIVERED)$",message = "paymentStatus should contain either of (PENDING,ACCEPTED,PICKEDUP,DELIVERED)")
+    @Pattern(regexp = "^(PENDING|ACCEPTED|PICKEDUP|DELIVERED)$", message = "paymentStatus should contain either of (PENDING,ACCEPTED,PICKEDUP,DELIVERED)")
     private String deliveryStatus;
 
     @NotBlank

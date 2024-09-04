@@ -1,10 +1,9 @@
-package com.i2i.zing.service;
+package com.i2i.zing.service.impl;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.i2i.zing.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,12 +20,12 @@ import static org.mockito.Mockito.when;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockRequestDto;
+import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.model.Category;
 import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
 import com.i2i.zing.repository.StockRepository;
-import com.i2i.zing.service.impl.StockServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class StockServiceImplTest {
@@ -136,4 +135,5 @@ public class StockServiceImplTest {
         APIResponse apiResponse = stockService.deleteStock("1L");
         assertEquals(apiResponse.getData(), "Stock Deleted Successfully : " + stock.getStockId());
     }
+
 }

@@ -12,7 +12,7 @@ import com.i2i.zing.model.Order;
 public interface OrderAssignService {
     /**
      * <p>
-     *     passes the value for insertion into the collection.
+     * passes the value for insertion into the collection.
      * </p>
      *
      * @param order - {@link Order} value to set order Id.
@@ -21,7 +21,7 @@ public interface OrderAssignService {
 
     /**
      * <p>
-     *     Fetches all the OrderAssigns in application.
+     * Fetches all the OrderAssigns in application.
      * </p>
      *
      * @return APIResponse value to display OrderAssign list.
@@ -30,7 +30,7 @@ public interface OrderAssignService {
 
     /**
      * <p>
-     *     Fetches the Order and returns the OrderAssign.
+     * Fetches the Order and returns the OrderAssign.
      * </p>
      *
      * @param orderAssignId - String value to display the OrderAssign.
@@ -40,8 +40,8 @@ public interface OrderAssignService {
 
     /**
      * <p>
-     *     Updates the delivery status and delivery person of the
-     *     order assigned.
+     * Updates the delivery status and delivery person of the
+     * order assigned.
      * </p>
      *
      * @param orderAssignDto - {@link OrderAssignDto} value to update
@@ -51,10 +51,10 @@ public interface OrderAssignService {
 
     /**
      * <p>
-     *     Updates the delivery status internally after delivery.
+     * Updates the delivery status internally after delivery.
      * </p>
      *
-     * @param status - String value to update.
+     * @param status  - String value to update.
      * @param OrderId - string value to fetch assigned record.
      */
     void updateOrderStatus(String status, String OrderId);

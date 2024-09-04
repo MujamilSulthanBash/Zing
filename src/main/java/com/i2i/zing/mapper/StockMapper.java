@@ -6,19 +6,38 @@ import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
 
+/**
+ * <p>
+ * Converts the json objects according to application operations.
+ * e.g., (dto object -> Entity object, Entity object -> dto object)
+ * </p>
+ */
 public class StockMapper {
+    /**
+     * <p>
+     *     This method convert the entity Object to Dto Object
+     * </p>
+     * @param stock - Entity Object
+     * @return StockResponseDto {@link StockResponseDto} - Stock Response as Dto Object
+     */
     public static StockResponseDto convertEntityToDto(Stock stock) {
-        StockResponseDto stockResponseDto = StockResponseDto.builder()
+        return StockResponseDto.builder()
                 .stockId(stock.getStockId())
                 .darkStoreId(stock.getDarkstore().getDarkStoreId())
                 .itemId(stock.getItem().getItemId())
                 .quantity(stock.getQuantity())
                 .build();
-        return stockResponseDto;
     }
 
+    /**
+     * <p>
+     *     This method convert the Dto object to Entity Object
+     * </p>
+     * @param stockRequestDto {@link StockRequestDto} - Stock as Dto Object
+     * @return Stock as Entity Object
+     */
     public static Stock convertDtoToEntity(StockRequestDto stockRequestDto) {
-        Stock stock = Stock.builder()
+        return Stock.builder()
                 .stockId(stockRequestDto.getStockId())
                 .darkstore(DarkStore.builder()
                         .darkStoreId(stockRequestDto.getDarkStoreId())
@@ -28,6 +47,6 @@ public class StockMapper {
                         .build())
                 .quantity(stockRequestDto.getQuantity())
                 .build();
-        return stock;
     }
+
 }

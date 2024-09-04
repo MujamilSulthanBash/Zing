@@ -25,10 +25,10 @@ import com.i2i.zing.common.Membership;
 
 /**
  * <p>
- *     Represents blueprint for the Customer datatype.
- *     Contains details of customer such as Id, customer's membership.
- *     It is subtype of User type and contains all the fields in the
- *     User datatype
+ * Represents blueprint for the Customer datatype.
+ * Contains details of customer such as Id, customer's membership.
+ * It is subtype of User type and contains all the fields in the
+ * User datatype
  * </p>
  */
 @Entity
@@ -54,5 +54,4 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private Set<Cart> carts;
-
 }

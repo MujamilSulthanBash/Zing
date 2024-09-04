@@ -8,16 +8,17 @@ import com.i2i.zing.model.OrderAssign;
 
 /**
  * <p>
- *     Converts the json objects according to application operations.
- *     e.g., (dto object -> json object, json object -> dto object)
+ * Converts the json objects according to application operations.
+ * e.g., (dto object -> json object, json object -> dto object)
  * </p>
  */
 public class OrderAssignMapper {
 
     /**
      * <p>
-     *     Converts the entity to displayable dto format.
+     * Converts the entity to displayable dto format.
      * </p>
+     *
      * @param orderAssign {@link OrderAssign} for conversion into dto.
      * @return OrderAssignDto to display.
      */
@@ -33,13 +34,14 @@ public class OrderAssignMapper {
 
     /**
      * <p>
-     *     Converts input dto to entity for creating OrderAssign.
+     * Converts input dto to entity for creating OrderAssign.
      * </p>
+     *
      * @param orderAssignDto {@link OrderAssignDto} to convert into entity.
      * @return OrderAssign for internal usage.
      */
     public static OrderAssign convertToOrderAssign(OrderAssignDto orderAssignDto) {
-            DeliveryStatus deliveryStatus = DeliveryStatus.valueOf(orderAssignDto.getDeliveryStatus());
+        DeliveryStatus deliveryStatus = DeliveryStatus.valueOf(orderAssignDto.getDeliveryStatus());
         return OrderAssign.builder()
                 .order(Order.builder()
                         .orderId(orderAssignDto.getOrderId()).build())
@@ -52,8 +54,9 @@ public class OrderAssignMapper {
 
     /**
      * <p>
-     *     Converts input dto to entity for updating OrderAssign.
+     * Converts input dto to entity for updating OrderAssign.
      * </p>
+     *
      * @param orderAssignDto {@link OrderAssignDto} to convert into entity.
      * @return OrderAssign for internal usage.
      */
@@ -69,4 +72,5 @@ public class OrderAssignMapper {
                 .deliveryStatus(deliveryStatus)
                 .build();
     }
+
 }

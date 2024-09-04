@@ -3,7 +3,6 @@ package com.i2i.zing.exception;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
@@ -89,4 +88,5 @@ public class GlobalExceptionHandler {
         errorMap.put("TimeStamp", String.valueOf(LocalDateTime.now()));
         return errorMap;
     }
+
 }

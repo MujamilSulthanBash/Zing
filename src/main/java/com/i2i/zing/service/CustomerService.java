@@ -6,16 +6,18 @@ public interface CustomerService {
 
     /**
      * <p>
-     *     This method create the customer after signup
+     * This method create the customer after signup
      * </p>
+     *
      * @param customer - as Entity Object
      */
     void createCustomer(Customer customer);
 
     /**
      * <p>
-     *     This method get the Customer with Customer Id
+     * This method get the Customer with Customer Id
      * </p>
+     *
      * @param customerId - To Identify the Customer
      * @return Customer as Entity Object
      */

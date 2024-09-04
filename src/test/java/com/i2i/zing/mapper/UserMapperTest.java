@@ -4,6 +4,7 @@ import com.i2i.zing.common.UserRole;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.dto.UserLoginRequestDto;
+import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -156,6 +157,13 @@ public class UserMapperTest {
         return UserLoginRequestDto.builder()
                 .emailId("mujamil.official@gmail.com")
                 .password("12345")
+                .build();
+    }
+
+    public static VerifyEmailDto getVerifyEmailDto() {
+        return VerifyEmailDto.builder()
+                .email("mujamil.official@gmail.com")
+                .otp("3245")
                 .build();
     }
 

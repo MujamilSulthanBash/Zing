@@ -212,7 +212,7 @@ public class LoginServiceImpl implements LoginService {
                     return apiResponse;
                 }
             }
-            apiResponse.setStatus(HttpStatus.OK.value());
+            apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             return apiResponse;
         }
         apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
@@ -250,7 +250,7 @@ public class LoginServiceImpl implements LoginService {
                     return apiResponse;
                 }
             }
-            apiResponse.setStatus(HttpStatus.OK.value());
+            apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
             return apiResponse;
         }
         apiResponse.setStatus(HttpStatus.NOT_FOUND.value());

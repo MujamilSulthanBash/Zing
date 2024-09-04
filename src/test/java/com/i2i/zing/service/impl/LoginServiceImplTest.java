@@ -5,6 +5,7 @@ import com.i2i.zing.configuration.JwtService;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.dto.UserLoginRequestDto;
+import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.mapper.UserMapperTest;
 import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
@@ -14,6 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.http.HttpStatus;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -55,6 +59,7 @@ class LoginServiceImplTest {
     private User deliveryPersonWithSameRole;
     private UserLoginRequestDto userLoginRequestDto;
     private UserLoginRequestDto userLoginRequestDtoSuccess;
+    private VerifyEmailDto verifyEmailDto;
 
     @BeforeEach
     void setUp() {
@@ -72,6 +77,7 @@ class LoginServiceImplTest {
         deliveryPersonWithSameRole = UserMapperTest.getUserWithSameRole();
         userLoginRequestDto = UserMapperTest.getUserLoginRequestDto();
         userLoginRequestDtoSuccess = UserMapperTest.getUserLoginRequestDtoSuccess();
+        verifyEmailDto = UserMapperTest.getVerifyEmailDto();
     }
 
     @Test
@@ -182,9 +188,26 @@ class LoginServiceImplTest {
 
     @Test
     void testVerifyCustomerEmailFailure() {
+        APIResponse apiResponse = loginService.verifyCustomerEmail(verifyEmailDto);
+        assertEquals(apiResponse.getStatus(), HttpStatus.NOT_FOUND.value());
     }
 
     @Test
-    void verifyDeliveryPersonEmail() {
+    void testVerifyCustomerEmailSuccess() {
+        when(roleService.retrieveRoleByName(any())).thenReturn(role);
+
+        APIResponse apiResponse = loginService.verifyCustomerEmail(verifyEmailDto);
+    }
+
+    @Test
+    void verifyDeliveryPersonEmailFailure() {
+        APIResponse apiResponse = loginService.verifyCustomerEmail(verifyEmailDto);
+        assertEquals(apiResponse.getStatus(), HttpStatus.NOT_FOUND.value());
+    }
+
+    @Test
+    void verifyDeliveryPersonEmailSuccess() {
+        when(roleService.retrieveRoleByName(any())).thenReturn(role);
+        APIResponse apiResponse = loginService.verifyCustomerEmail(verifyEmailDto);
     }
 }

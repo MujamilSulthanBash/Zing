@@ -24,9 +24,9 @@ public interface DeliveryPersonService {
      *     This method return the Delivery Person by the
      *     Delivery Person ID
      * </p>
-     * @param userId - To Identify the User
+     * @param location - To Identify the Delivery person location
      * @return - Delivery Person as Entity Object
      */
-    List<DeliveryPerson> getDeliveryPersonById(String userId);
+    List<DeliveryPerson> getDeliveryPersonByLocation(String location);
 
 }

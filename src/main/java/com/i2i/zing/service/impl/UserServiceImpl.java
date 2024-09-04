@@ -29,15 +29,16 @@ public class UserServiceImpl implements UserService {
     public void createAdmin() {
         User user = User.builder()
                 .userName("ADMIN")
-                .emailId("admin@gmail.com")
+                .emailId("mujamil.official@gmail.com")
                 .contactNumber("123456789")
-                .password(encoder.encode(System.getenv("ADMIN_PASSWORD")))
+                .password(System.getenv("ADMIN_PASSWORD"))
                 .location("chennai")
                 .build();
         Set<Role> roles = new HashSet<>();
         roles.add(roleService.retrieveRoleByName(UserRole.ADMIN));
         user.setRoles(roles);
         if( ! userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")) {
+            user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
         }
     }

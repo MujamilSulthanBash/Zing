@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.i2i.zing.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -99,7 +100,7 @@ public class StockServiceImplTest {
     @Test
     void testGetStocksByIdFailure() {
         when(stockRepository.findByIsDeletedFalseAndStockId("1L")).thenReturn(null);
-        assertThrows(NullPointerException.class, () -> {
+        assertThrows(EntityNotFoundException.class, () -> {
             stockService.getStockById("1L");
         });
     }

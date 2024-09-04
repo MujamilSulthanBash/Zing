@@ -38,9 +38,6 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     OrderAssignRepository orderAssignRepository;
 
     @Autowired
-    UserService userService;
-
-    @Autowired
     DeliveryPersonService deliveryPersonService;
 
     @Autowired

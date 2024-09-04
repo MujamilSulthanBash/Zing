@@ -135,7 +135,7 @@ public class OrderServiceImpl implements OrderService {
         Order order = orderRepository.findByOrderIdAndIsDeletedFalse(orderId);
         if (null == order) {
             logger.warn("Order with Id : {} not found to verify", orderId);
-            throw new EntityNotFoundException("Order with Id : " + orderId + " not found to verify");
+            throw new EntityNotFoundException("Order with Id : " + orderId + " not found to verify.");
         }
         return order;
     }
@@ -151,5 +151,4 @@ public class OrderServiceImpl implements OrderService {
         apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         return apiResponse;
     }
-
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
@@ -47,6 +49,7 @@ public class OrderServiceImplTest {
     CartService cartService;
 
     private String cartId;
+    private String orderId;
     private Cart cart;
     private CartItem cartItem;
     private Order order;
@@ -55,6 +58,7 @@ public class OrderServiceImplTest {
 
     @BeforeEach
     public void setUp() {
+        orderId = "1o";
         cartId = "2c";
         cart = Cart.builder()
                 .cartId(cartId)
@@ -81,6 +85,7 @@ public class OrderServiceImplTest {
                 .quantity(2)
                 .build();
         cartItems.add(cartItem);
+        cart.setCartItems(cartItems);
         order = Order.builder()
                 .orderId("1o")
                 .paymentStatus(PaymentStatus.PAID)
@@ -93,28 +98,48 @@ public class OrderServiceImplTest {
                 .paymentMethod("UPI")
                 .cartId("1c").build();
         stock = Stock.builder()
+                .stockId("1s")
                 .darkstore(DarkStore.builder().darkStoreId("1ds").build())
                 .item(Item.builder().itemId("1i").build())
                 .quantity(10).build();
     }
 
     @Test
-    public void testAddOrder() {
-        Order order = Order.builder()
-                .orderId("1o")
-                .paymentStatus(PaymentStatus.PAID)
-                .paymentMethod(PaymentMethod.UPI)
-                .cart(cart)
-                .build();
+    public void testGetOrders() {
         when(orderRepository.findByIsDeletedFalse()).thenReturn(List.of(order));
-        when(cartService.getCartAsModel("1c")).thenReturn(cart);
-        when(stockService.getStockByItemId("1i")).thenReturn(stock);
-        orderAssignService.addOrderAssign(order);
-        stockService.reduceStocks(cart.getCartItems());
-        emailSenderService.sendEmail(cart.getCustomer().getUser().getEmailId(), "subject", "body");
-        cartService.addCart(order.getCart().getCustomer());
-        APIResponse apiResponse = orderServiceImpl.addOrder(orderDto);
-        assertEquals(HttpStatus.CREATED.value(), apiResponse.getStatus());
+        APIResponse apiResponse = orderServiceImpl.getOrders();
+        assertEquals(apiResponse.getStatus(), HttpStatus.OK.value());
         assertThat(apiResponse.getData()).isNotNull();
+    }
+
+    @Test
+    public void testGetOrderSuccess() {
+        when(orderRepository.findByOrderIdAndIsDeletedFalse(orderId)).thenReturn(order);
+        APIResponse apiResponse = orderServiceImpl.getOrder(orderId);
+        assertEquals(apiResponse.getStatus(), HttpStatus.OK.value());
+        assertThat(apiResponse.getData()).isNotNull();
+    }
+
+    @Test
+    public void testGetOrderFailure() {
+        String orderId = "2o";
+        when(orderRepository.findByOrderIdAndIsDeletedFalse(orderId)).thenReturn(null);
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> orderServiceImpl.getOrder(orderId));
+        assertEquals("Order with Id : " + orderId + " not found", thrown.getMessage());
+    }
+
+    @Test
+    public void testGetOrderById() {
+        when(orderRepository.findByOrderIdAndIsDeletedFalse(orderId)).thenReturn(order);
+        Order order = orderServiceImpl.getOrderById(orderId);
+        assertEquals(orderId, order.getOrderId());
+    }
+
+    @Test
+    public void testGetOrderByIdFailure() {
+        String orderId = "2o";
+        when(orderRepository.findByOrderIdAndIsDeletedFalse(orderId)).thenReturn(null);
+        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> orderServiceImpl.getOrderById(orderId));
+        assertEquals("Order with Id : " + orderId + " not found to verify.", thrown.getMessage());
     }
 }

@@ -18,8 +18,8 @@ import com.i2i.zing.service.CategoryService;
 
 /**
  * <p>
- *     This class is the Controller for Category Operations
- *     like Add, Update, Read and Delete the Categories.
+ * This class is the Controller for Category Operations
+ * like Add, Update, Read and Delete the Categories.
  * </p>
  */
 @Controller
@@ -33,9 +33,10 @@ public class CategoryController {
 
     /**
      * <p>
-     *     This method add the Category to the Database
-     *     like id, name
+     * This method add the Category to the Database
+     * like id, name
      * </p>
+     *
      * @param categoryRequestDto {@link CategoryRequestDto} Category as Dto Object
      * @return APIResponse Details like Status, Data.
      */
@@ -52,8 +53,9 @@ public class CategoryController {
 
     /**
      * <p>
-     *     This method get all the Categories from the Database
+     * This method get all the Categories from the Database
      * </p>
+     *
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping
@@ -69,8 +71,9 @@ public class CategoryController {
 
     /**
      * <p>
-     *     This method get the Category by ID
+     * This method get the Category by ID
      * </p>
+     *
      * @param categoryId - To Identify the Category
      * @return APIResponse Details like Status, Data.
      */
@@ -87,8 +90,9 @@ public class CategoryController {
 
     /**
      * <p>
-     *     This method delete the Category in the Database
+     * This method delete the Category in the Database
      * </p>
+     *
      * @param categoryId - To Identify the Category
      * @return APIResponse Details like Status, Data.
      */

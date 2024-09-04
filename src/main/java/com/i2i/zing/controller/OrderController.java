@@ -16,8 +16,8 @@ import com.i2i.zing.service.OrderService;
 
 /**
  * <p>
- *     This class is the Controller for Order Operations
- *     like Add, Update, Read and Delete the Order.
+ * This class is the Controller for Order Operations
+ * like Add, Update, Read and Delete the Order.
  * </p>
  */
 @RestController
@@ -31,8 +31,9 @@ public class OrderController {
 
     /**
      * <p>
-     *     This method add the Order to the Database
+     * This method add the Order to the Database
      * </p>
+     *
      * @param orderDto {@link OrderDto} - Order as Dto Object
      * @return - APIResponse like Status, Data.
      */
@@ -50,8 +51,9 @@ public class OrderController {
 
     /**
      * <p>
-     *     This method get the Order Details in the Database
+     * This method get the Order Details in the Database
      * </p>
+     *
      * @return APIResponse like Status, Data.
      */
     @GetMapping
@@ -63,8 +65,9 @@ public class OrderController {
 
     /**
      * <p>
-     *     This method get the Specific Order Detail by ID
+     * This method get the Specific Order Detail by ID
      * </p>
+     *
      * @param orderId - To Identify the Order
      * @return APIResponse like Status, Data.
      */

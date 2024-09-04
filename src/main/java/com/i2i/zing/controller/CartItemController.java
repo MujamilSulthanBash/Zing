@@ -16,8 +16,8 @@ import com.i2i.zing.service.CartItemService;
 
 /**
  * <p>
- *     This class is the Controller for CartItem Operations
- *     like Add, Update, Read and Delete the CartItems.
+ * This class is the Controller for CartItem Operations
+ * like Add, Update, Read and Delete the CartItems.
  * </p>
  */
 @RestController
@@ -29,11 +29,11 @@ public class CartItemController {
 
     /**
      * <p>
-     *     This method add the Cart Items to the Database
+     * This method add the Cart Items to the Database
      * </p>
      *
      * @param cartItemRequestDto - CartItem Details like ID, quantity
-     *                    total price etc.,
+     *                           total price etc.,
      * @return - APIResponse (Status , Data)
      */
     @PostMapping
@@ -45,7 +45,7 @@ public class CartItemController {
 
     /**
      * <p>
-     *     This method get all the Cart Items in the Database
+     * This method get all the Cart Items in the Database
      * </p>
      *
      * @return - APIResponse (Status, Data)
@@ -59,7 +59,7 @@ public class CartItemController {
 
     /**
      * <p>
-     *     This method get the CartItem by ID
+     * This method get the CartItem by ID
      * </p>
      *
      * @param cartItemId - To Identify the Cart Item
@@ -74,7 +74,7 @@ public class CartItemController {
 
     /**
      * <p>
-     *     This method delete the Cart Item in the Database
+     * This method delete the Cart Item in the Database
      * </p>
      *
      * @param cartItemId - TO Identify the CartItem ID
@@ -89,7 +89,7 @@ public class CartItemController {
 
     /**
      * <p>
-     *     This method update the Stock
+     * This method update the Stock
      * </p>
      *
      * @param cartItemRequestDto - CartItem Details as Dto Object

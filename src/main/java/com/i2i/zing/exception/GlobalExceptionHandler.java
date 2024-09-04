@@ -67,8 +67,8 @@ public class GlobalExceptionHandler {
         return apiResponse;
     }
 
-    @ExceptionHandler({UnAuthorizedExecption.class})
-    public APIResponse handleUnAuthorizedException(UnAuthorizedExecption exception) {
+    @ExceptionHandler({UnAuthorizedException.class})
+    public APIResponse handleUnAuthorizedException(UnAuthorizedException exception) {
         APIResponse apiResponse = new APIResponse();
         ExceptionResponse exceptionResponse = new ExceptionResponse();
         exceptionResponse.setErrorCode("UNAUTHORIZED");

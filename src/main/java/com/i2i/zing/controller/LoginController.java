@@ -15,6 +15,13 @@ import com.i2i.zing.dto.UserLoginRequestDto;
 import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.service.LoginService;
 
+/**
+ * <p>
+ * This class is the Controller for Signup and Login Operations
+ * like Customer, Delivery Person Signup and Login and
+ * also verification of the Email
+ * </p>
+ */
 @RestController
 @RequestMapping("zing/api/v1/")
 public class LoginController {
@@ -24,9 +31,10 @@ public class LoginController {
 
     /**
      * <p>
-     *     This method is used to sign up the Customer with
-     *     Customer Details
+     * This method is used to sign up the Customer with
+     * Customer Details
      * </p>
+     *
      * @param customerRequestDto - Customer Details to Signup as Dto object
      * @return - APIResponse (Status Code, Data)
      */
@@ -39,9 +47,10 @@ public class LoginController {
 
     /**
      * <p>
-     *     This method is used to sign up the Delivery Person with
-     *     Delivery Person Details
+     * This method is used to sign up the Delivery Person with
+     * Delivery Person Details
      * </p>
+     *
      * @param deliveryPersonRequestDto - Delivery Person Details for Signup as Dto object
      * @return - APIResponse (Status COde, Data)
      */
@@ -54,8 +63,9 @@ public class LoginController {
 
     /**
      * <p>
-     *     This method is used to authenticate the User login Credentials
+     * This method is used to authenticate the User login Credentials
      * </p>
+     *
      * @param userLoginRequestDto - Login Request Details like Username, Password
      * @return - APIResponse (Status Code, Data)
      */
@@ -68,8 +78,9 @@ public class LoginController {
 
     /**
      * <p>
-     *     This method is used to authenticate the User login Credentials
+     * This method is used to authenticate the User login Credentials
      * </p>
+     *
      * @param verifyEmailDto - Login Request Details like User email, otp
      * @return - APIResponse (Status Code, Data)
      */

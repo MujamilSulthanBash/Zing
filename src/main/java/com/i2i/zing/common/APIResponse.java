@@ -8,8 +8,8 @@ import lombok.Setter;
 
 /**
  * <p>
- *     Represents blueprint for the APIResponse.
- *     Contains status of the api, data of the api, error of the api.
+ * Represents blueprint for the APIResponse.
+ * Contains status of the api, data of the api, error of the api.
  * </p>
  */
 @Builder

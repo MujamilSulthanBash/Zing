@@ -18,8 +18,8 @@ import com.i2i.zing.service.StockService;
 
 /**
  * <p>
- *     This class is the Controller for Stock Operations
- *     like Add, Update, Read and Delete the Stocks.
+ * This class is the Controller for Stock Operations
+ * like Add, Update, Read and Delete the Stocks.
  * </p>
  */
 @RestController
@@ -31,8 +31,9 @@ public class StockController {
 
     /**
      * <p>
-     *     This method add the Stock to the Database
+     * This method add the Stock to the Database
      * </p>
+     *
      * @param stockRequestDto {@link StockRequestDto} Stock as Dto Object
      * @return APIResponse Details like Status, Data.
      */
@@ -49,8 +50,9 @@ public class StockController {
 
     /**
      * <p>
-     *     This method get all the Stock Details in the Database table
+     * This method get all the Stock Details in the Database table
      * </p>
+     *
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping
@@ -66,8 +68,9 @@ public class StockController {
 
     /**
      * <p>
-     *     This method get the Stock Details by ID
+     * This method get the Stock Details by ID
      * </p>
+     *
      * @param stockId - To Identify the Stock
      * @return APIResponse Details like Status, Data.
      */
@@ -84,8 +87,9 @@ public class StockController {
 
     /**
      * <p>
-     *     This method delete the Stock Details by ID
+     * This method delete the Stock Details by ID
      * </p>
+     *
      * @param stockId - To Identify the Stock
      * @return APIResponse Details like Status, Data.
      */
@@ -102,8 +106,9 @@ public class StockController {
 
     /**
      * <p>
-     *     This method Update the Stock Details by Stock Id
+     * This method Update the Stock Details by Stock Id
      * </p>
+     *
      * @param stockRequestDto {@link StockRequestDto} - Stock as Dto Object
      * @return - APIResponse Details like Status, Data.
      */

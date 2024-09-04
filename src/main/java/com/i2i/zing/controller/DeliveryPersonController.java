@@ -13,6 +13,12 @@ import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.service.OrderAssignService;
 import com.i2i.zing.service.OrderService;
 
+/**
+ * <p>
+ * This class is the Controller for Delivery Person Operations
+ * Validate the order with OTP
+ * </p>
+ */
 @RestController
 @RequestMapping("zing/api/v1/deliverypersons")
 public class DeliveryPersonController {

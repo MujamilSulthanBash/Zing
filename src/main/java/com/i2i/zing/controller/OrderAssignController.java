@@ -16,8 +16,8 @@ import com.i2i.zing.service.OrderAssignService;
 
 /**
  * <p>
- *      Acts as transaction between interface and application for
- *      fetching and updating assigned orders to delivery person.
+ * Acts as transaction between interface and application for
+ * fetching and updating assigned orders to delivery person.
  * </p>
  */
 @RestController
@@ -31,7 +31,7 @@ public class OrderAssignController {
 
     /**
      * <p>
-     *     Retrieves the required assigned order detail.
+     * Retrieves the required assigned order detail.
      * </p>
      *
      * @param assignId - String value to fetch details.
@@ -46,7 +46,7 @@ public class OrderAssignController {
 
     /**
      * <p>
-     *     Retrieves all the assigned order detail.
+     * Retrieves all the assigned order detail.
      * </p>
      *
      * @return APIResponse Details like Status, Data.
@@ -60,7 +60,7 @@ public class OrderAssignController {
 
     /**
      * <p>
-     *     Updates the required assigned order detail.
+     * Updates the required assigned order detail.
      * </p>
      *
      * @param orderAssignDto - {@link OrderAssignDto} value to fetch details.

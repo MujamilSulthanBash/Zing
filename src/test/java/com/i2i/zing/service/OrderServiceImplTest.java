@@ -1,32 +1,39 @@
 package com.i2i.zing.service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import com.i2i.zing.common.PaymentMethod;
 import com.i2i.zing.common.PaymentStatus;
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.OrderDto;
-import com.i2i.zing.model.*;
+import com.i2i.zing.exception.EntityNotFoundException;
+import com.i2i.zing.model.Cart;
+import com.i2i.zing.model.CartItem;
+import com.i2i.zing.model.Customer;
+import com.i2i.zing.model.DarkStore;
+import com.i2i.zing.model.Item;
+import com.i2i.zing.model.Order;
+import com.i2i.zing.model.Stock;
+import com.i2i.zing.model.User;
 import com.i2i.zing.repository.OrderRepository;
 import com.i2i.zing.service.impl.EmailSenderService;
 import com.i2i.zing.service.impl.OrderServiceImpl;
-import org.springframework.http.HttpStatus;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceImplTest {
@@ -55,6 +62,8 @@ public class OrderServiceImplTest {
     private Order order;
     private OrderDto orderDto;
     private Stock stock;
+    private Order firstOrder;
+    private List<Order> orders;
 
     @BeforeEach
     public void setUp() {
@@ -93,7 +102,7 @@ public class OrderServiceImplTest {
                 .cart(cart)
                 .build();
         orderDto = OrderDto.builder()
-                .orderId("1o")
+                .orderId("100")
                 .paymentStatus("PAID")
                 .paymentMethod("UPI")
                 .cartId("1c").build();
@@ -102,6 +111,15 @@ public class OrderServiceImplTest {
                 .darkstore(DarkStore.builder().darkStoreId("1ds").build())
                 .item(Item.builder().itemId("1i").build())
                 .quantity(10).build();
+        firstOrder = Order.builder()
+                .orderId("100")
+                .paymentStatus(PaymentStatus.PAID)
+                .paymentMethod(PaymentMethod.UPI)
+                .cart(cart)
+                .build();
+        orders = new ArrayList<>();
+        orders.add(order);
+        orders.add(firstOrder);
     }
 
     @Test

@@ -5,7 +5,6 @@ import java.util.NoSuchElementException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,8 +23,8 @@ import com.i2i.zing.service.ItemService;
 
 /**
  * <p>
- *     This class is the Controller for Item Operations
- *     like Add, Update, Read and Delete the Items.
+ * This class is the Controller for Item Operations
+ * like Add, Update, Read and Delete the Items.
  * </p>
  */
 @Controller
@@ -37,7 +36,7 @@ public class ItemController {
 
     /**
      * <p>
-     *     This method add the Item to the Database table
+     * This method add the Item to the Database table
      * </p>
      *
      * @param itemRequestDto {@link ItemRequestDto} - Item as Dto Object
@@ -56,8 +55,9 @@ public class ItemController {
 
     /**
      * <p>
-     *     This method get all the Items in the database table
+     * This method get all the Items in the database table
      * </p>
+     *
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/showitems")
@@ -73,8 +73,9 @@ public class ItemController {
 
     /**
      * <p>
-     *     This method get specific Item by ID given by the user
+     * This method get specific Item by ID given by the user
      * </p>
+     *
      * @param itemId - To Identify the Item
      * @return APIResponse Details like Status, Data.
      */
@@ -91,8 +92,9 @@ public class ItemController {
 
     /**
      * <p>
-     *     This method delete the Item by ID
+     * This method delete the Item by ID
      * </p>
+     *
      * @param itemId - To Identify the Item
      * @return APIResponse Details like Status, Data.
      */

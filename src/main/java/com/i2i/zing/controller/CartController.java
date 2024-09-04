@@ -12,8 +12,8 @@ import com.i2i.zing.service.CartService;
 
 /**
  * <p>
- *     This class is the Controller for Cart Operations
- *     like Add, Update, Read and Delete the Cart.
+ * This class is the Controller for Cart Operations
+ * like Add, Update, Read and Delete the Cart.
  * </p>
  */
 @RestController
@@ -25,8 +25,9 @@ public class CartController {
 
     /**
      * <p>
-     *     This method get the Cart Details by the Cart Id
+     * This method get the Cart Details by the Cart Id
      * </p>
+     *
      * @param cartId - To Identify the Cart
      * @return APIResponse Details like Status, Data.
      */
@@ -39,9 +40,10 @@ public class CartController {
 
     /**
      * <p>
-     *     This method get the Cart items of Specific
-     *     Cart by Cart Id
+     * This method get the Cart items of Specific
+     * Cart by Cart Id
      * </p>
+     *
      * @param cartId - To Identify the Cart
      * @return APIResponse Details like Status, Data.
      */

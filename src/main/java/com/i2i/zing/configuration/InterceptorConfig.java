@@ -6,8 +6,10 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
+ * <p>
  * Configuration class for setting up interceptors in the Spring MVC application.
  * Implements WebMvcConfigure to customize the default MVC configuration.
+ * </p>
  */
 @Component
 public class InterceptorConfig implements WebMvcConfigurer {
@@ -17,8 +19,9 @@ public class InterceptorConfig implements WebMvcConfigurer {
 
     /**
      * <p>
-     *     This method add Interceptor in the registry
+     * This method add Interceptor in the registry
      * </p>
+     *
      * @param registry - as InterceptorRegistry Object
      */
     @Override

@@ -11,10 +11,11 @@ import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.DarkStoreDto;
 import com.i2i.zing.dto.DarkStoreRequestDto;
 import com.i2i.zing.service.DarkStoreService;
+
 /**
  * <p>
- *     This class is the Controller for DarkStore Operations
- *     like Add, Update, Read and Delete the DarkStore.
+ * This class is the Controller for DarkStore Operations
+ * like Add, Update, Read and Delete the DarkStore.
  * </p>
  */
 @Controller
@@ -28,8 +29,9 @@ public class DarkStoreController {
 
     /**
      * <p>
-     *     This method Add a DarkStore to the Database
+     * This method Add a DarkStore to the Database
      * </p>
+     *
      * @param darkStoreDto {@link DarkStoreRequestDto}- DarkStore as Dto Object
      * @return APIResponse Details like Status, Data.
      */
@@ -46,8 +48,9 @@ public class DarkStoreController {
 
     /**
      * <p>
-     *     This method get all the DarkStores in the Database
+     * This method get all the DarkStores in the Database
      * </p>
+     *
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping
@@ -62,8 +65,9 @@ public class DarkStoreController {
 
     /**
      * <p>
-     *     This method get the DarkStore by DarkStore Id
+     * This method get the DarkStore by DarkStore Id
      * </p>
+     *
      * @param darkStoreId - To Identify DarkStore
      * @return APIResponse Details like Status, Data.
      */
@@ -79,9 +83,10 @@ public class DarkStoreController {
 
     /**
      * <p>
-     *     This method Delete the Dark Store in the Database
-     *     with the DarkStoreId
+     * This method Delete the Dark Store in the Database
+     * with the DarkStoreId
      * </p>
+     *
      * @param darkStoreId - To Identify DarkStore
      * @return APIResponse Details like Status, Data.
      */

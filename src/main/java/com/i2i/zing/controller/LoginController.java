@@ -91,6 +91,14 @@ public class LoginController {
                 .body(apiResponse);
     }
 
+    /**
+     * <p>
+     *     This method verify the Delivery Person Email
+     *     with OTP Verification
+     * </p>
+     * @param verifyEmailDto {@link VerifyEmailDto} - Email Id and Password
+     * @return APIResponse (Status, Data)
+     */
     @PostMapping("deliverypersons/verify")
     public ResponseEntity<APIResponse> verifyDeliveryPersonsMail(@Valid @RequestBody VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = loginService.verifyDeliveryPersonEmail(verifyEmailDto);

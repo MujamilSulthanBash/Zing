@@ -1,7 +1,5 @@
 package com.i2i.zing.controller;
 
-import java.util.NoSuchElementException;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +43,6 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<APIResponse> addItem(@RequestBody ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = itemService.addItem(itemRequestDto);
-        if (null == apiResponse.getData()) {
-            logger.warn("An Error Occurred while adding Item to the Database..");
-        }
         logger.info("Item Added Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -63,9 +58,6 @@ public class ItemController {
     @GetMapping("/showitems")
     public ResponseEntity<APIResponse> getItemsByLocation(@RequestBody LocationRequestDto locationRequestDto) {
         APIResponse apiResponse = itemService.getItemsByLocation(locationRequestDto.getLocation());
-        if (null == apiResponse.getData()) {
-            logger.warn("No Items found in that Location..");
-        }
         logger.info("Items Retrieved by Successfully by this Location : {}", locationRequestDto.getLocation());
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -82,9 +74,6 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public ResponseEntity<APIResponse> getItemById(@PathVariable String itemId) {
         APIResponse apiResponse = itemService.getItemById(itemId);
-        if (null == apiResponse.getData()) {
-            logger.warn("An Error Occurred while getting the item by ID :{}", itemId);
-        }
         logger.info("Item Retrieved By Successfully with Id : {}", itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -101,10 +90,6 @@ public class ItemController {
     @DeleteMapping("/{itemId}")
     public ResponseEntity<APIResponse> deleteItem(String itemId) {
         APIResponse apiResponse = itemService.deleteItem(itemId);
-        if (null != apiResponse.getData()) {
-            logger.warn("An Error occurred while Deleting the Item with Id : {}", itemId);
-            throw new NoSuchElementException("Item Not found with Id :" + itemId);
-        }
         logger.info("Item deleted Successfully with Id : {}", itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -113,9 +98,6 @@ public class ItemController {
     @PutMapping
     public ResponseEntity<APIResponse> updateItem(@RequestBody ItemUpdateDto itemUpdateDto) {
         APIResponse apiResponse = itemService.updateItem(itemUpdateDto);
-        if (null == apiResponse.getData()) {
-            logger.warn("An Error occurred while Updating the Item with Id :" + itemUpdateDto.getItemId());
-        }
         logger.info("Item Updated Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

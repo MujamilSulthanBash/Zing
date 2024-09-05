@@ -126,7 +126,6 @@ public class StockServiceImpl implements StockService {
     @Override
     public APIResponse updateStock(StockRequestDto stockRequestDto) {
         APIResponse apiResponse = new APIResponse();
-        Stock stock = StockMapper.convertDtoToEntity(stockRequestDto);
         Stock existingStock = stockRepository.findByIsDeletedFalseAndStockId(stockRequestDto.getStockId());
         if (null == existingStock) {
             logger.warn("Stock Not found to update with Id :{}", stockRequestDto.getStockId());

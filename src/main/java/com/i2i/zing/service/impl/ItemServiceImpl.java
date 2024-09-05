@@ -122,7 +122,6 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public APIResponse updateItem(ItemUpdateDto itemUpdateDto) {
         APIResponse apiResponse = new APIResponse();
-        Item item = ItemMapper.convertDtoToResponseEntity(itemUpdateDto);
         Item existingItem = itemRepository.findByIsDeletedFalseAndItemId(itemUpdateDto.getItemId());
         if (null == existingItem) {
             logger.warn("Item Not found to Update with Id :{}", itemUpdateDto.getItemId());

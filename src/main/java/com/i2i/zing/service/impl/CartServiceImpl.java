@@ -24,7 +24,7 @@ import com.i2i.zing.service.CartService;
  * </p>
  */
 @Service
-public class CartServiceImpl implements CartService {
+    public class CartServiceImpl implements CartService {
 
     @Autowired
     CartRepository cartRepository;

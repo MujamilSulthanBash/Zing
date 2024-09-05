@@ -48,6 +48,7 @@ public class CartItemServiceImpl implements CartItemService {
             }
         }
         ItemDisplayResponseDto itemDisplayResponseDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
+        cartItem.setPrice(itemDisplayResponseDto.getPrice());
         cartItem.setTotalPrice((double) cartItem.getQuantity() * itemDisplayResponseDto.getPrice());
         CartItem resultCartItem = cartItemRepository.save(cartItem);
         apiResponse.setData(resultCartItem);

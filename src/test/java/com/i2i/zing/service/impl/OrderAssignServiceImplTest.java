@@ -1,5 +1,6 @@
 package com.i2i.zing.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -54,7 +55,9 @@ public class OrderAssignServiceImplTest {
     private Cart cart;
     private Customer customer;
     private DeliveryPerson deliveryPerson;
+    private DeliveryPerson firstDeliveryPerson;
     private OrderAssignDto orderAssignDto;
+    private List<DeliveryPerson> deliveryPeoples;
 
     @BeforeEach
     public void setUp() {
@@ -90,6 +93,13 @@ public class OrderAssignServiceImplTest {
                                 .cart(Cart.builder().cartId("2c").build()).build()).build()))
                 .user(User.builder().location("Guindy").build())
                 .build();
+        firstDeliveryPerson = DeliveryPerson.builder()
+                .deliveryPersonId("2d")
+                .orderAssign(Set.of(OrderAssign.builder()
+                        .order(Order.builder()
+                                .cart(Cart.builder().cartId("3c").build()).build()).build()))
+                .user(User.builder().location("Guindy").build())
+                .build();
         orderAssign = OrderAssign.builder()
                 .assignId("1a")
                 .order(order)
@@ -101,6 +111,9 @@ public class OrderAssignServiceImplTest {
                 .deliveryStatus(DeliveryStatus.PENDING.toString())
                 .deliveryPersonId("1d")
                 .build();
+        deliveryPeoples = new ArrayList<>();
+        deliveryPeoples.add(deliveryPerson);
+        deliveryPeoples.add(firstDeliveryPerson);
     }
 
     @Test
@@ -161,6 +174,19 @@ public class OrderAssignServiceImplTest {
         when(orderAssignRepository.findByAssignIdAndIsDeletedFalse("2a")).thenReturn(null);
         EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> orderAssignServiceImpl.updateOrderAssign(orderAssignDto1));
         assertEquals("There is no assigning record with ID : " + orderAssignDto1.getAssignId() + " to update.", thrown.getMessage());
+    }
+
+    @Test
+    public void testAddOrderAssign() {
+        when(customerService.getCustomer(order.getCart().getCustomer().getCustomerId())).thenReturn(customer);
+        when(deliveryPersonService.getDeliveryPersonByLocation(customer.getUser().getLocation())).thenReturn(deliveryPeoples);
+        orderAssignServiceImpl.addOrderAssign(order);
+    }
+
+    @Test
+    public void testUpdateOrderStatusFailure() {
+        when(orderAssignRepository.findByOrderId(order.getOrderId())).thenReturn(null);
+        assertThrows(EntityNotFoundException.class, ()-> orderAssignServiceImpl.updateOrderStatus("accepted", order.getOrderId()));
     }
 
 }

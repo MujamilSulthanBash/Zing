@@ -1,6 +1,5 @@
 package com.i2i.zing.service.impl;
 
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +51,15 @@ public class OrderAssignServiceImpl implements OrderAssignService {
         Customer customer = customerService.getCustomer(order.getCart().getCustomer().getCustomerId());
         List<DeliveryPerson> deliveryPeoples = deliveryPersonService.getDeliveryPersonByLocation(customer.getUser().getLocation());
         logger.debug("Revoked deliveryPersonService to get deliveryPerson list.");
-        deliveryPeoples.sort(Comparator.comparingInt(dp -> dp.getOrderAssign().size()));
+        for (int i = 0; i < deliveryPeoples.size(); i++) {
+            for (int j = i+1; j <= deliveryPeoples.size() - 1; j++) {
+                if (deliveryPeoples.get(i).getOrderAssign().size() < deliveryPeoples.get(j).getOrderAssign().size()) {
+                    DeliveryPerson temp = deliveryPeoples.get(j);
+                    deliveryPeoples.set(j,deliveryPeoples.get(i));
+                    deliveryPeoples.set(i, temp);
+                }
+            }
+        }
         logger.debug("Assigned delivery Person.");
         OrderAssign orderAssign = OrderAssign.builder()
                 .order(order)

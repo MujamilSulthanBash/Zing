@@ -70,9 +70,6 @@ public class DarkStoreServiceImpl implements DarkStoreService {
         darkStore.setUser(savedUser);
         darkStoreRepository.save(darkStore);
         apiResponse.setStatus(HttpStatus.CREATED.value());
-        if (null == darkStore) {
-            logger.warn("An Error Occurred while Adding DarkStore..");
-        }
         return apiResponse;
     }
 

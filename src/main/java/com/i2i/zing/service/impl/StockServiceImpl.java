@@ -134,6 +134,7 @@ public class StockServiceImpl implements StockService {
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingStock.setModifiedDate(modifiedDate);
+        existingStock.setQuantity(stockRequestDto.getQuantity());
         stockRepository.save(existingStock);
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(modifiedDateTime);

@@ -50,9 +50,6 @@ public class ItemServiceImpl implements ItemService {
         }
         apiResponse.setData(ItemMapper.convertEntityToDto(itemRepository.save(item)));
         apiResponse.setStatus(HttpStatus.CREATED.value());
-        if (null == apiResponse.getData()) {
-            logger.warn("An error Occurred while Adding Item..");
-        }
         return apiResponse;
     }
 
@@ -84,24 +81,23 @@ public class ItemServiceImpl implements ItemService {
     public APIResponse getItemById(String itemId) {
         APIResponse apiResponse = new APIResponse();
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
-        apiResponse.setData(ItemMapper.convertEntityToResponseDto(item));
-        apiResponse.setStatus(HttpStatus.OK.value());
-        if (null == apiResponse.getData()) {
+        if (null == item) {
             logger.warn("An Error Occurred while getting Item with Id : {} not found.", itemId);
             throw new EntityNotFoundException("Item Not found with Id : " + itemId);
         }
+        apiResponse.setData(ItemMapper.convertEntityToResponseDto(item));
+        apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
 
     @Override
     public ItemDisplayResponseDto getItemDtoById(String itemId) {
         Item item = itemRepository.findByIsDeletedFalseAndItemId(itemId);
-        ItemDisplayResponseDto itemResponseDto = ItemMapper.convertEntityToDisplayResponseDto(item);
-        if (null == itemResponseDto) {
+        if (null == item) {
             logger.warn("An Error Occurred while getting Item with Id : {}", itemId);
             throw new EntityNotFoundException("Item Not found with Id : " + itemId);
         }
-        return itemResponseDto;
+        return ItemMapper.convertEntityToDisplayResponseDto(item);
     }
 
     @Override
@@ -130,6 +126,8 @@ public class ItemServiceImpl implements ItemService {
         LocalDate modifiedDateTime = LocalDate.now();
         Date modifiedDate = Date.from(modifiedDateTime.atStartOfDay(ZoneId.systemDefault()).toInstant());
         existingItem.setModifiedDate(modifiedDate);
+        existingItem.setItemName(itemUpdateDto.getName());
+        existingItem.setPrice(itemUpdateDto.getPrice());
         itemRepository.save(existingItem);
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(modifiedDateTime);

@@ -3,6 +3,7 @@ package com.i2i.zing.mapper;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
 import com.i2i.zing.model.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * <p>
@@ -11,6 +12,8 @@ import com.i2i.zing.model.User;
  * </p>
  */
 public class UserMapper {
+
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     /**
      * <p>
@@ -61,6 +64,17 @@ public class UserMapper {
                 .contactNumber(deliveryPersonRequestDto.getContactNumber())
                 .location(deliveryPersonRequestDto.getLocation())
                 .password(deliveryPersonRequestDto.getPassword())
+                .build();
+    }
+
+    public static User getAdminDetails() {
+//        String adminPassword = encoder.encode(System.getenv("ADMIN_PASSWORD"));
+        return User.builder()
+                .userName("ADMIN")
+                .emailId("mujamil.official@gmail.com")
+                .contactNumber("123456789")
+                .password(encoder.encode("adminPassword"))
+                .location("chennai")
                 .build();
     }
 

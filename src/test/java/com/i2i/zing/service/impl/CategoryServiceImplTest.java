@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.i2i.zing.exception.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,6 +37,8 @@ public class CategoryServiceImplTest {
     private CategoryServiceImpl categoryService;
 
     Category category;
+
+    List<Category> categories;
 
     CategoryRequestDto categoryRequestDto;
 
@@ -71,14 +74,22 @@ public class CategoryServiceImplTest {
                 .build();
         result.add(categoryResponseDto);
         category.setItems(items);
+        categories = new ArrayList<>();
     }
 
     @Test
     void testAddCategorySuccess() {
         when(categoryRepository.save(any(Category.class))).thenReturn(category);
         APIResponse apiResponse  = categoryService.addCategory(categoryRequestDto);
-
         assertEquals(apiResponse.getStatus(), HttpStatus.CREATED.value());
+    }
+
+    @Test
+    void testAddCategoryFailure() {
+        when(categoryRepository.existsByName(categoryRequestDto.getName())).thenReturn(true);
+        assertThrows(EntityNotFoundException.class, () -> {
+            categoryService.addCategory(categoryRequestDto);
+        });
     }
 
     @Test
@@ -89,17 +100,23 @@ public class CategoryServiceImplTest {
     }
 
     @Test
+    void testGetAllCategoriesFailure() {
+        when(categoryRepository.findByIsDeletedFalse()).thenReturn(categories);
+        APIResponse apiResponse = categoryService.getCategories();
+        assertThat(apiResponse.getData()).isNotNull();
+    }
+
+    @Test
     void testGetCategoryByIdSuccess(){
         when(categoryRepository.findByIsDeletedFalseAndCategoryId("1")).thenReturn(category);
         APIResponse apiResponse = categoryService.getCategoryById(category.getCategoryId());
-
         assertThat(apiResponse.getData()).isNotNull();
     }
 
     @Test
     void testGetCategoryByIdFailure() {
         when(categoryRepository.findByIsDeletedFalseAndCategoryId("1")).thenReturn(null);
-        assertThrows(NullPointerException.class, () -> {
+        assertThrows(EntityNotFoundException.class, () -> {
             categoryService.getCategoryById("1");
         });
     }

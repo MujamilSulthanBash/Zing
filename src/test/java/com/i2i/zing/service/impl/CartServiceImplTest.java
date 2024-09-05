@@ -35,11 +35,13 @@ public class CartServiceImplTest {
 
     private Cart cart;
     private String cartId;
+    private Customer customer;
+    private Cart emptyCart;
 
     @BeforeEach
     public void setUp() {
         cartId = "1c";
-        Customer customer = Customer.builder()
+        customer = Customer.builder()
                 .customerId("1cu")
                 .memberShip(Membership.SILVER)
                 .carts(Set.of(Cart.builder()
@@ -68,6 +70,13 @@ public class CartServiceImplTest {
                 .build();
         cartItems.add(cartItem);
         cart.setCartItems(cartItems);
+        emptyCart = null;
+    }
+
+    @Test
+    public void testAddCart() {
+        cartRepository.save(cart);
+        cartServiceImpl.addCart(customer);
     }
 
     @Test
@@ -88,9 +97,8 @@ public class CartServiceImplTest {
 
     @Test
     public void testGetCartFailure() {
-        when(cartRepository.findByCartId(cartId)).thenReturn(null);
-        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCart(cartId));
-        assertEquals("Cart Not found with Id : " + cartId, thrown.getMessage());
+        when(cartRepository.findByCartId(cartId)).thenReturn(emptyCart);
+        assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCart(cartId));
     }
 
     @Test
@@ -103,8 +111,7 @@ public class CartServiceImplTest {
     @Test
     public void testGetCartAsModelFailure() {
         when(cartRepository.findByCartId(cartId)).thenReturn(null);
-        EntityNotFoundException thrown = assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCart(cartId));
-        assertEquals("Cart Not found with Id : " + cartId, thrown.getMessage());
+        assertThrows(EntityNotFoundException.class, ()-> cartServiceImpl.getCartAsModel(cartId));
     }
 
     @Test

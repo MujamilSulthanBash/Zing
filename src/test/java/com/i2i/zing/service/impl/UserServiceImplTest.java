@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.i2i.zing.common.UserRole;
@@ -19,6 +20,7 @@ import com.i2i.zing.model.Role;
 import com.i2i.zing.model.User;
 import com.i2i.zing.repository.UserRepository;
 import com.i2i.zing.service.RoleService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceImplTest {
@@ -55,9 +57,15 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void testCreateAdminSuccess() {
+    void testCreateAdminFailure() {
         when(userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")).thenReturn(true);
-        userRepository.save(user);
+        roleService.retrieveRoleByName(UserRole.ADMIN);
+        userService.createAdmin();
+    }
+
+    @Test
+    void testCreateAdminSuccess() {
+        when(userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")).thenReturn(false);
         roleService.retrieveRoleByName(UserRole.ADMIN);
         userService.createAdmin();
     }
@@ -66,7 +74,6 @@ public class UserServiceImplTest {
     void testRetrieveByEmail() {
         when(userRepository.findByEmailIdIgnoreCase(user.getEmailId())).thenReturn(user);
         User retrievedUser = userService.retrieveByEmail(user.getEmailId());
-
         assertEquals(retrievedUser.getEmailId(), user.getEmailId());
     }
 

@@ -33,10 +33,11 @@ public class CategoryServiceImpl implements CategoryService {
     public APIResponse addCategory(CategoryRequestDto categoryRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Category category = CategoryMapper.convertDtoToCreationEntity(categoryRequestDto);
-        CategoryCreationDto categoryCreationDto = CategoryMapper.convertEntityToCreationDto(categoryRepository.save(category));
-        if (null == categoryCreationDto) {
-            logger.warn("An Error Occurred while Adding Category :");
+        if (categoryRepository.existsByName(categoryRequestDto.getName())) {
+            logger.warn("Category Already Exists.. :");
+            throw new EntityNotFoundException("Category Already Exists with Name : " + categoryRequestDto.getName());
         }
+        CategoryCreationDto categoryCreationDto = CategoryMapper.convertEntityToCreationDto(categoryRepository.save(category));
         logger.info("Category Added Successfully..");
         apiResponse.setData(categoryCreationDto);
         apiResponse.setStatus(HttpStatus.CREATED.value());
@@ -63,13 +64,13 @@ public class CategoryServiceImpl implements CategoryService {
     public APIResponse getCategoryById(String categoryId) {
         APIResponse apiResponse = new APIResponse();
         Category category = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryId);
+        if (null == category) {
+            logger.warn("Category not found with Id : {} not found.", categoryId);
+            throw new EntityNotFoundException("Category Not found with Id : " + categoryId);
+        }
         CategoryResponseDto categoryResponseDto = CategoryMapper.convertEntityToResponseDto(category);
         apiResponse.setStatus(HttpStatus.OK.value());
         apiResponse.setData(categoryResponseDto);
-        if (null == categoryResponseDto) {
-            logger.warn("An Error Occurred while getting Category with Id : {} not found.", categoryId);
-            throw new EntityNotFoundException("Category Not found with Id : " + categoryId);
-        }
         return apiResponse;
     }
 

@@ -3,8 +3,8 @@ package com.i2i.zing.service.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.i2i.zing.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.UserRole;
@@ -23,22 +23,13 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleService roleService;
 
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
-
     @Override
     public void createAdmin() {
-        User user = User.builder()
-                .userName("ADMIN")
-                .emailId("mujamil.official@gmail.com")
-                .contactNumber("123456789")
-                .password(System.getenv("ADMIN_PASSWORD"))
-                .location("chennai")
-                .build();
-        Set<Role> roles = new HashSet<>();
-        roles.add(roleService.retrieveRoleByName(UserRole.ADMIN));
-        user.setRoles(roles);
         if (!userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")) {
-            user.setPassword(encoder.encode(user.getPassword()));
+            User user = UserMapper.getAdminDetails();
+            Set<Role> roles = new HashSet<>();
+            roles.add(roleService.retrieveRoleByName(UserRole.ADMIN));
+            user.setRoles(roles);
             userRepository.save(user);
         }
     }

@@ -23,7 +23,7 @@ import com.i2i.zing.service.CategoryService;
  * </p>
  */
 @Controller
-@RequestMapping("zing/api/v1/dark-stores/categories")
+@RequestMapping("zing/api/v1/darkstores/categories")
 public class CategoryController {
 
     private static final Logger logger = LogManager.getLogger();

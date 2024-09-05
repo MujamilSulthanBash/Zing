@@ -33,4 +33,13 @@ public interface CategoryRepository extends JpaRepository<Category, String> {
      */
     Category findByIsDeletedFalseAndCategoryId(String categoryId);
 
+    /**
+     * <p>
+     *     This method checks the Name exist or not
+     * </p>
+     * @param CategoryName - Name of the Category
+     * @return boolean Valid or not
+     */
+    boolean existsByName(String CategoryName);
+
 }

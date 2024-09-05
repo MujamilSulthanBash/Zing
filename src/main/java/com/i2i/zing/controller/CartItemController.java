@@ -32,7 +32,7 @@ public class CartItemController {
      * This method add the Cart Items to the Database
      * </p>
      *
-     * @param cartItemRequestDto - CartItem Details like ID, quantity
+     * @param cartItemRequestDto - {@link CartItemRequestDto}CartItem Details like ID, quantity
      *                           total price etc.,
      * @return - APIResponse (Status , Data)
      */
@@ -92,7 +92,7 @@ public class CartItemController {
      * This method update the Stock
      * </p>
      *
-     * @param cartItemRequestDto - CartItem Details as Dto Object
+     * @param cartItemRequestDto - {@link CartItemRequestDto}CartItem Details as Dto Object
      * @return - APIResponse (Status, Data)
      */
     @PutMapping

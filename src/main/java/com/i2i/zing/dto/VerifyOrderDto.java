@@ -3,6 +3,7 @@ package com.i2i.zing.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -11,6 +12,7 @@ import lombok.Data;
  * to verify.
  * </p>
  */
+@Builder
 @Data
 public class VerifyOrderDto {
     @NotBlank

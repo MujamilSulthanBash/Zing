@@ -67,7 +67,7 @@ public class OrderAssignController {
      * @return APIResponse Details like Status, Data.
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateOrderAssigns(@RequestBody OrderAssignDto orderAssignDto) {
+    public ResponseEntity<APIResponse> updateOrderAssign(@RequestBody OrderAssignDto orderAssignDto) {
         APIResponse apiResponse = orderAssignService.updateOrderAssign(orderAssignDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

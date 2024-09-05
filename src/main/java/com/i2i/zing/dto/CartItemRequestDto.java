@@ -30,8 +30,10 @@ public class CartItemRequestDto {
     private int quantity;
 
     private Double totalPrice;
+
     @NotBlank
     private String cartId;
+
     @NotBlank
     private String itemId;
 }

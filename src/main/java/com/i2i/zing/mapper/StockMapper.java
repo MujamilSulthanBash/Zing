@@ -1,5 +1,6 @@
 package com.i2i.zing.mapper;
 
+import com.i2i.zing.dto.StockCreationDto;
 import com.i2i.zing.dto.StockRequestDto;
 import com.i2i.zing.dto.StockResponseDto;
 import com.i2i.zing.model.DarkStore;
@@ -25,6 +26,21 @@ public class StockMapper {
                 .stockId(stock.getStockId())
                 .darkStoreId(stock.getDarkstore().getDarkStoreId())
                 .itemId(stock.getItem().getItemId())
+                .quantity(stock.getQuantity())
+                .build();
+    }
+
+    /**
+     * <p>
+     *     This method convert the Entity to Dto Object for Creation
+     * </p>
+     * @param stock as Entity Object
+     * @return StockResponseDto {@link StockResponseDto}
+     */
+    public static StockCreationDto convertEntityToCreateDto(Stock stock) {
+        return StockCreationDto.builder()
+                .stockId(stock.getStockId())
+                .itemId(stock.getItem().getItemName())
                 .quantity(stock.getQuantity())
                 .build();
     }

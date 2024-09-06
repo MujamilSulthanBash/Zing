@@ -188,14 +188,14 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public APIResponse verifyCustomerEmail(VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = new APIResponse();
-        boolean verifyOtp = false;
+        boolean isVerifyOtp = false;
         for (Map.Entry<String, String> entry : otpStore.entrySet()) {
             if (entry.getKey().equals(verifyEmailDto.getEmail()) && entry.getValue().equals(verifyEmailDto.getOtp())) {
                 otpStore.remove(entry.getKey());
-                verifyOtp = true;
+                isVerifyOtp = true;
             }
         }
-        if (verifyOtp) {
+        if (isVerifyOtp) {
             Role role = roleService.retrieveRoleByName(UserRole.CUSTOMER);
             for (Map.Entry<String, CustomerRequestDto> entry : primaryCacheMemory.entrySet()) {
                 if (entry.getKey().equals(verifyEmailDto.getEmail())) {

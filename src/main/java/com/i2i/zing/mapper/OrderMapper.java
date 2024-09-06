@@ -26,6 +26,7 @@ public class OrderMapper {
         return OrderDto.builder()
                 .orderId(order.getOrderId())
                 .cartId(order.getCart().getCartId())
+                .paymentMethod(order.getPaymentMethod().toString())
                 .paymentStatus(order.getPaymentStatus().toString())
                 .timeOfOrder(order.getCreatedDate())
                 .build();

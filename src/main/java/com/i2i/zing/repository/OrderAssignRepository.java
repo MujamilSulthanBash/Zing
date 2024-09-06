@@ -2,6 +2,7 @@ package com.i2i.zing.repository;
 
 import java.util.List;
 
+import com.i2i.zing.common.DeliveryStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -48,5 +49,8 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
      */
     @Query(value = "FROM OrderAssign a RIGHT JOIN FETCH Order o ON a.order.id = :orderId")
     OrderAssign findByOrderId(String orderId);
+
+    @Query(value = "select count(*) from order_assign where delivery_status != 'DELIVERED' AND order_assign.delivery_person_id = :id", nativeQuery = true)
+    Long getOrdersCount(String id);
 
 }

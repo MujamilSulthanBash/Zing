@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import com.i2i.zing.dto.StockCreationDto;
 import com.i2i.zing.dto.StockResponseDto;
 import com.i2i.zing.exception.EntityNotFoundException;
 import org.apache.logging.log4j.LogManager;
@@ -39,8 +40,8 @@ public class StockServiceImpl implements StockService {
     public APIResponse addStock(StockRequestDto stockRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Stock stock = StockMapper.convertDtoToEntity(stockRequestDto);
-        StockResponseDto stockResponseDto = StockMapper.convertEntityToDto(stockRepository.save(stock));
-        apiResponse.setData(stock);
+        StockCreationDto stockCreationDto = StockMapper.convertEntityToCreateDto(stockRepository.save(stock));
+        apiResponse.setData(stockCreationDto);
         apiResponse.setStatus(HttpStatus.CREATED.value());
         return apiResponse;
     }

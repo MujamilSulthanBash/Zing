@@ -52,10 +52,11 @@ public class OrderAssignServiceImpl implements OrderAssignService {
         List<DeliveryPerson> deliveryPeoples = deliveryPersonService.getDeliveryPersonByLocation(customer.getUser().getLocation());
         logger.debug("Revoked deliveryPersonService to get deliveryPerson list.");
         for (int i = 0; i < deliveryPeoples.size(); i++) {
-            for (int j = i+1; j <= deliveryPeoples.size() - 1; j++) {
-                if (deliveryPeoples.get(i).getOrderAssign().size() < deliveryPeoples.get(j).getOrderAssign().size()) {
+            for (int j = i + 1; j <= deliveryPeoples.size() - 1; j++) {
+                if (orderAssignRepository.getOrdersCount(deliveryPeoples.get(i).getDeliveryPersonId()) >
+                        orderAssignRepository.getOrdersCount(deliveryPeoples.get(j).getDeliveryPersonId())) {
                     DeliveryPerson temp = deliveryPeoples.get(j);
-                    deliveryPeoples.set(j,deliveryPeoples.get(i));
+                    deliveryPeoples.set(j, deliveryPeoples.get(i));
                     deliveryPeoples.set(i, temp);
                 }
             }

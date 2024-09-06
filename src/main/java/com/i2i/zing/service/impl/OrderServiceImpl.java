@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.PaymentMethod;
+import com.i2i.zing.common.PaymentStatus;
 import com.i2i.zing.dto.OrderDto;
 import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.exception.EntityAlreadyExistsException;
@@ -145,6 +146,8 @@ public class OrderServiceImpl implements OrderService {
         APIResponse apiResponse = new APIResponse();
         Order order = orderRepository.findByOrderIdAndIsDeletedFalse(verifyOrderDto.getOrderId());
         if (encoder.matches(verifyOrderDto.getOtp(), order.getOtp())) {
+            order.setPaymentStatus(PaymentStatus.PAID);
+            orderRepository.save(order);
             apiResponse.setStatus(HttpStatus.OK.value());
             return apiResponse;
         }

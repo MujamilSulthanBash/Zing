@@ -7,8 +7,6 @@ import java.util.Set;
 
 import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.exception.EntityAlreadyExistsException;
-import com.i2i.zing.service.CartService;
-import com.i2i.zing.service.StockService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,12 +28,11 @@ import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.model.Customer;
-import com.i2i.zing.model.DarkStore;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Order;
-import com.i2i.zing.model.Stock;
 import com.i2i.zing.model.User;
 import com.i2i.zing.repository.OrderRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @ExtendWith(MockitoExtension.class)
 public class OrderServiceImplTest {
@@ -46,11 +43,14 @@ public class OrderServiceImplTest {
     @Mock
     OrderRepository orderRepository;
 
+    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
+
     private String cartId;
     private String orderId;
     private Cart cart;
     private CartItem cartItem;
     private Order order;
+    private Order fourthOrder;
     private OrderDto orderDto;
     private Order firstOrder;
     private Order secondOrder;
@@ -93,6 +93,13 @@ public class OrderServiceImplTest {
                 .orderId("100")
                 .paymentStatus(PaymentStatus.PAID)
                 .paymentMethod(PaymentMethod.UPI)
+                .cart(cart)
+                .build();
+        fourthOrder = Order.builder()
+                .orderId("100")
+                .paymentStatus(PaymentStatus.PAID)
+                .paymentMethod(PaymentMethod.UPI)
+                .otp(encoder.encode("1234"))
                 .cart(cart)
                 .build();
         orderDto = OrderDto.builder()
@@ -173,6 +180,12 @@ public class OrderServiceImplTest {
     public void testUpdateOrderStatusFailure() {
         when(orderRepository.findByOrderIdAndIsDeletedFalse(verifyOrderDto.getOrderId())).thenReturn(order);
         assertEquals(orderServiceImpl.updateOrderStatus(verifyOrderDto).getStatus(), HttpStatus.UNAUTHORIZED.value());
+    }
+
+    @Test
+    public void testUpdateOrderStatusSuccess() {
+        when(orderRepository.findByOrderIdAndIsDeletedFalse(verifyOrderDto.getOrderId())).thenReturn(fourthOrder);
+        assertEquals(orderServiceImpl.updateOrderStatus(verifyOrderDto).getStatus(), HttpStatus.OK.value());
     }
 
     @Test

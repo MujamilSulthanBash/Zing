@@ -56,7 +56,6 @@ public class OrderAssignServiceImplTest {
     private Customer customer;
     private DeliveryPerson deliveryPerson;
     private DeliveryPerson firstDeliveryPerson;
-    private OrderAssignDto orderAssignDto;
     private List<DeliveryPerson> deliveryPeoples;
 
     @BeforeEach
@@ -84,6 +83,7 @@ public class OrderAssignServiceImplTest {
                 .orderId("1o")
                 .paymentStatus(PaymentStatus.PAID)
                 .paymentMethod(PaymentMethod.UPI)
+                .otp("2345")
                 .cart(cart)
                 .build();
         deliveryPerson = DeliveryPerson.builder()
@@ -105,12 +105,6 @@ public class OrderAssignServiceImplTest {
                 .order(order)
                 .deliveryPerson(deliveryPerson)
                 .deliveryStatus(DeliveryStatus.PENDING).build();
-        orderAssignDto = OrderAssignDto.builder()
-                .orderId("1o")
-                .assignId("1a")
-                .deliveryStatus(DeliveryStatus.PENDING.toString())
-                .deliveryPersonId("1d")
-                .build();
         deliveryPeoples = new ArrayList<>();
         deliveryPeoples.add(deliveryPerson);
         deliveryPeoples.add(firstDeliveryPerson);
@@ -188,5 +182,6 @@ public class OrderAssignServiceImplTest {
         when(orderAssignRepository.findByOrderId(order.getOrderId())).thenReturn(null);
         assertThrows(EntityNotFoundException.class, ()-> orderAssignServiceImpl.updateOrderStatus("accepted", order.getOrderId()));
     }
+
 
 }

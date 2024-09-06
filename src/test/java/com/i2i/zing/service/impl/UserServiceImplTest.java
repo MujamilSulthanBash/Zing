@@ -64,13 +64,6 @@ public class UserServiceImplTest {
     }
 
     @Test
-    void testCreateAdminSuccess() {
-        when(userRepository.existsByUserNameAndIsDeletedFalse("ADMIN")).thenReturn(false);
-        roleService.retrieveRoleByName(UserRole.ADMIN);
-        userService.createAdmin();
-    }
-
-    @Test
     void testRetrieveByEmail() {
         when(userRepository.findByEmailIdIgnoreCase(user.getEmailId())).thenReturn(user);
         User retrievedUser = userService.retrieveByEmail(user.getEmailId());

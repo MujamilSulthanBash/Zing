@@ -68,12 +68,11 @@ public class UserMapper {
     }
 
     public static User getAdminDetails() {
-//        String adminPassword = encoder.encode(System.getenv("ADMIN_PASSWORD"));
         return User.builder()
                 .userName("ADMIN")
                 .emailId("mujamil.official@gmail.com")
                 .contactNumber("123456789")
-                .password(encoder.encode("adminPassword"))
+                .password(encoder.encode(System.getenv("ADMIN_PASSWORD")))
                 .location("chennai")
                 .build();
     }

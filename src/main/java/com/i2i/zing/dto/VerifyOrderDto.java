@@ -14,7 +14,6 @@ import lombok.Data;
  */
 @Builder
 @Data
-@Builder
 public class VerifyOrderDto {
     @NotBlank
     @Size(min = 10, max = 40, message = "Id should contain 3 to 40 letters.")

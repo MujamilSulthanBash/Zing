@@ -46,7 +46,7 @@ public interface OrderAssignRepository extends JpaRepository<OrderAssign, String
      * @param orderId - String value to fetch the Order assign.
      * @return OrderAssign to display the orderAssign.
      */
-    @Query(value = "FROM OrderAssign a LEFT JOIN FETCH Order o ON a.order.id = :orderId")
+    @Query(value = "FROM OrderAssign a RIGHT JOIN FETCH Order o ON a.order.id = :orderId")
     OrderAssign findByOrderId(String orderId);
 
 }

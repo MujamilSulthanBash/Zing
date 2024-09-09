@@ -27,4 +27,5 @@ public class InitialSetup implements CommandLineRunner {
         roleService.addRoles();
         userService.createAdmin();
     }
+
 }

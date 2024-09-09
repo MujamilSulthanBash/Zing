@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class OrderAssignController {
      * @return APIResponse Details like Status, Data.
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateOrderAssign(@RequestBody OrderAssignDto orderAssignDto) {
+    public ResponseEntity<APIResponse> updateOrderAssign(@Valid @RequestBody OrderAssignDto orderAssignDto) {
         APIResponse apiResponse = orderAssignService.updateOrderAssign(orderAssignDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

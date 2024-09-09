@@ -85,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
                 apiResponse.setStatus(HttpStatus.OK.value());
                 return apiResponse;
             }
-            apiResponse.setStatus(HttpStatus.FOUND.value());
+            apiResponse.setStatus(HttpStatus.CONFLICT.value());
             return apiResponse;
         }
         boolean isMailSend = true;

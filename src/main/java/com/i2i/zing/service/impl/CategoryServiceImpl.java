@@ -3,6 +3,7 @@ package com.i2i.zing.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.i2i.zing.exception.EntityAlreadyExistsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = CategoryMapper.convertDtoToCreationEntity(categoryRequestDto);
         if (categoryRepository.existsByName(categoryRequestDto.getName())) {
             logger.warn("Category Already Exists.. :");
-            throw new EntityNotFoundException("Category Already Exists with Name : " + categoryRequestDto.getName());
+            throw new EntityAlreadyExistsException("Category Already Exists with Name : " + categoryRequestDto.getName());
         }
         CategoryCreationDto categoryCreationDto = CategoryMapper.convertEntityToCreationDto(categoryRepository.save(category));
         logger.info("Category Added Successfully..");

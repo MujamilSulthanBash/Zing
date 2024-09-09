@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class ItemController {
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addItem(@RequestBody ItemRequestDto itemRequestDto) {
+    public ResponseEntity<APIResponse> addItem(@Valid @RequestBody ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = itemService.addItem(itemRequestDto);
         logger.info("Item Added Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())

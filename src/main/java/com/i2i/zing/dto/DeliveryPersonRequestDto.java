@@ -1,5 +1,6 @@
 package com.i2i.zing.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -29,7 +30,7 @@ public class DeliveryPersonRequestDto {
     private String userName;
 
     @NotBlank
-    @Pattern(regexp = "^(.+)@(.+)$")
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Mail Id should contain @ and should not contain other special character.")
     private String emailId;
 
     @NotBlank

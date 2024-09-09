@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,7 +38,7 @@ public class CartItemController {
      * @return - APIResponse (Status , Data)
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCartItem(@RequestBody CartItemRequestDto cartItemRequestDto) {
+    public ResponseEntity<APIResponse> addCartItem(@Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
         APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -96,7 +97,7 @@ public class CartItemController {
      * @return - APIResponse (Status, Data)
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateCartItem(@RequestBody CartItemRequestDto cartItemRequestDto) {
+    public ResponseEntity<APIResponse> updateCartItem(@Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
         APIResponse apiResponse = cartItemService.updateCartItem(cartItemRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

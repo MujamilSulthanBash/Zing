@@ -24,7 +24,7 @@ public class CategoryCreationDto {
     private String categoryId;
 
     @NotBlank (message = "Name must not be blank..")
-    @Pattern(regexp = "[a-zA-Z\\s]+$")
+    @Pattern(regexp = "[a-zA-Z\\s]+$", message = "Category name should contain only letters.")
     private String name;
 
     @NotBlank

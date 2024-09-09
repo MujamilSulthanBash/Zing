@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class DeliveryPersonController {
     private OrderAssignService orderAssignService;
 
     @PostMapping("/orders/validate")
-    public ResponseEntity<APIResponse> verifyOrder(@RequestBody VerifyOrderDto verifyOrderDto) {
+    public ResponseEntity<APIResponse> verifyOrder(@Valid @RequestBody VerifyOrderDto verifyOrderDto) {
         APIResponse apiResponse = orderService.updateOrderStatus(verifyOrderDto);
         if (apiResponse.getStatus() == HttpStatus.OK.value()) {
             orderAssignService.updateOrderStatus("DELIVERED", verifyOrderDto.getOrderId());

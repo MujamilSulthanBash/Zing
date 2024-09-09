@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockRequestDto;
@@ -38,7 +39,7 @@ public class StockController {
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addStock(@RequestBody StockRequestDto stockRequestDto) {
+    public ResponseEntity<APIResponse> addStock(@Valid @RequestBody StockRequestDto stockRequestDto) {
         APIResponse apiResponse = stockService.addStock(stockRequestDto);
         logger.info("Stock Created Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
@@ -101,7 +102,7 @@ public class StockController {
      * @return - APIResponse Details like Status, Data.
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateStock(@RequestBody StockRequestDto stockRequestDto) {
+    public ResponseEntity<APIResponse> updateStock(@Valid @RequestBody StockRequestDto stockRequestDto) {
         APIResponse apiResponse = stockService.updateStock(stockRequestDto);
         logger.info("Stock Updated Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())

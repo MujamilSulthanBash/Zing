@@ -1,5 +1,6 @@
 package com.i2i.zing.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -18,7 +19,7 @@ import lombok.Data;
 public class VerifyEmailDto {
     @NotBlank
     @Size(min = 10, max = 40, message = "Mail id should contain only 10 to 40 letters.")
-    @Pattern(regexp = "^(.+)@(.+)$", message = "Given mailId is not in expected order pattern.")
+    @Pattern(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$", message = "Mail Id should contain @ and should not contain other special character.")
     String email;
 
     @NotBlank

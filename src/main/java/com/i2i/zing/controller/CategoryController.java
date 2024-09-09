@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,7 @@ public class CategoryController {
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCategory(@RequestBody CategoryRequestDto categoryRequestDto) {
+    public ResponseEntity<APIResponse> addCategory(@Valid @RequestBody CategoryRequestDto categoryRequestDto) {
         APIResponse apiResponse = categoryService.addCategory(categoryRequestDto);
         logger.info("Category Created Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())

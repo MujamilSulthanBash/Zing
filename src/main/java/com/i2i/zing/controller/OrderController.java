@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.OrderDto;
@@ -34,7 +35,7 @@ public class OrderController {
      * @return - APIResponse like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<APIResponse> addOrder(@Valid @RequestBody OrderDto orderDto) {
         APIResponse apiResponse = orderService.addOrder(orderDto);
         if (null == apiResponse.getData()) {
             logger.warn("Error Occurred while Adding Order..");

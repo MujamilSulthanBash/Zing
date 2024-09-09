@@ -53,7 +53,7 @@ public class DarkStoreServiceImpl implements DarkStoreService {
                 }
             }
             if (isRoleExist) {
-                apiResponse.setStatus(HttpStatus.FOUND.value());
+                apiResponse.setStatus(HttpStatus.CONFLICT.value());
                 return apiResponse;
             }
             user.getRoles().add(role);

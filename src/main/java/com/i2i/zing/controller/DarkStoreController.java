@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -36,7 +37,7 @@ public class DarkStoreController {
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addDarkStore(@RequestBody DarkStoreDto darkStoreDto) {
+    public ResponseEntity<APIResponse> addDarkStore(@Valid @RequestBody DarkStoreDto darkStoreDto) {
         logger.debug("Dark Store Adding..");
         APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreDto);
         logger.info("Dark Store Added Successfully..");

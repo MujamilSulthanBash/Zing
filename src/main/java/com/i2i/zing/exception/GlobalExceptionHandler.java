@@ -3,6 +3,7 @@ package com.i2i.zing.exception;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.logging.log4j.LogManager;
@@ -27,6 +28,7 @@ public class GlobalExceptionHandler {
 
     private static final Logger logger = LogManager.getLogger();
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler({EntityNotFoundException.class})
     public APIResponse handleEntityNotFoundException(EntityNotFoundException exception) {
         APIResponse apiResponse = new APIResponse();
@@ -40,6 +42,7 @@ public class GlobalExceptionHandler {
         return apiResponse;
     }
 
+    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler({EntityAlreadyExistsException.class})
     public APIResponse handleEntityAlreadyExistsException(EntityAlreadyExistsException exception) {
         APIResponse apiResponse = new APIResponse();
@@ -53,6 +56,7 @@ public class GlobalExceptionHandler {
         return apiResponse;
     }
 
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({RuntimeException.class})
     public APIResponse handleRuntimeException(RuntimeException exception) {
         APIResponse apiResponse = new APIResponse();
@@ -66,6 +70,7 @@ public class GlobalExceptionHandler {
         return apiResponse;
     }
 
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({UnAuthorizedException.class})
     public APIResponse handleUnAuthorizedException(UnAuthorizedException exception) {
         APIResponse apiResponse = new APIResponse();
@@ -79,7 +84,7 @@ public class GlobalExceptionHandler {
         return apiResponse;
     }
 
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Map<String, String> handleInvalidArgument(MethodArgumentNotValidException ex, HttpServletRequest req) {
         Map<String, String> errorMap = new HashMap<>();
@@ -88,5 +93,4 @@ public class GlobalExceptionHandler {
         errorMap.put("TimeStamp", String.valueOf(LocalDateTime.now()));
         return errorMap;
     }
-
 }

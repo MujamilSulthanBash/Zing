@@ -37,8 +37,8 @@ public class JwtService {
         long expiryTime = milliTime + expiryDuration * 1000;
         Claims claims = Jwts.claims()
                 .setIssuedAt(new Date(milliTime))
-                .setExpiration(new Date(expiryTime));
-        claims.put("email", user.getEmailId());
+                .setExpiration(new Date(expiryTime))
+                .setSubject(user.getEmailId());
         List<UserRole> roles = new ArrayList<>();
         for (Role role : user.getRoles()) {
             roles.add(role.getRoleName());

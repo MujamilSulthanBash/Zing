@@ -54,4 +54,7 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private Set<Cart> carts;
+
+    @OneToMany(mappedBy = "customer")
+    private Set<Order> orders;
 }

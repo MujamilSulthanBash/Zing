@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.i2i.zing.dto.VerifyOrderDto;
-import com.i2i.zing.exception.EntityAlreadyExistsException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +22,8 @@ import com.i2i.zing.common.PaymentMethod;
 import com.i2i.zing.common.PaymentStatus;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.OrderDto;
+import com.i2i.zing.dto.VerifyOrderDto;
+import com.i2i.zing.exception.EntityAlreadyExistsException;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.model.Cart;
 import com.i2i.zing.model.CartItem;
@@ -140,7 +140,7 @@ public class OrderServiceImplTest {
     @Test
     public void testGetOrders() {
         when(orderRepository.findByIsDeletedFalse()).thenReturn(List.of(order));
-        APIResponse apiResponse = orderServiceImpl.getOrders();
+        APIResponse apiResponse = orderServiceImpl.getOrder(orderId);
         assertEquals(apiResponse.getStatus(), HttpStatus.OK.value());
         assertThat(apiResponse.getData()).isNotNull();
     }

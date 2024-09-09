@@ -1,8 +1,6 @@
 package com.i2i.zing.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,8 +40,6 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     CustomerService customerService;
 
     private static final Logger logger = LogManager.getLogger();
-
-    private static final Map<String, String> otpStore = new HashMap<>();
 
     @Override
     public void addOrderAssign(Order order) {

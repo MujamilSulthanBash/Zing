@@ -73,8 +73,8 @@ public class OrderControllerTest {
 
     @Test
     public void testGetOrders() {
-        when(orderService.getOrders()).thenReturn(getOrdersResponse);
-        ResponseEntity<APIResponse> getOrdersResponse = orderController.getOrders();
+        when(orderService.getOrdersOfCustomerById("1c")).thenReturn(getOrdersResponse);
+        ResponseEntity<APIResponse> getOrdersResponse = orderController.getOrdersOfCustomer("1c");
         assertEquals(HttpStatus.OK, getOrdersResponse.getStatusCode());
     }
 }

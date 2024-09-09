@@ -3,6 +3,8 @@ package com.i2i.zing.service.impl;
 import java.util.List;
 import java.util.Objects;
 
+import com.i2i.zing.model.*;
+import com.i2i.zing.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +20,7 @@ import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.exception.EntityAlreadyExistsException;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderMapper;
-import com.i2i.zing.model.Cart;
-import com.i2i.zing.model.CartItem;
-import com.i2i.zing.model.Stock;
-import com.i2i.zing.model.Order;
 import com.i2i.zing.repository.OrderRepository;
-import com.i2i.zing.service.StockService;
-import com.i2i.zing.service.OrderAssignService;
-import com.i2i.zing.service.OrderService;
-import com.i2i.zing.service.CartService;
 import com.i2i.zing.util.OtpGenerator;
 
 /**
@@ -52,6 +46,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    CustomerService customerService;
+
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     private static final Logger logger = LogManager.getLogger();
@@ -68,6 +65,7 @@ public class OrderServiceImpl implements OrderService {
             }
         }
         Cart cart = cartService.getCartAsModel(orderDto.getCartId());
+        Customer customer = customerService.getCustomer(cart.getCustomer().getCustomerId());
         Order order = OrderMapper.convertToOrder(orderDto);
         String otp = String.valueOf(OtpGenerator.generateOtp());
         Double sum = 0.0;
@@ -85,6 +83,7 @@ public class OrderServiceImpl implements OrderService {
         }
         if (sum > 50.0) {
             order.setCart(cart);
+            order.setCustomer(customer);
             order.setOrderAmount(sum);
             order.setOtp(encoder.encode(otp));
             Order resultOrder = orderRepository.save(order);
@@ -110,9 +109,9 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public APIResponse getOrders() {
+    public APIResponse getOrdersOfCustomerById(String id) {
         APIResponse apiResponse = new APIResponse();
-        apiResponse.setData(orderRepository.findByIsDeletedFalse().stream()
+        apiResponse.setData(orderRepository.findByCustomerId(id).stream()
                 .map(OrderMapper::convertToOrderDto).toList());
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;

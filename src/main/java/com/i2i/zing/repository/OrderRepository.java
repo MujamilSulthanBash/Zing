@@ -3,6 +3,7 @@ package com.i2i.zing.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.i2i.zing.model.Order;
@@ -35,4 +36,15 @@ public interface OrderRepository extends JpaRepository<Order, String> {
      * @return Order to display the order.
      */
     Order findByOrderIdAndIsDeletedFalse(String id);
+
+    /**
+     * <p>
+     * Fetches the Order by checking their customer id.
+     * </p>
+     *
+     * @param id - String value to fetch the Order.
+     * @return list of orders to display.
+     */
+    @Query("SELECT o FROM Order o LEFT JOIN FETCH o.customer c where c.customerId = :id")
+    List<Order> findByCustomerId(String id);
 }

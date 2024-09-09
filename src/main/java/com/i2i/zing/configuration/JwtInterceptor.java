@@ -40,7 +40,9 @@ public class JwtInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws UnAuthorizedException {
         String authToken = request.getHeader("Authorization");
-        if (!(request.getRequestURI().contains("signup") || request.getRequestURI().contains("login") || request.getRequestURI().contains("showitems") || request.getRequestURI().contains("verify"))) {
+        if (!(request.getRequestURI().contains("signup") || request.getRequestURI().contains("login") ||
+                request.getRequestURI().contains("showitems") || request.getRequestURI().contains("/v3/api-docs") ||
+                request.getRequestURI().contains("swagger-ui")|| request.getRequestURI().contains("verify"))) {
             if (authToken == null || !authToken.startsWith(bearerPrefix)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return false;

@@ -25,12 +25,13 @@ public interface OrderService {
 
     /**
      * <p>
-     * Fetches all the Orders in application.
+     * Fetches all the Orders in application for a customer.
      * </p>
      *
+     * @param id - customer Id to fetch orders.
      * @return APIResponse value to display Order list.
      */
-    APIResponse getOrders();
+    APIResponse getOrdersOfCustomerById(String id);
 
     /**
      * <p>

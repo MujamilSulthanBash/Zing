@@ -18,8 +18,8 @@ public class DeliveryPersonServiceImpl implements DeliveryPersonService {
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
-    public void createDeliveryPerson(DeliveryPerson deliveryPerson) {
-        deliveryPersonRepository.save(deliveryPerson);
+    public DeliveryPerson createDeliveryPerson(DeliveryPerson deliveryPerson) {
+        return deliveryPersonRepository.save(deliveryPerson);
     }
 
     @Override

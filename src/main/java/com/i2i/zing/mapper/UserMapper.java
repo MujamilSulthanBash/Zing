@@ -1,7 +1,11 @@
 package com.i2i.zing.mapper;
 
 import com.i2i.zing.dto.CustomerRequestDto;
+import com.i2i.zing.dto.CustomerResponseDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
+import com.i2i.zing.dto.DeliveryPersonResponseDto;
+import com.i2i.zing.model.Customer;
+import com.i2i.zing.model.DeliveryPerson;
 import com.i2i.zing.model.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -52,6 +56,24 @@ public class UserMapper {
 
     /**
      * <p>
+     *     This class convert the object to dto for user
+     *     acknowledgement.
+     * </p>
+     * @param customer {@link Customer} as Dto Object
+     * @return CustomerResponseDto as Dto Object
+     */
+    public static CustomerResponseDto convertToResponseDto(Customer customer) {
+        return CustomerResponseDto.builder()
+                .customerId(customer.getCustomerId())
+                .userName(customer.getUser().getUserName())
+                .contactNumber(customer.getUser().getContactNumber())
+                .emailId(customer.getUser().getEmailId())
+                .location(customer.getUser().getLocation())
+                .build();
+    }
+
+    /**
+     * <p>
      *     This method convert the Dto to Entity Object
      * </p>
      * @param deliveryPersonRequestDto {@link DeliveryPersonRequestDto} as Dto Object
@@ -67,6 +89,31 @@ public class UserMapper {
                 .build();
     }
 
+    /**
+     * <p>
+     *     This class convert the object to dto for user
+     *     acknowledgement.
+     * </p>
+     * @param deliveryPerson {@link DeliveryPerson} as Dto Object
+     * @return DeliveryPersonResponseDto as Dto Object
+     */
+    public static DeliveryPersonResponseDto convertToDeliveryPersonResponseDto(
+            DeliveryPerson deliveryPerson) {
+        return DeliveryPersonResponseDto.builder()
+                .deliveryPersonId(deliveryPerson.getDeliveryPersonId())
+                .userName(deliveryPerson.getUser().getUserName())
+                .contactNumber(deliveryPerson.getUser().getContactNumber())
+                .location(deliveryPerson.getUser().getLocation())
+                .emailId(deliveryPerson.getUser().getEmailId())
+                .build();
+    }
+
+    /**
+     * <p>
+     *     This class creates a user object for internal operation.
+     * </p>
+     * @return User as Dto Object
+     */
     public static User getAdminDetails() {
         return User.builder()
                 .userName("ADMIN")

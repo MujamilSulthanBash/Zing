@@ -70,11 +70,12 @@ public class OrderServiceImpl implements OrderService {
         String otp = String.valueOf(OtpGenerator.generateOtp());
         Double sum = 0.0;
         for (CartItem cartItem : cart.getCartItems()) {
-            Stock stock = stockService.getStockByItemId(cartItem.getItem().getItemId());
+            Stock stock = stockService.getStockByItemId(cartItem.getItem().getItemId(),
+                    cartItem.getCart().getCustomer().getUser().getLocation() );
             if (cartItem.getQuantity() > stock.getQuantity()) {
                 apiResponse.setData("Cart Item with Id : " + cartItem.getItem().getItemId() + " is out of stock." +
                         "Please try later after 1 Hour.");
-                apiResponse.setStatus(HttpStatus.NO_CONTENT.value());
+                apiResponse.setStatus(HttpStatus.UNPROCESSABLE_ENTITY.value());
                 return apiResponse;
             }
         }
@@ -104,7 +105,7 @@ public class OrderServiceImpl implements OrderService {
             return apiResponse;
         }
         apiResponse.setData("Order amount must be greater than 50.");
-        apiResponse.setStatus(HttpStatus.FORBIDDEN.value());
+        apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
         return apiResponse;
     }
 
@@ -148,6 +149,7 @@ public class OrderServiceImpl implements OrderService {
             order.setPaymentStatus(PaymentStatus.PAID);
             orderRepository.save(order);
             apiResponse.setStatus(HttpStatus.OK.value());
+            apiResponse.setData("");
             return apiResponse;
         }
         apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());

@@ -8,8 +8,8 @@ import lombok.Setter;
 
 /**
  * <p>
- * This class represents the Dto for Dark Store Manager
- * and DarkStore Details like Username, EmailId, contact Number,
+ * This class represents the Dto for customer
+ * and customer Details like Username, EmailId, contact Number,
  * Location.
  * </p>
  */
@@ -18,8 +18,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DarkStoreResponseDto {
-    private String darkStoreId;
+public class CustomerResponseDto {
+    private String customerId;
     private String userName;
     private String emailId;
     private String contactNumber;

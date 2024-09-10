@@ -51,8 +51,6 @@ public class ItemControllerTest {
 
     ItemDisplayResponseDto itemDisplayResponseDto;
 
-    LocationRequestDto locationRequestDto;
-
     APIResponse addItemResponse;
 
     APIResponse getItemsByLocationResponse;
@@ -61,11 +59,10 @@ public class ItemControllerTest {
 
     APIResponse deleteItemResponse;
 
+    String location;
+
     @BeforeEach
     void setUp() {
-        locationRequestDto = LocationRequestDto.builder()
-                .location("Guindy")
-                .build();
         itemDisplayResponseDto = ItemDisplayResponseDto.builder()
                 .name("Tomato")
                 .price(30.0)
@@ -82,6 +79,7 @@ public class ItemControllerTest {
                 .item(item)
                 .quantity(30)
                 .build();
+        location = "Guindy";
         stocks.add(stock);
         items.put(stock.getItem().getItemName(), itemDisplayResponseDto);
         category = Category.builder()
@@ -121,8 +119,8 @@ public class ItemControllerTest {
 
     @Test
     public void testGetItemsByLocation() {
-        when(itemService.getItemsByLocation(locationRequestDto.getLocation())).thenReturn(getItemsByLocationResponse);
-        ResponseEntity<APIResponse> getItemsByLocationResponse = itemController.getItemsByLocation(locationRequestDto);
+        when(itemService.getItemsByLocation(location)).thenReturn(getItemsByLocationResponse);
+        ResponseEntity<APIResponse> getItemsByLocationResponse = itemController.getItemsByLocation(location);
         assertEquals(HttpStatus.OK, getItemsByLocationResponse.getStatusCode());
     }
 

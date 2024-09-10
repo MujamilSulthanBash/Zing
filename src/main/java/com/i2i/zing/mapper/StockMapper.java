@@ -40,7 +40,7 @@ public class StockMapper {
     public static StockCreationDto convertEntityToCreateDto(Stock stock) {
         return StockCreationDto.builder()
                 .stockId(stock.getStockId())
-                .itemId(stock.getItem().getItemName())
+                .itemId(stock.getItem().getItemId())
                 .quantity(stock.getQuantity())
                 .build();
     }

@@ -17,7 +17,7 @@ import com.i2i.zing.service.CartService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/customers/carts")
+@RequestMapping("zing/api/v1/customers/me/carts")
 public class CartController {
 
     @Autowired
@@ -32,7 +32,7 @@ public class CartController {
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/{cartId}")
-    public ResponseEntity<APIResponse> getCart(String cartId) {
+    public ResponseEntity<APIResponse> getCart(@PathVariable String cartId) {
         APIResponse apiResponse = cartService.getCart(cartId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -47,7 +47,7 @@ public class CartController {
      * @param cartId - To Identify the Cart
      * @return APIResponse Details like Status, Data.
      */
-    @GetMapping("/{cartId}/cartItems")
+    @GetMapping("/{cartId}/cart-items")
     public ResponseEntity<APIResponse> getItemsOfCart(@PathVariable String cartId) {
         APIResponse apiResponse = cartService.getCartItemsOfCart(cartId);
         return ResponseEntity.status(apiResponse.getStatus())

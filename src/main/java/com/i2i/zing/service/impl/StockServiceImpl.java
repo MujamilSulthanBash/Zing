@@ -69,8 +69,8 @@ public class StockServiceImpl implements StockService {
     }
 
     @Override
-    public Stock getStockByItemId(String itemId) {
-        return stockRepository.findStockByItemId(itemId);
+    public Stock getStockByItemId(String itemId, String location) {
+        return stockRepository.findStockByItemIdAndLocation(itemId, location);
     }
 
     @Override

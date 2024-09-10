@@ -22,7 +22,7 @@ import com.i2i.zing.service.CartItemService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/customers/carts/cart-items")
+@RequestMapping("zing/api/v1/customers/me/carts/cart-items")
 public class CartItemController {
 
     @Autowired

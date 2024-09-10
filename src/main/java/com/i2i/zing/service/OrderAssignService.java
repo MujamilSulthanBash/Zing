@@ -56,7 +56,8 @@ public interface OrderAssignService {
      *
      * @param status  - String value to update.
      * @param OrderId - string value to fetch assigned record.
+     * @return APIResponse value to acknowledge update.
      */
-    void updateOrderStatus(String status, String OrderId);
+    APIResponse updateOrderStatus(String status, String OrderId);
 
 }

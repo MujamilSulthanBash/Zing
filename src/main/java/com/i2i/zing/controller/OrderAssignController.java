@@ -22,7 +22,7 @@ import com.i2i.zing.service.OrderAssignService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/admins/orderAssign")
+@RequestMapping("zing/api/v1/admin/order-assign")
 public class OrderAssignController {
 
     @Autowired

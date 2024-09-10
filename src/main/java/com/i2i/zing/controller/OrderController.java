@@ -68,7 +68,7 @@ public class OrderController {
      * @param orderId - To Identify the Order
      * @return APIResponse like Status, Data.
      */
-    @GetMapping("/{orderId}")
+    @GetMapping("/me/{orderId}")
     public ResponseEntity<APIResponse> getOrder(@PathVariable String orderId) {
         APIResponse apiResponse = orderService.getOrder(orderId);
         return ResponseEntity.status(apiResponse.getStatus())

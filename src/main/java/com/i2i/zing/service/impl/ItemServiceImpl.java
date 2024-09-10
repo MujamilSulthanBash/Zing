@@ -111,7 +111,7 @@ public class ItemServiceImpl implements ItemService {
         item.setDeleted(true);
         itemRepository.save(item);
         apiResponse.setData("Item Deleted Successfully : " + itemId);
-        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setStatus(HttpStatus.NO_CONTENT.value());
         return apiResponse;
     }
 

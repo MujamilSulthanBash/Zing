@@ -22,5 +22,5 @@ public class ItemCreationDto {
     private String itemId;
     private String name;
     private double price;
-    private String categoryName;
+    private String categoryId;
 }

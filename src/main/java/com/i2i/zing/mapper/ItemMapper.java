@@ -27,7 +27,7 @@ public class ItemMapper {
                 .itemId(item.getItemId())
                 .name(item.getItemName())
                 .price(item.getPrice())
-                .categoryName(item.getCategory().getName())
+                .categoryId(item.getCategory().getCategoryId())
                 .build();
     }
 

@@ -29,9 +29,6 @@ public class OrderDto {
     @Size(min = 3, max = 40, message = "cartId should contain 3 to 40 characters.")
     private String cartId;
 
-    @NotBlank
-    @Size(min = 4, max = 6, message = "paymentStatus should contain 4 to 6 letters.")
-    @Pattern(regexp = "^(PAID|UNPAID)$", message = "paymentStatus should contain either PAID or UNPAID.")
     private String paymentStatus;
 
     @NotBlank

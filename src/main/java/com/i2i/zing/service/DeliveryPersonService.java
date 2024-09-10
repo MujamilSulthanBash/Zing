@@ -17,8 +17,9 @@ public interface DeliveryPersonService {
      * </p>
      *
      * @param deliveryPerson - Delivery Person as Entity Object
+     * @return DeliveryPerson - {@link DeliveryPerson} details.
      */
-    void createDeliveryPerson(DeliveryPerson deliveryPerson);
+    DeliveryPerson createDeliveryPerson(DeliveryPerson deliveryPerson);
 
     /**
      * <p>

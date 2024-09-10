@@ -1,5 +1,6 @@
 package com.i2i.zing.mapper;
 
+import com.i2i.zing.dto.DarkStoreResponseDto;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.i2i.zing.dto.DarkStoreDto;
@@ -43,6 +44,16 @@ public class DarkStoreMapper {
                 .location(darkStoreDto.getLocation())
                 .emailId(darkStoreDto.getEmailId())
                 .password(encoder.encode(darkStoreDto.getPassword()))
+                .build();
+    }
+
+    public static DarkStoreResponseDto convertResponseDto(DarkStore darkStore) {
+        return DarkStoreResponseDto.builder()
+                .darkStoreId(darkStore.getDarkStoreId())
+                .location(darkStore.getUser().getLocation())
+                .userName(darkStore.getUser().getUserName())
+                .emailId(darkStore.getUser().getEmailId())
+                .contactNumber(darkStore.getUser().getContactNumber())
                 .build();
     }
 

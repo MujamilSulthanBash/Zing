@@ -1,8 +1,7 @@
 package com.i2i.zing.dto;
 
 import jakarta.validation.constraints.NotBlank;
-
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,8 +24,7 @@ import lombok.Setter;
 public class CartItemRequestDto {
     private String cartItemId;
 
-    @NotBlank (message = "Quantity not be blank")
-    @Size(min = 10, message = "Quantity must be greater than 10")
+    @NotNull(message = "Quantity not be blank")
     private int quantity;
 
     private Double totalPrice;

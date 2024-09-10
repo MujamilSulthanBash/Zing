@@ -86,6 +86,7 @@ public class LoginServiceImpl implements LoginService {
                 return apiResponse;
             }
             apiResponse.setStatus(HttpStatus.CONFLICT.value());
+            apiResponse.setData("The mail id - " + customerRequestDto.getEmailId() + " already exists.");
             return apiResponse;
         }
         boolean isMailSend = true;
@@ -96,7 +97,7 @@ public class LoginServiceImpl implements LoginService {
             }
         }
         if (!isMailSend) {
-            apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            apiResponse.setStatus(HttpStatus.CONFLICT.value());
             apiResponse.setData("Please verify your email !");
             return apiResponse;
         }
@@ -108,6 +109,7 @@ public class LoginServiceImpl implements LoginService {
         emailSenderService.sendEmail(to, subject, body);
         primaryCacheMemory.put(customerRequestDto.getEmailId(), customerRequestDto);
         apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData("Otp sent to respective mail Id - " + customerRequestDto.getEmailId());
         return apiResponse;
     }
 
@@ -141,7 +143,8 @@ public class LoginServiceImpl implements LoginService {
                 apiResponse.setStatus(HttpStatus.OK.value());
                 return apiResponse;
             }
-            apiResponse.setStatus(HttpStatus.FOUND.value());
+            apiResponse.setStatus(HttpStatus.CONFLICT.value());
+            apiResponse.setData("The mail id - " + deliveryPersonRequestDto.getEmailId() + " already exists.");
             return apiResponse;
         }
         boolean isMailSend = true;
@@ -152,7 +155,7 @@ public class LoginServiceImpl implements LoginService {
             }
         }
         if (!isMailSend) {
-            apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+            apiResponse.setStatus(HttpStatus.CONFLICT.value());
             apiResponse.setData("Please verify your email !");
             return apiResponse;
         }
@@ -164,6 +167,7 @@ public class LoginServiceImpl implements LoginService {
         emailSenderService.sendEmail(to, subject, body);
         secondaryCacheMemory.put(deliveryPersonRequestDto.getEmailId(), deliveryPersonRequestDto);
         apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData("Otp sent to respective mail Id - " + deliveryPersonRequestDto.getEmailId());
         return apiResponse;
     }
 
@@ -179,23 +183,25 @@ public class LoginServiceImpl implements LoginService {
                 return apiResponse;
             }
             apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+            apiResponse.setData("Email or password might be incorrect..");
             return apiResponse;
         }
-        apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        apiResponse.setData("Check your Email Id and try again..");
         return apiResponse;
     }
 
     @Override
     public APIResponse verifyCustomerEmail(VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = new APIResponse();
-        boolean isVerifyOtp = false;
+        boolean isVerified = false;
         for (Map.Entry<String, String> entry : otpStore.entrySet()) {
             if (entry.getKey().equals(verifyEmailDto.getEmail()) && entry.getValue().equals(verifyEmailDto.getOtp())) {
-                otpStore.remove(entry.getKey());
-                isVerifyOtp = true;
+                isVerified = true;
+                break;
             }
         }
-        if (isVerifyOtp) {
+        if (isVerified) {
             Role role = roleService.retrieveRoleByName(UserRole.CUSTOMER);
             for (Map.Entry<String, CustomerRequestDto> entry : primaryCacheMemory.entrySet()) {
                 if (entry.getKey().equals(verifyEmailDto.getEmail())) {
@@ -207,29 +213,38 @@ public class LoginServiceImpl implements LoginService {
                     User savedUser = userService.createUser(user);
                     Customer customer = new Customer();
                     customer.setUser(savedUser);
-                    customerService.createCustomer(customer);
-                    apiResponse.setStatus(HttpStatus.OK.value());
+                    Customer resultCustomer = customerService.createCustomer(customer);
+                    for (Map.Entry<String, String> secondEntry : otpStore.entrySet()) {
+                        if (secondEntry.getKey().equals(verifyEmailDto.getEmail()) && secondEntry.getValue().equals(verifyEmailDto.getOtp())) {
+                            otpStore.remove(secondEntry.getKey());
+                            break;
+                        }
+                    }
+                    apiResponse.setStatus(HttpStatus.CREATED.value());
+                    apiResponse.setData(UserMapper.convertToResponseDto(resultCustomer));
                     return apiResponse;
                 }
             }
-            apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+            apiResponse.setStatus(HttpStatus.FORBIDDEN.value());
+            apiResponse.setData("Try with proper URI..");
             return apiResponse;
         }
-        apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        apiResponse.setData("Email or Otp Incorrect Try Again..");
         return apiResponse;
     }
 
     @Override
     public APIResponse verifyDeliveryPersonEmail(VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = new APIResponse();
-        boolean verifyOtp = false;
+        boolean isVerified = false;
         for (Map.Entry<String, String> entry : otpStore.entrySet()) {
             if (entry.getKey().equals(verifyEmailDto.getEmail()) && entry.getValue().equals(verifyEmailDto.getOtp())) {
-                otpStore.remove(entry.getKey());
-                verifyOtp = true;
+                isVerified = true;
+                break;
             }
         }
-        if (verifyOtp) {
+        if (isVerified) {
             Role role = roleService.retrieveRoleByName(UserRole.DELIVERYPERSON);
             for (Map.Entry<String, DeliveryPersonRequestDto> entry : secondaryCacheMemory.entrySet()) {
                 if (entry.getKey().equals(verifyEmailDto.getEmail())) {
@@ -245,15 +260,24 @@ public class LoginServiceImpl implements LoginService {
                     deliveryPerson.setLicenseNumber(deliveryPersonRequestDto.getLicenseNumber());
                     deliveryPerson.setVehicleNumber(deliveryPersonRequestDto.getVehicleNumber());
                     deliveryPerson.setUser(savedUser);
-                    deliveryPersonService.createDeliveryPerson(deliveryPerson);
-                    apiResponse.setStatus(HttpStatus.OK.value());
+                    DeliveryPerson resultDeliveryPerson = deliveryPersonService.createDeliveryPerson(deliveryPerson);
+                    for (Map.Entry<String, String> secondEntry : otpStore.entrySet()) {
+                        if (secondEntry.getKey().equals(verifyEmailDto.getEmail()) && secondEntry.getValue().equals(verifyEmailDto.getOtp())) {
+                            otpStore.remove(secondEntry.getKey());
+                            break;
+                        }
+                    }
+                    apiResponse.setStatus(HttpStatus.CREATED.value());
+                    apiResponse.setData(UserMapper.convertToDeliveryPersonResponseDto(resultDeliveryPerson));
                     return apiResponse;
                 }
             }
-            apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+            apiResponse.setStatus(HttpStatus.FORBIDDEN.value());
+            apiResponse.setData("Try with proper URI..");
             return apiResponse;
         }
-        apiResponse.setStatus(HttpStatus.NOT_FOUND.value());
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        apiResponse.setData("Email or Otp Incorrect Try Again..");
         return apiResponse;
     }
 

@@ -56,10 +56,10 @@ public class ItemController {
      *
      * @return APIResponse Details like Status, Data.
      */
-    @GetMapping("/showitems")
-    public ResponseEntity<APIResponse> getItemsByLocation(@RequestBody LocationRequestDto locationRequestDto) {
-        APIResponse apiResponse = itemService.getItemsByLocation(locationRequestDto.getLocation());
-        logger.info("Items Retrieved by Successfully by this Location : {}", locationRequestDto.getLocation());
+    @GetMapping("/show-items/{location}")
+    public ResponseEntity<APIResponse> getItemsByLocation(@PathVariable String location) {
+        APIResponse apiResponse = itemService.getItemsByLocation(location);
+        logger.info("Items Retrieved by Successfully by this Location : {}", location);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

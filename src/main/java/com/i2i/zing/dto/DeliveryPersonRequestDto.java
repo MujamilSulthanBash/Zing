@@ -35,6 +35,7 @@ public class DeliveryPersonRequestDto {
 
     @NotBlank
     @Size(min = 10, max = 10, message = "Contact number must be 10 Digits..")
+    @Pattern(regexp = "^[1-9]{1}[0-9]{9}$", message = "Contact Number should contain only numbers.")
     private String contactNumber;
 
     @NotBlank

@@ -1,6 +1,7 @@
 package com.i2i.zing.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -27,9 +28,7 @@ public class ItemRequestDto {
     @Pattern(regexp = "^[a-zA-Z]+([ ][a-zA-Z]+)*$", message = "Name should contain only letters.")
     private String name;
 
-    @NotBlank
-    @Size(min = 10, max = 500, message = "price should contain 10 to 500 .")
-    @Pattern(regexp = "^[1-5]{1}[0-9]{2}$", message = "price should contain only numbers.")
+    @NotNull
     private double price;
 
     @NotBlank

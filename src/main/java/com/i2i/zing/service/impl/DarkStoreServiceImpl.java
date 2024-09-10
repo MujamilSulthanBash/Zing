@@ -54,6 +54,8 @@ public class DarkStoreServiceImpl implements DarkStoreService {
             }
             if (isRoleExist) {
                 apiResponse.setStatus(HttpStatus.CONFLICT.value());
+                apiResponse.setData("Try a new mail id, Id : " +
+                        darkStoreDto.getEmailId()  + " already exists.");
                 return apiResponse;
             }
             user.getRoles().add(role);
@@ -68,8 +70,9 @@ public class DarkStoreServiceImpl implements DarkStoreService {
         user.setRoles(roles);
         User savedUser = userService.createUser(user);
         darkStore.setUser(savedUser);
-        darkStoreRepository.save(darkStore);
+        DarkStore resultDarkStore = darkStoreRepository.save(darkStore);
         apiResponse.setStatus(HttpStatus.CREATED.value());
+        apiResponse.setData(DarkStoreMapper.convertResponseDto(resultDarkStore));
         return apiResponse;
     }
 
@@ -113,7 +116,7 @@ public class DarkStoreServiceImpl implements DarkStoreService {
         darkStore.setDeleted(true);
         darkStoreRepository.save(darkStore);
         apiResponse.setData("Dark store Deleted Successfully : " + darkStoreId);
-        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setStatus(HttpStatus.NO_CONTENT.value());
         return apiResponse;
     }
 

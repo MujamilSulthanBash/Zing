@@ -10,8 +10,9 @@ public interface CustomerService {
      * </p>
      *
      * @param customer - as Entity Object
+     * @return - {@link Customer} for acknowledgement.
      */
-    void createCustomer(Customer customer);
+    Customer createCustomer(Customer customer);
 
     /**
      * <p>

@@ -58,6 +58,6 @@ public interface StockRepository extends JpaRepository<Stock, String> {
      * @param itemId - To Identify the Item
      * @return Stock as Entity Object
      */
-    @Query("SELECT s FROM Stock s LEFT JOIN FETCH s.item i WHERE i.itemId = :itemId")
-    Stock findStockByItemId(String itemId);
+    @Query("SELECT s FROM Stock s LEFT JOIN FETCH s.darkstore d JOIN FETCH d.user u LEFT JOIN FETCH s.item i WHERE u.location = :location AND i.itemId = :itemId")
+    Stock findStockByItemIdAndLocation(String itemId, String location);
 }

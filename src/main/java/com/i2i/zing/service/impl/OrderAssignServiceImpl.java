@@ -105,14 +105,18 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     }
 
     @Override
-    public void updateOrderStatus(String status, String orderId) {
+    public APIResponse updateOrderStatus(String status, String orderId) {
+        APIResponse apiResponse = new APIResponse();
         OrderAssign orderAssign = orderAssignRepository.findByOrderId(orderId);
         if (null == orderAssign) {
             logger.warn("There is no assigning record related to order : {} to update.", orderId);
             throw new EntityNotFoundException("There is no assigning record related to order : " + orderId + " to update.");
         }
         orderAssign.setDeliveryStatus(DeliveryStatus.valueOf(status));
-        orderAssignRepository.save(orderAssign);
+        OrderAssign resultOrderAssign = orderAssignRepository.save(orderAssign);
+        apiResponse.setData(OrderAssignMapper.convertToOrderAssignDto(resultOrderAssign));
+        apiResponse.setStatus(HttpStatus.OK.value());
+        return apiResponse;
     }
 
 }

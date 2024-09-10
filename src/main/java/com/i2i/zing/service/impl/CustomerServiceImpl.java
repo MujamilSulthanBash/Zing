@@ -18,10 +18,10 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CartService cartService;
 
-    public void createCustomer(Customer customer) {
+    public Customer createCustomer(Customer customer) {
         customer.setMemberShip(Membership.SILVER);
-        customerRepository.save(customer);
         cartService.addCart(customer);
+        return customerRepository.save(customer);
     }
 
     public Customer getCustomer(String customerId) {

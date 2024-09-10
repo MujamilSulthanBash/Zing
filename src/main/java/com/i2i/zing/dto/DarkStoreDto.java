@@ -1,6 +1,5 @@
 package com.i2i.zing.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -35,6 +34,7 @@ public class DarkStoreDto {
 
     @NotBlank
     @Size(min = 10, max = 10, message = "Contact number must be 10 Digits..")
+    @Pattern(regexp = "^[1-9]{1}[0-9]{9}$", message = "Contact Number should contain only numbers.")
     private String contactNumber;
 
     @NotBlank

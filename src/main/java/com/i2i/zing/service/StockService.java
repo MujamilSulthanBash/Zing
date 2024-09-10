@@ -92,8 +92,9 @@ public interface StockService {
      * </p>
      *
      * @param itemId - To Identify the Item
+     * @param location - To identify the location.
      * @return Stock as Entity Object
      */
-    Stock getStockByItemId(String itemId);
+    Stock getStockByItemId(String itemId, String location);
 
 }

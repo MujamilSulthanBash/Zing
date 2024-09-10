@@ -49,9 +49,10 @@ public class CartItemServiceImpl implements CartItemService {
         }
         ItemDisplayResponseDto itemDisplayResponseDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
         cartItem.setPrice(itemDisplayResponseDto.getPrice());
+        cartItem.setCart(cartService.getCartAsModel(cartItem.getCart().getCartId()));
         cartItem.setTotalPrice((double) cartItem.getQuantity() * itemDisplayResponseDto.getPrice());
         CartItem resultCartItem = cartItemRepository.save(cartItem);
-        apiResponse.setData(resultCartItem);
+        apiResponse.setData(CartItemMapper.convertToCartItemDto(resultCartItem));
         apiResponse.setStatus(HttpStatus.CREATED.value());
         return apiResponse;
     }
@@ -82,7 +83,7 @@ public class CartItemServiceImpl implements CartItemService {
                 .orElseThrow(() -> new EntityNotFoundException("CartItem with Id : " + cartItemId + " not found to delete."));
         cartItemRepository.deleteById(cartItemId);
         apiResponse.setData("CartItem with Id : " + cartItemId + " has been deleted.");
-        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setStatus(HttpStatus.NO_CONTENT.value());
         return apiResponse;
     }
 

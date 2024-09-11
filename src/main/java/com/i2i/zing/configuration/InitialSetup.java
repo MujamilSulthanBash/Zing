@@ -9,8 +9,8 @@ import com.i2i.zing.service.UserService;
 
 /**
  * <p>
- *     This class represent the initial setup need to be done while running the application
- *     like roles to be stored in the database and admin account will be create.
+ * This class represent the initial setup need to be done while running the application
+ * like roles to be stored in the database and admin account will be create.
  * </p>
  */
 @Configuration

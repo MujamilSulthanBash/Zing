@@ -1,15 +1,23 @@
 package com.i2i.zing.controller;
 
-import com.i2i.zing.configuration.JwtService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
+import com.i2i.zing.configuration.JwtService;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CartItemRequestDto;
 import com.i2i.zing.service.CartItemService;
-
 /**
  * <p>
  * This class is the Controller for CartItem Operations
@@ -31,13 +39,14 @@ public class CartItemController {
      * This method add the Cart Items to the Database
      * </p>
      *
+     * @param token - Authorization Token for user
      * @param cartItemRequestDto - {@link CartItemRequestDto}CartItem Details like ID, quantity
      *                           total price etc.,
      * @return - APIResponse (Status , Data)
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCartItem(@RequestHeader(value = "authorization", defaultValue = "") String auth, @Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
-        APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto, jwtService.getSubjectFromToken(auth));
+    public ResponseEntity<APIResponse> addCartItem(@RequestHeader(value = "authorization", defaultValue = "") String token, @Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
+        APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto, jwtService.getSubjectFromToken(token));
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

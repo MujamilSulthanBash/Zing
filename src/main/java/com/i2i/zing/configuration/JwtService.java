@@ -50,6 +50,15 @@ public class JwtService {
                 .compact();
     }
 
+    /**
+     * <>
+     * Separates and sends the subject string from
+     * jwt token.
+     * </>
+     *
+     * @param jwtToken - String to fetch the subject.
+     * @return String for internal usage.
+     */
     public String getSubjectFromToken(String jwtToken) {
         if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
             String token = jwtToken.substring(7);
@@ -67,7 +76,6 @@ public class JwtService {
         } else {
             System.err.println("JWT Token does not begin with Bearer String");
         }
-
         return null;
     }
 

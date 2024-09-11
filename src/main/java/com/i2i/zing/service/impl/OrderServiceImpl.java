@@ -116,7 +116,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public APIResponse getOrdersOfCustomerById(String id) {
         APIResponse apiResponse = new APIResponse();
-        apiResponse.setData(orderRepository.findByCustomerId(id).stream()
+        Customer resultCustomer = customerService.getCustomerByUserId(id);
+        apiResponse.setData(orderRepository.findByCustomerId(resultCustomer.getCustomerId()).stream()
                 .map(OrderMapper::convertToOrderDto).toList());
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;

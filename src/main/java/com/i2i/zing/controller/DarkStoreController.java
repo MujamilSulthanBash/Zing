@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.DarkStoreDto;
-import com.i2i.zing.dto.DarkStoreRequestDto;
 import com.i2i.zing.dto.DarkStoreResponseDto;
 import com.i2i.zing.dto.UpdateOrderStatusDto;
 import com.i2i.zing.service.DarkStoreService;
@@ -39,12 +38,11 @@ public class DarkStoreController {
      * This method Add a DarkStore to the Database
      * </p>
      *
-     * @param darkStoreDto {@link DarkStoreRequestDto}- DarkStore as Dto Object
+     * @param darkStoreDto {@link DarkStoreDto}- DarkStore as Dto Object
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
     public ResponseEntity<APIResponse> addDarkStore(@Valid @RequestBody DarkStoreDto darkStoreDto) {
-        logger.debug("Dark Store Adding..");
         APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreDto);
         logger.info("Dark Store Added Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())

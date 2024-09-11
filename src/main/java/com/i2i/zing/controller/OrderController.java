@@ -57,9 +57,9 @@ public class OrderController {
      *
      * @return APIResponse like Status, Data.
      */
-    @GetMapping("/{customerId}")
-    public ResponseEntity<APIResponse> getOrdersOfCustomer(@PathVariable String customerId) {
-        APIResponse apiResponse = orderService.getOrdersOfCustomerById(customerId);
+    @GetMapping
+    public ResponseEntity<APIResponse> getOrdersOfCustomer(@RequestHeader(value = "authorization", defaultValue = "") String auth) {
+        APIResponse apiResponse = orderService.getOrdersOfCustomerById(jwtService.getSubjectFromToken(auth));
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -72,7 +72,7 @@ public class OrderController {
      * @param orderId - To Identify the Order
      * @return APIResponse like Status, Data.
      */
-    @GetMapping("/me/{orderId}")
+    @GetMapping("/{orderId}")
     public ResponseEntity<APIResponse> getOrder(@PathVariable String orderId) {
         APIResponse apiResponse = orderService.getOrder(orderId);
         return ResponseEntity.status(apiResponse.getStatus())

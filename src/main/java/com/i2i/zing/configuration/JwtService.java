@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.jsonwebtoken.SignatureException;
 import org.springframework.stereotype.Service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -38,7 +39,7 @@ public class JwtService {
         Claims claims = Jwts.claims()
                 .setIssuedAt(new Date(milliTime))
                 .setExpiration(new Date(expiryTime))
-                .setSubject(user.getEmailId());
+                .setSubject(user.getUserId());
         List<UserRole> roles = new ArrayList<>();
         for (Role role : user.getRoles()) {
             roles.add(role.getRoleName());
@@ -47,6 +48,27 @@ public class JwtService {
         return Jwts.builder().setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY)
                 .compact();
+    }
+
+    public String getSubjectFromToken(String jwtToken) {
+        if (jwtToken != null && jwtToken.startsWith("Bearer ")) {
+            String token = jwtToken.substring(7);
+            try {
+                Claims claims = Jwts.parser()
+                        .setSigningKey(SECRET_KEY)
+                        .parseClaimsJws(token)
+                        .getBody();
+                return claims.getSubject();
+            } catch (SignatureException e) {
+                System.err.println("Invalid JWT signature: " + e.getMessage());
+            } catch (Exception e) {
+                System.err.println("Error parsing JWT: " + e.getMessage());
+            }
+        } else {
+            System.err.println("JWT Token does not begin with Bearer String");
+        }
+
+        return null;
     }
 
 }

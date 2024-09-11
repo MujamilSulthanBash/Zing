@@ -47,4 +47,5 @@ public interface OrderRepository extends JpaRepository<Order, String> {
      */
     @Query("SELECT o FROM Order o LEFT JOIN FETCH o.customer c where c.customerId = :id")
     List<Order> findByCustomerId(String id);
+
 }

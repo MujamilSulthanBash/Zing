@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import com.i2i.zing.service.CategoryService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import com.i2i.zing.dto.ItemDisplayResponseDto;
 import com.i2i.zing.dto.ItemUpdateDto;
 import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.exception.EntityNotFoundException;
+import com.i2i.zing.exception.EntityAlreadyExistsException;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Item;
 import com.i2i.zing.model.Stock;
@@ -32,25 +34,33 @@ public class ItemServiceImpl implements ItemService {
     private static final Logger logger = LogManager.getLogger();
 
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
     private StockService stockService;
+
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public APIResponse addItem(ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = new APIResponse();
         Item item = ItemMapper.convertDtoToEntity(itemRequestDto);
-        List<Item> items = itemRepository.findByIsDeletedFalse();
-        for (Item iterator : items) {
-            if (Objects.equals(iterator.getItemName(), item.getItemName())) {
-                logger.warn("Item with name {} already exists. Please provide alter name.", item.getItemName());
-                throw new EntityNotFoundException("Item with name " + item.getItemName() + " already exists. Please provide alter name.");
+        if (categoryService.verifyCategoryId(item.getCategory().getCategoryId())) {
+            List<Item> items = itemRepository.findByIsDeletedFalse();
+            for (Item iterator : items) {
+                if (Objects.equals(iterator.getItemName(), item.getItemName())) {
+                    logger.warn("Item with name {} already exists. Please provide alter name.", item.getItemName());
+                    throw new EntityAlreadyExistsException("Item with name " + item.getItemName() + " already exists. Please provide alter name.");
+                }
             }
+            apiResponse.setData(ItemMapper.convertEntityToDto(itemRepository.save(item)));
+            apiResponse.setStatus(HttpStatus.CREATED.value());
+            return apiResponse;
         }
-        apiResponse.setData(ItemMapper.convertEntityToDto(itemRepository.save(item)));
-        apiResponse.setStatus(HttpStatus.CREATED.value());
-        return apiResponse;
+        logger.warn("Category with category Id : {}does not exists.", item.getCategory().getCategoryId());
+        throw new EntityNotFoundException("Category with category Id : " + item.getCategory().getCategoryId()
+                + "does not exists.");
     }
 
     @Override
@@ -128,10 +138,14 @@ public class ItemServiceImpl implements ItemService {
         existingItem.setModifiedDate(modifiedDate);
         existingItem.setItemName(itemUpdateDto.getName());
         existingItem.setPrice(itemUpdateDto.getPrice());
-        itemRepository.save(existingItem);
+        Item resultItem = itemRepository.save(existingItem);
         apiResponse.setStatus(HttpStatus.OK.value());
-        apiResponse.setData(modifiedDateTime);
+        apiResponse.setData(ItemMapper.convertEntityToResponseDto(resultItem));
         return apiResponse;
     }
 
+    @Override
+    public boolean verifyItemId(String itemId) {
+        return itemRepository.existsById(itemId);
+    }
 }

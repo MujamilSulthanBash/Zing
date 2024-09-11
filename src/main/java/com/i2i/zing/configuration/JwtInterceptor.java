@@ -38,14 +38,15 @@ public class JwtInterceptor implements HandlerInterceptor {
      * @throws UnAuthorizedException - This Exception will throw while Unauthorized login access
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws UnAuthorizedException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+                             Object handler) throws UnAuthorizedException {
         String authToken = request.getHeader("Authorization");
-        if (!(request.getRequestURI().contains("/signup") || request.getRequestURI().contains("/login") ||
-                request.getRequestURI().contains("/show-items") || request.getRequestURI().contains("/v3/api-docs") ||
-                request.getRequestURI().contains("/swagger-ui")|| request.getRequestURI().contains("/verify"))) {
+        if (!(request.getRequestURI().contains("/signup") || request.getRequestURI().contains("/login")
+                || request.getRequestURI().contains("/forget-password") || request.getRequestURI().contains("/show-items")
+                || request.getRequestURI().contains("/v3/api-docs") || request.getRequestURI().contains("/swagger-ui")
+                || request.getRequestURI().contains("/verify"))) {
             if (authToken == null || !authToken.startsWith(bearerPrefix)) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                System.out.println("1");
                 return false;
             }
             String token = authToken.substring(bearerPrefix.length());

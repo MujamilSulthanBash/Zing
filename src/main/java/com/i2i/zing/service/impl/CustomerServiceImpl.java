@@ -18,14 +18,20 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     CartService cartService;
 
+    @Override
     public Customer createCustomer(Customer customer) {
         customer.setMemberShip(Membership.SILVER);
         cartService.addCart(customer);
         return customerRepository.save(customer);
     }
 
+    @Override
     public Customer getCustomer(String customerId) {
         return customerRepository.getReferenceById(customerId);
     }
 
+    @Override
+    public Customer getCustomerByUserId(String userId) {
+        return customerRepository.findByUserId(userId);
+    }
 }

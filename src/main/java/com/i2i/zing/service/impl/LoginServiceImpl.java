@@ -15,6 +15,8 @@ import com.i2i.zing.common.UserRole;
 import com.i2i.zing.configuration.JwtService;
 import com.i2i.zing.dto.CustomerRequestDto;
 import com.i2i.zing.dto.DeliveryPersonRequestDto;
+import com.i2i.zing.dto.ForgetPasswordDto;
+import com.i2i.zing.dto.ForgetPasswordValidator;
 import com.i2i.zing.dto.UserLoginRequestDto;
 import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.mapper.UserMapper;
@@ -53,6 +55,8 @@ public class LoginServiceImpl implements LoginService {
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     private static final Map<String, String> otpStore = new HashMap<>();
+
+    private static final Map<String, String> forgetPasswordOtpStore = new HashMap<>();
 
     private static final Map<String, CustomerRequestDto> primaryCacheMemory = new HashMap<>();
 
@@ -278,6 +282,53 @@ public class LoginServiceImpl implements LoginService {
         }
         apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         apiResponse.setData("Email or Otp Incorrect Try Again..");
+        return apiResponse;
+    }
+
+    public APIResponse sendMailForForgetPassword(ForgetPasswordDto forgetPasswordDto) {
+        APIResponse apiResponse = new APIResponse();
+        System.out.println(forgetPasswordDto.getEmail());
+        if (userService.checkByEmailId(forgetPasswordDto.getEmail())) {
+            String to = forgetPasswordDto.getEmail();
+            String subject = "Login OTP";
+            String otp = String.valueOf(OtpGenerator.generateOtp());
+            String body = "Your One Time Password for resetting the password is " + otp;
+            forgetPasswordOtpStore.put(forgetPasswordDto.getEmail(), otp);
+            emailSenderService.sendEmail(to, subject, body);
+            apiResponse.setStatus(HttpStatus.OK.value());
+            apiResponse.setData("Otp sent to respective mail Id - " + forgetPasswordDto.getEmail());
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        apiResponse.setData("Enter valid Zing email id !");
+        return apiResponse;
+    }
+
+    public APIResponse verifyEmailForForgetPassword(ForgetPasswordValidator forgetPasswordValidator) {
+        APIResponse apiResponse = new APIResponse();
+        if (userService.checkByEmailId(forgetPasswordValidator.getEmail())) {
+            boolean isVerified = false;
+            for (Map.Entry<String, String> entry : forgetPasswordOtpStore.entrySet()) {
+                if (entry.getKey().equals(forgetPasswordValidator.getEmail()) && entry.getValue().equals(forgetPasswordValidator.getOtp())) {
+                    isVerified = true;
+                    break;
+                }
+            }
+            if(isVerified) {
+                User checkUser = userService.retrieveByEmail(forgetPasswordValidator.getEmail());
+                checkUser.setPassword(encoder.encode(forgetPasswordValidator.getNewPassword()));
+                userService.createUser(checkUser);
+                forgetPasswordOtpStore.remove(forgetPasswordValidator.getEmail());
+                apiResponse.setStatus(HttpStatus.OK.value());
+                apiResponse.setData("Password changed successfully");
+                return apiResponse;
+            }
+            apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+            apiResponse.setData("Email or Otp Incorrect Try Again..");
+            return apiResponse;
+        }
+        apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
+        apiResponse.setData("Enter valid Zing email id !");
         return apiResponse;
     }
 

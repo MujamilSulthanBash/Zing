@@ -3,8 +3,6 @@ package com.i2i.zing.service.impl;
 import java.util.List;
 import java.util.Objects;
 
-import com.i2i.zing.model.*;
-import com.i2i.zing.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +18,9 @@ import com.i2i.zing.dto.VerifyOrderDto;
 import com.i2i.zing.exception.EntityAlreadyExistsException;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderMapper;
+import com.i2i.zing.model.*;
 import com.i2i.zing.repository.OrderRepository;
+import com.i2i.zing.service.*;
 import com.i2i.zing.util.OtpGenerator;
 
 /**
@@ -32,30 +32,34 @@ import com.i2i.zing.util.OtpGenerator;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-    OrderRepository orderRepository;
+    private OrderRepository orderRepository;
 
     @Autowired
-    OrderAssignService orderAssignService;
+    private OrderAssignService orderAssignService;
 
     @Autowired
-    StockService stockService;
+    private StockService stockService;
 
     @Autowired
-    EmailSenderService emailSenderService;
+    private EmailSenderService emailSenderService;
 
     @Autowired
-    CartService cartService;
+    private CartService cartService;
 
     @Autowired
-    CustomerService customerService;
+    private CustomerService customerService;
 
     private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(12);
 
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public APIResponse addOrder(OrderDto orderDto) {
+    public APIResponse addOrder(OrderDto orderDto, String userId) {
         APIResponse apiResponse = new APIResponse();
+        Customer resultCustomer = customerService.getCustomerByUserId(userId);
+        List<Cart> carts = resultCustomer.getCarts();
+        Cart customerCart = carts.getLast();
+        orderDto.setCartId(customerCart.getCartId());
         List<Order> orders = orderRepository.findByIsDeletedFalse();
         logger.debug("Getting list of orders to check previous carts.");
         for (Order order : orders) {
@@ -71,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
         Double sum = 0.0;
         for (CartItem cartItem : cart.getCartItems()) {
             Stock stock = stockService.getStockByItemId(cartItem.getItem().getItemId(),
-                    cartItem.getCart().getCustomer().getUser().getLocation() );
+                    cartItem.getCart().getCustomer().getUser().getLocation());
             if (cartItem.getQuantity() > stock.getQuantity()) {
                 apiResponse.setData("Cart Item with Id : " + cartItem.getItem().getItemId() + " is out of stock." +
                         "Please try later after 1 Hour.");
@@ -154,5 +158,10 @@ public class OrderServiceImpl implements OrderService {
         }
         apiResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
         return apiResponse;
+    }
+
+    @Override
+    public boolean verifyCartForOrder(String cartId) {
+        return orderRepository.existsById(cartId);
     }
 }

@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.configuration.JwtService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +19,16 @@ import com.i2i.zing.service.OrderService;
  * </p>
  */
 @RestController
-@RequestMapping("zing/api/v1/customers/orders")
+@RequestMapping("zing/api/v1/customers/me/orders")
 public class OrderController {
 
     private static final Logger logger = LogManager.getLogger();
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
+
+    @Autowired
+    private JwtService jwtService;
 
     /**
      * <p>
@@ -35,8 +39,8 @@ public class OrderController {
      * @return - APIResponse like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addOrder(@Valid @RequestBody OrderDto orderDto) {
-        APIResponse apiResponse = orderService.addOrder(orderDto);
+    public ResponseEntity<APIResponse> addOrder(@RequestHeader(value = "authorization", defaultValue = "") String auth, @Valid @RequestBody OrderDto orderDto) {
+        APIResponse apiResponse = orderService.addOrder(orderDto, jwtService.getSubjectFromToken(auth));
         if (null == apiResponse.getData()) {
             logger.warn("Error Occurred while Adding Order..");
         } else {

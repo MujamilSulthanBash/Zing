@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,10 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CustomerRequestDto;
-import com.i2i.zing.dto.DeliveryPersonRequestDto;
-import com.i2i.zing.dto.UserLoginRequestDto;
-import com.i2i.zing.dto.VerifyEmailDto;
 import com.i2i.zing.service.LoginService;
 
 /**
@@ -102,6 +99,20 @@ public class LoginController {
     @PostMapping("deliverypersons/verify")
     public ResponseEntity<APIResponse> verifyDeliveryPersonsMail(@Valid @RequestBody VerifyEmailDto verifyEmailDto) {
         APIResponse apiResponse = loginService.verifyDeliveryPersonEmail(verifyEmailDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
+    }
+
+    @PostMapping("customers/forget-password")
+    public ResponseEntity<APIResponse> sendMailForForgetPassword(@RequestBody ForgetPasswordDto forgetPasswordDto) {
+        APIResponse apiResponse = loginService.sendMailForForgetPassword(forgetPasswordDto);
+        return ResponseEntity.status(apiResponse.getStatus())
+                .body(apiResponse);
+    }
+
+    @PostMapping("customers/verify/forget-password")
+    public ResponseEntity<APIResponse> verifyEmailForForgetPassword(@RequestBody ForgetPasswordValidator forgetPasswordValidator) {
+        APIResponse apiResponse = loginService.verifyEmailForForgetPassword(forgetPasswordValidator);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

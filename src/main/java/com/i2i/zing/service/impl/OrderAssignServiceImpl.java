@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.common.DeliveryStatus;
 import com.i2i.zing.dto.OrderAssignDto;
+import com.i2i.zing.dto.UpdateOrderStatusDto;
 import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.OrderAssignMapper;
 import com.i2i.zing.model.Customer;
@@ -39,6 +40,9 @@ public class OrderAssignServiceImpl implements OrderAssignService {
     @Autowired
     CustomerService customerService;
 
+    @Autowired
+    EmailSenderService emailSenderService;
+
     private static final Logger logger = LogManager.getLogger();
 
     @Override
@@ -63,7 +67,13 @@ public class OrderAssignServiceImpl implements OrderAssignService {
                 .deliveryPerson(deliveryPeoples.getFirst())
                 .deliveryStatus(DeliveryStatus.ACCEPTED)
                 .build();
-        OrderAssign resultOrderAssign = orderAssignRepository.save(orderAssign);
+        orderAssignRepository.save(orderAssign);
+        logger.info("Order {} has been assigned to .{}", order.getOrderId(), deliveryPeoples.getFirst().getUser().getUserName());
+        String subject = "Order Acknowledgement";
+        String body = "Your order " + order.getOrderId() + " has been assigned to ."
+                + deliveryPeoples.getFirst().getUser().getUserName() + " for verification approach "
+                + deliveryPeoples.getFirst().getUser().getContactNumber();
+        emailSenderService.sendEmail(order.getCustomer().getUser().getEmailId(), subject, body);
     }
 
     @Override
@@ -83,23 +93,28 @@ public class OrderAssignServiceImpl implements OrderAssignService {
             logger.warn("There is no assigning record with ID : {}", orderAssignId);
             throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignId);
         }
-        apiResponse.setData(OrderAssignMapper.convertToOrderAssignDto(orderAssign));
+        OrderAssignDto orderAssignDto = OrderAssignMapper.convertToOrderAssignDto(orderAssign);
+        orderAssignDto.setCustomerName(orderAssign.getOrder().getCustomer().getUser().getUserName());
+        orderAssignDto.setCustomerNumber(orderAssign.getOrder().getCustomer().getUser().getContactNumber());
+        apiResponse.setData(orderAssignDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
 
     @Override
-    public APIResponse updateOrderAssign(OrderAssignDto orderAssignDto) {
+    public APIResponse updateOrderAssign(UpdateOrderStatusDto updateOrderStatusDto) {
         APIResponse apiResponse = new APIResponse();
-        OrderAssign orderAssign = orderAssignRepository.findByAssignIdAndIsDeletedFalse(orderAssignDto.getAssignId());
+        OrderAssign orderAssign = orderAssignRepository.findByAssignIdAndIsDeletedFalse(updateOrderStatusDto.getOrderId());
         if (null == orderAssign) {
-            logger.warn("There is no assigning record with ID : {} to update.", orderAssignDto.getAssignId());
-            throw new EntityNotFoundException("There is no assigning record with ID : " + orderAssignDto.getAssignId() + " to update.");
+            logger.warn("There is no assigning record with ID : {} to update.", updateOrderStatusDto.getOrderId());
+            throw new EntityNotFoundException("There is no assigning record with ID : " + updateOrderStatusDto.getOrderId() + " to update.");
         }
-        OrderAssign requestBody = OrderAssignMapper.convertToUpdatableEntity(orderAssignDto);
-        orderAssign.setDeliveryStatus(requestBody.getDeliveryStatus());
-        orderAssignRepository.save(orderAssign);
-        apiResponse.setData(orderAssign);
+        orderAssign.setDeliveryStatus(DeliveryStatus.valueOf(updateOrderStatusDto.getStatus()));
+        OrderAssign resultOrderAssign = orderAssignRepository.save(orderAssign);
+        OrderAssignDto orderAssignDto = OrderAssignMapper.convertToOrderAssignDto(resultOrderAssign);
+        orderAssignDto.setCustomerName(orderAssign.getOrder().getCustomer().getUser().getUserName());
+        orderAssignDto.setCustomerNumber(orderAssign.getOrder().getCustomer().getUser().getContactNumber());
+        apiResponse.setData(orderAssignDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
@@ -114,9 +129,11 @@ public class OrderAssignServiceImpl implements OrderAssignService {
         }
         orderAssign.setDeliveryStatus(DeliveryStatus.valueOf(status));
         OrderAssign resultOrderAssign = orderAssignRepository.save(orderAssign);
-        apiResponse.setData(OrderAssignMapper.convertToOrderAssignDto(resultOrderAssign));
+        OrderAssignDto orderAssignDto = OrderAssignMapper.convertToOrderAssignDto(resultOrderAssign);
+        orderAssignDto.setCustomerName(orderAssign.getOrder().getCustomer().getUser().getUserName());
+        orderAssignDto.setCustomerNumber(orderAssign.getOrder().getCustomer().getUser().getContactNumber());
+        apiResponse.setData(orderAssignDto);
         apiResponse.setStatus(HttpStatus.OK.value());
         return apiResponse;
     }
-
 }

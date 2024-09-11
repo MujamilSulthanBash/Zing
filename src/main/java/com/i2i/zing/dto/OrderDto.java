@@ -25,8 +25,6 @@ import lombok.Setter;
 public class OrderDto {
     private String orderId;
 
-    @NotBlank
-    @Size(min = 3, max = 40, message = "cartId should contain 3 to 40 characters.")
     private String cartId;
 
     private String paymentStatus;

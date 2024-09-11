@@ -28,8 +28,6 @@ public class StockRequestDto {
     @Size(min = 3, max = 40, message = "darKStoreId should contain 3 to 40 characters.")
     private String darkStoreId;
 
-    @NotBlank
-    @Size(min = 3, max = 40, message = "itemId should contain 3 to 40 characters.")
     private String itemId;
 
     @NotNull

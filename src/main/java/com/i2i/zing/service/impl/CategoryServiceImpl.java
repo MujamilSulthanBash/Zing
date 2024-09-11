@@ -3,7 +3,6 @@ package com.i2i.zing.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.i2i.zing.exception.EntityAlreadyExistsException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import com.i2i.zing.dto.CategoryRequestDto;
 import com.i2i.zing.dto.CategoryResponseDto;
 import com.i2i.zing.dto.ItemUpdateDto;
 import com.i2i.zing.exception.EntityNotFoundException;
+import com.i2i.zing.exception.EntityAlreadyExistsException;
 import com.i2i.zing.mapper.CategoryMapper;
 import com.i2i.zing.mapper.ItemMapper;
 import com.i2i.zing.model.Category;
@@ -106,6 +106,26 @@ public class CategoryServiceImpl implements CategoryService {
             throw new EntityNotFoundException("Category Not found with Id : " + categoryId);
         }
         return apiResponse;
+    }
+
+    public APIResponse updateCategory(CategoryCreationDto categoryCreationDto) {
+        APIResponse apiResponse = new APIResponse();
+        Category existingCategory = categoryRepository.findByIsDeletedFalseAndCategoryId(categoryCreationDto.getCategoryId());
+        if (null == existingCategory) {
+            logger.warn("Category Not found to Update with Id :{}", categoryCreationDto.getCategoryId());
+            throw new EntityNotFoundException("Category Not found with Id : " + categoryCreationDto.getCategoryId());
+        }
+        existingCategory.setName(categoryCreationDto.getName());
+        existingCategory.setDescription(categoryCreationDto.getDescription());
+        Category resultCategory = categoryRepository.save(existingCategory);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(CategoryMapper.convertEntityToResponseDto(resultCategory));
+        return apiResponse;
+    }
+
+    @Override
+    public boolean verifyCategoryId(String categoryId) {
+        return categoryRepository.existsById(categoryId);
     }
 
 }

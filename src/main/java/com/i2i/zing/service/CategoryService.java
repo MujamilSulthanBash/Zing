@@ -1,6 +1,7 @@
 package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
+import com.i2i.zing.dto.CategoryCreationDto;
 import com.i2i.zing.dto.CategoryRequestDto;
 
 /**
@@ -56,4 +57,15 @@ public interface CategoryService {
      */
     APIResponse getItemsByCategoryId(String categoryId);
 
+    APIResponse updateCategory(CategoryCreationDto categoryCreationDto);
+
+    /**
+     * <p>
+     * Verifies category  availability in records.
+     * </p>
+     *
+     * @param categoryId - String value to check.
+     * @return boolean value to internal operation.
+     */
+    boolean verifyCategoryId(String categoryId);
 }

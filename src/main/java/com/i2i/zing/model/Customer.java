@@ -1,5 +1,6 @@
 package com.i2i.zing.model;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.CascadeType;
@@ -53,7 +54,7 @@ public class Customer {
     private User user;
 
     @OneToMany(mappedBy = "customer")
-    private Set<Cart> carts;
+    private List<Cart> carts;
 
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders;

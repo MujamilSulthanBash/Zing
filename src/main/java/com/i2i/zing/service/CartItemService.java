@@ -11,9 +11,10 @@ public interface CartItemService {
      * </p>
      *
      * @param cartItemRequestDto - {@link CartItemRequestDto} value to set Cart Id.
+     * @param auth - string value to fetch cartId.
      * @return APIResponse value to indicate insertion status.
      */
-    APIResponse addCartItem(CartItemRequestDto cartItemRequestDto);
+    APIResponse addCartItem(CartItemRequestDto cartItemRequestDto, String auth);
 
     /**
      * <p>

@@ -25,5 +25,4 @@ public class CategoryResponseDto {
     private String categoryId;
     private String name;
     private String description;
-    private Set<Item> items;
 }

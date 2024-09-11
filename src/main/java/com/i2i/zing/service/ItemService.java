@@ -72,4 +72,14 @@ public interface ItemService {
      */
     APIResponse updateItem(ItemUpdateDto itemUpdateDto);
 
+    /**
+     * <p>
+     * Verifies item availability in records.
+     * </p>
+     *
+     * @param itemId - String value to check.
+     * @return boolean value to internal operation.
+     */
+    boolean verifyItemId(String itemId);
+
 }

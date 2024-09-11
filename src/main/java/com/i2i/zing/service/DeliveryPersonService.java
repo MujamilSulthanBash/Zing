@@ -2,6 +2,7 @@ package com.i2i.zing.service;
 
 import java.util.List;
 
+import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.model.DeliveryPerson;
 
 /**
@@ -31,5 +32,15 @@ public interface DeliveryPersonService {
      * @return - Delivery Person as Entity Object
      */
     List<DeliveryPerson> getDeliveryPersonByLocation(String location);
+
+    /**
+     * <p>
+     * Fetches the deliveryPerson and returns the all the orders assigned to him.
+     * </p>
+     *
+     * @param deliveryPersonId - String value to display the assigned order details.
+     * @return APIResponse value to display the Cart.
+     */
+    APIResponse getOrderAssignsOfDeliveryPerson(String deliveryPersonId);
 
 }

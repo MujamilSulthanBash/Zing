@@ -41,5 +41,9 @@ public class OrderAssignDto {
     @Size(min = 3, max = 40, message = "orderId should contain 3 to 20 characters.")
     private String orderId;
 
+    private String customerName;
+
+    private String customerNumber;
+
     private Date timeOfUpdate;
 }

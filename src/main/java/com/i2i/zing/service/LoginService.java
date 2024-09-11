@@ -1,10 +1,7 @@
 package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.CustomerRequestDto;
-import com.i2i.zing.dto.DeliveryPersonRequestDto;
-import com.i2i.zing.dto.UserLoginRequestDto;
-import com.i2i.zing.dto.VerifyEmailDto;
+import com.i2i.zing.dto.*;
 
 /**
  * <p>
@@ -65,4 +62,21 @@ public interface LoginService {
      */
     APIResponse verifyDeliveryPersonEmail(VerifyEmailDto verifyEmailDto);
 
+    /**
+     * <p>
+     * This method send the Email to Reset the Password
+     * </p>
+     * @param forgetPasswordDto {@link ForgetPasswordDto} - as Dto Object
+     * @return APIResponse (Status Code, Data, Error)
+     */
+    APIResponse sendMailForForgetPassword(ForgetPasswordDto forgetPasswordDto);
+
+    /**
+     * <p>
+     * This method verify the Email for Forget Password
+     * </p>
+     * @param forgetPasswordValidator {@link ForgetPasswordValidator} - as Dto Object
+     * @return APIResponse (Status Code, Data, Error)
+     */
+    APIResponse verifyEmailForForgetPassword(ForgetPasswordValidator forgetPasswordValidator);
 }

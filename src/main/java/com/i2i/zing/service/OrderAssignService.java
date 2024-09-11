@@ -1,7 +1,7 @@
 package com.i2i.zing.service;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.OrderAssignDto;
+import com.i2i.zing.dto.UpdateOrderStatusDto;
 import com.i2i.zing.model.Order;
 
 /**
@@ -44,10 +44,10 @@ public interface OrderAssignService {
      * order assigned.
      * </p>
      *
-     * @param orderAssignDto - {@link OrderAssignDto} value to update
+     * @param updateOrderStatusDto - {@link UpdateOrderStatusDto} value to update
      * @return APIResponse value to acknowledge update.
      */
-    APIResponse updateOrderAssign(OrderAssignDto orderAssignDto);
+    APIResponse updateOrderAssign(UpdateOrderStatusDto updateOrderStatusDto);
 
     /**
      * <p>

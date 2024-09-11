@@ -19,9 +19,10 @@ public interface OrderService {
      * </p>
      *
      * @param orderDto - {@link OrderDto} value to set order Id.
+     * @param userId - String value to fetch cart.
      * @return APIResponse value to indicate insertion status.
      */
-    APIResponse addOrder(OrderDto orderDto);
+    APIResponse addOrder(OrderDto orderDto, String userId);
 
     /**
      * <p>
@@ -64,4 +65,13 @@ public interface OrderService {
      */
     APIResponse updateOrderStatus(VerifyOrderDto verifyOrderDto);
 
+    /**
+     * <p>
+     * Verifies cart availability in order records.
+     * </p>
+     *
+     * @param cartId - String value to check.
+     * @return boolean value to internal operation.
+     */
+    boolean verifyCartForOrder(String cartId);
 }

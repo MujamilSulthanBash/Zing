@@ -15,6 +15,9 @@ import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.StockRequestDto;
+import com.i2i.zing.exception.EntityNotFoundException;
+import com.i2i.zing.service.DarkStoreService;
+import com.i2i.zing.service.ItemService;
 import com.i2i.zing.service.StockService;
 
 /**
@@ -28,7 +31,13 @@ import com.i2i.zing.service.StockService;
 public class StockController {
     private static final Logger logger = LogManager.getLogger();
     @Autowired
-    StockService stockService;
+    private StockService stockService;
+
+    @Autowired
+    private ItemService itemService;
+
+    @Autowired
+    private DarkStoreService darkStoreService;
 
     /**
      * <p>
@@ -40,10 +49,17 @@ public class StockController {
      */
     @PostMapping
     public ResponseEntity<APIResponse> addStock(@Valid @RequestBody StockRequestDto stockRequestDto) {
-        APIResponse apiResponse = stockService.addStock(stockRequestDto);
-        logger.info("Stock Created Successfully..");
-        return ResponseEntity.status(apiResponse.getStatus())
-                .body(apiResponse);
+        if ((itemService.verifyItemId(stockRequestDto.getItemId())) &&
+                (darkStoreService.verifyDarkStoreId(stockRequestDto.getDarkStoreId()))) {
+            APIResponse apiResponse = stockService.addStock(stockRequestDto);
+            logger.info("Stock Created Successfully..");
+            return ResponseEntity.status(apiResponse.getStatus())
+                    .body(apiResponse);
+        }
+        logger.warn("Either Item Id : {} or Darkstore Id : {} does not exists.",
+                stockRequestDto.getItemId(), stockRequestDto.getDarkStoreId());
+        throw new EntityNotFoundException("Either Item Id : " + stockRequestDto.getItemId() +
+                " or DarkStoreId : " + stockRequestDto.getDarkStoreId() + " does not exists.");
     }
 
     /**

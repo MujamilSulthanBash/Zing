@@ -3,6 +3,9 @@ package com.i2i.zing.service.impl;
 import java.util.List;
 import java.util.Objects;
 
+import com.i2i.zing.model.Cart;
+import com.i2i.zing.model.Customer;
+import com.i2i.zing.service.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,44 +20,57 @@ import com.i2i.zing.exception.EntityNotFoundException;
 import com.i2i.zing.mapper.CartItemMapper;
 import com.i2i.zing.model.CartItem;
 import com.i2i.zing.repository.CartItemRepository;
-import com.i2i.zing.service.CartService;
-import com.i2i.zing.service.CartItemService;
-import com.i2i.zing.service.ItemService;
 
 @Service
 public class CartItemServiceImpl implements CartItemService {
 
     @Autowired
-    CartItemRepository cartItemRepository;
+    private CartItemRepository cartItemRepository;
 
     @Autowired
-    CartService cartService;
+    private CartService cartService;
 
     @Autowired
-    ItemService itemservice;
+    private CustomerService customerService;
+
+    @Autowired
+    private ItemService itemservice;
+
+    @Autowired
+    private OrderService orderService;
 
     private static final Logger logger = LogManager.getLogger();
 
     @Override
-    public APIResponse addCartItem(CartItemRequestDto cartItemRequestDto) {
+    public APIResponse addCartItem(CartItemRequestDto cartItemRequestDto, String userId) {
         APIResponse apiResponse = new APIResponse();
         CartItem cartItem = CartItemMapper.convertToCartItem(cartItemRequestDto);
-        List<CartItem> cartItems = cartService.getCartItemsOfCartAsObject(cartItem.getCart().getCartId());
-        for (CartItem items : cartItems) {
-            if (Objects.equals(items.getItem().getItemId(), cartItem.getItem().getItemId())) {
-                logger.warn("Item with Id : {}already exists in the cart with Id : {}", cartItem.getItem().getItemId(), cartItem.getCart().getCartId());
-                throw new EntityAlreadyExistsException("Item with Id : " + cartItem.getItem().getItemId()
-                                                       + "already exists please update quantity, if you need.");
+        Customer customer = customerService.getCustomerByUserId(userId);
+        List<Cart> carts = customer.getCarts();
+        Cart customerCart = carts.getLast();
+        cartItem.setCart(customerCart);
+        if (! orderService.verifyCartForOrder(cartItem.getCart().getCartId())) {
+            List<CartItem> cartItems = cartService.getCartItemsOfCartAsObject(cartItem.getCart().getCartId());
+            for (CartItem items : cartItems) {
+                if (Objects.equals(items.getItem().getItemId(), cartItem.getItem().getItemId())) {
+                    logger.warn("Item with Id : {}already exists in the cart with Id : {}", cartItem.getItem().getItemId(), cartItem.getCart().getCartId());
+                    throw new EntityAlreadyExistsException("Item with Id : " + cartItem.getItem().getItemId()
+                            + "already exists please update quantity, if you need.");
+                }
             }
+            ItemDisplayResponseDto itemDisplayResponseDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
+            cartItem.setPrice(itemDisplayResponseDto.getPrice());
+            cartItem.setCart(cartService.getCartAsModel(cartItem.getCart().getCartId()));
+            cartItem.setTotalPrice((double) cartItem.getQuantity() * itemDisplayResponseDto.getPrice());
+            CartItem resultCartItem = cartItemRepository.save(cartItem);
+            apiResponse.setData(CartItemMapper.convertToCartItemDto(resultCartItem));
+            apiResponse.setStatus(HttpStatus.CREATED.value());
+            return apiResponse;
         }
-        ItemDisplayResponseDto itemDisplayResponseDto = itemservice.getItemDtoById(cartItemRequestDto.getItemId());
-        cartItem.setPrice(itemDisplayResponseDto.getPrice());
-        cartItem.setCart(cartService.getCartAsModel(cartItem.getCart().getCartId()));
-        cartItem.setTotalPrice((double) cartItem.getQuantity() * itemDisplayResponseDto.getPrice());
-        CartItem resultCartItem = cartItemRepository.save(cartItem);
-        apiResponse.setData(CartItemMapper.convertToCartItemDto(resultCartItem));
-        apiResponse.setStatus(HttpStatus.CREATED.value());
-        return apiResponse;
+        apiResponse.setData("Cart with id " + cartItem.getCart().getCartId() +
+                               " placed for order. Please use new cart.");
+        apiResponse.setStatus(HttpStatus.BAD_REQUEST.value());
+        return  apiResponse;
     }
 
     @Override

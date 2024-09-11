@@ -58,6 +58,7 @@ public class ItemMapper {
      */
     public static ItemDisplayResponseDto convertEntityToDisplayResponseDto(Item item) {
         return ItemDisplayResponseDto.builder()
+                .itemId(item.getItemId())
                 .name(item.getItemName())
                 .price(item.getPrice())
                 .categoryName(item.getCategory().getName())

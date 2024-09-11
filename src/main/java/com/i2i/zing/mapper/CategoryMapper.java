@@ -26,7 +26,6 @@ public class CategoryMapper {
                 .categoryId(category.getCategoryId())
                 .name(category.getName())
                 .description(category.getDescription())
-                .items(category.getItems())
                 .build();
     }
 

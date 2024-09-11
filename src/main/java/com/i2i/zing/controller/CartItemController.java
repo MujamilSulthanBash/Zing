@@ -1,15 +1,10 @@
 package com.i2i.zing.controller;
 
+import com.i2i.zing.configuration.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CartItemRequestDto;
@@ -28,6 +23,9 @@ public class CartItemController {
     @Autowired
     CartItemService cartItemService;
 
+    @Autowired
+    JwtService jwtService;
+
     /**
      * <p>
      * This method add the Cart Items to the Database
@@ -38,8 +36,8 @@ public class CartItemController {
      * @return - APIResponse (Status , Data)
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCartItem(@Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
-        APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto);
+    public ResponseEntity<APIResponse> addCartItem(@RequestHeader(value = "authorization", defaultValue = "") String auth, @Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
+        APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto, jwtService.getSubjectFromToken(auth));
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -67,7 +65,7 @@ public class CartItemController {
      * @return - APIResponse (Status, Data)
      */
     @GetMapping("/{cartItemId}")
-    public ResponseEntity<APIResponse> getCartItem(String cartItemId) {
+    public ResponseEntity<APIResponse> getCartItem(@PathVariable String cartItemId) {
         APIResponse apiResponse = cartItemService.getCartItem(cartItemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -82,7 +80,7 @@ public class CartItemController {
      * @return - APIResponse (Status, Data)
      */
     @DeleteMapping("/{cartItemId}")
-    public ResponseEntity<APIResponse> deleteCartItem(String cartItemId) {
+    public ResponseEntity<APIResponse> deleteCartItem(@PathVariable String cartItemId) {
         APIResponse apiResponse = cartItemService.deleteCartItem(cartItemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

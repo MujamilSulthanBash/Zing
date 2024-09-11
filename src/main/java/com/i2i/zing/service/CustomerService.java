@@ -24,4 +24,14 @@ public interface CustomerService {
      */
     Customer getCustomer(String customerId);
 
+    /**
+     * <p>
+     * This method get the Customer with user Id
+     * </p>
+     *
+     * @param userId - To Identify the Customer
+     * @return Customer as Entity Object
+     */
+    Customer getCustomerByUserId(String userId);
+
 }

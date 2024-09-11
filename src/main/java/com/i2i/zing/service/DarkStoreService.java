@@ -1,5 +1,6 @@
 package com.i2i.zing.service;
 
+import com.i2i.zing.dto.DarkStoreResponseDto;
 import org.springframework.stereotype.Service;
 
 import com.i2i.zing.dto.DarkStoreDto;
@@ -55,4 +56,24 @@ public interface DarkStoreService {
      * @return APIResponse Details like Status, Data.
      */
     APIResponse deleteDarkStore(String darkStoreId);
+
+    /**
+     * <p>
+     * Verifies darkstore availability in records.
+     * </p>
+     *
+     * @param darkStoreId - String value to check.
+     * @return boolean value to internal operation.
+     */
+    boolean verifyDarkStoreId(String darkStoreId);
+
+    /**
+     * <p>
+     * This method update the DarkStore Details with
+     * updated Information
+     * </p>
+     * @param darkStoreResponseDto {@link DarkStoreResponseDto} - Dto Object to update
+     * @return
+     */
+    APIResponse updateDarkStore(DarkStoreResponseDto darkStoreResponseDto);
 }

@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
+import com.i2i.zing.dto.UpdateOrderStatusDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +33,7 @@ public class OrderAssignControllerTest {
 
     private String assignId;
     private OrderAssignDto orderAssignDto;
+    private UpdateOrderStatusDto updateOrderStatusDto;
     private APIResponse getOrderAssignResponse;
     private APIResponse getOrderAssignsResponse;
     private APIResponse updateOrderAssignResponse;
@@ -44,6 +46,7 @@ public class OrderAssignControllerTest {
                 .orderId("1o")
                 .deliveryStatus(DeliveryStatus.PENDING.toString())
                 .deliveryPersonId("1d").build();
+        updateOrderStatusDto = UpdateOrderStatusDto.builder().build();
         getOrderAssignResponse = APIResponse.builder()
                 .status(HttpStatus.OK.value())
                 .data(orderAssignDto).build();

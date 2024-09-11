@@ -1,5 +1,6 @@
 package com.i2i.zing.controller;
 
+
 import jakarta.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.i2i.zing.common.APIResponse;
-import com.i2i.zing.dto.OrderAssignDto;
+import com.i2i.zing.dto.UpdateOrderStatusDto;
 import com.i2i.zing.service.OrderAssignService;
 
 /**
@@ -64,12 +65,12 @@ public class OrderAssignController {
      * Updates the required assigned order detail.
      * </p>
      *
-     * @param orderAssignDto - {@link OrderAssignDto} value to fetch details.
+     * @param updateOrderStatusDto - {@link UpdateOrderStatusDto} value to fetch details.
      * @return APIResponse Details like Status, Data.
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateOrderAssign(@Valid @RequestBody OrderAssignDto orderAssignDto) {
-        APIResponse apiResponse = orderAssignService.updateOrderAssign(orderAssignDto);
+    public ResponseEntity<APIResponse> updateOrderAssign(@Valid @RequestBody UpdateOrderStatusDto updateOrderStatusDto) {
+        APIResponse apiResponse = orderAssignService.updateOrderAssign(updateOrderStatusDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

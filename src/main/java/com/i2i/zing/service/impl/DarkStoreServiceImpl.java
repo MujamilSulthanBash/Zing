@@ -1,10 +1,12 @@
 package com.i2i.zing.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
+import com.i2i.zing.dto.DarkStoreResponseDto;
+import com.i2i.zing.dto.ItemUpdateDto;
+import com.i2i.zing.model.Item;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,6 +119,26 @@ public class DarkStoreServiceImpl implements DarkStoreService {
         darkStoreRepository.save(darkStore);
         apiResponse.setData("Dark store Deleted Successfully : " + darkStoreId);
         apiResponse.setStatus(HttpStatus.NO_CONTENT.value());
+        return apiResponse;
+    }
+
+    @Override
+    public boolean verifyDarkStoreId(String darkStoreId) {
+        return darkStoreRepository.existsById(darkStoreId);
+    }
+
+    @Override
+    public APIResponse updateDarkStore(DarkStoreResponseDto darkStoreResponseDto) {
+        APIResponse apiResponse = new APIResponse();
+        DarkStore existingDarkStore = darkStoreRepository.findByIsDeletedFalseAndDarkStoreId(darkStoreResponseDto.getDarkStoreId());
+        if (null == existingDarkStore) {
+            logger.warn("DarkStore Not found to Update with Id :{}", darkStoreResponseDto.getDarkStoreId());
+            throw new EntityNotFoundException("DarkStore Not found with Id : " + darkStoreResponseDto.getDarkStoreId());
+        }
+        existingDarkStore.setUser(existingDarkStore.getUser());
+        DarkStoreResponseDto updatedDarkStore = DarkStoreMapper.convertResponseDto(darkStoreRepository.save(existingDarkStore));
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(updatedDarkStore);
         return apiResponse;
     }
 

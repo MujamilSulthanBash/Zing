@@ -29,7 +29,6 @@ public class CartItemRequestDto {
 
     private Double totalPrice;
 
-    @NotBlank
     private String cartId;
 
     @NotBlank

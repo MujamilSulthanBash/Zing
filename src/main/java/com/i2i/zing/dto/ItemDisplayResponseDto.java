@@ -19,6 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemDisplayResponseDto {
+    private String itemId;
     private String name;
     private double price;
     private String categoryName;

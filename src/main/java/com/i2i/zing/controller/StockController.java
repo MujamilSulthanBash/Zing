@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
@@ -29,7 +30,7 @@ import com.i2i.zing.service.StockService;
 @RestController
 @RequestMapping("zing/api/v1/darkstores/stocks")
 public class StockController {
-    private static final Logger logger = LogManager.getLogger();
+
     @Autowired
     private StockService stockService;
 
@@ -38,6 +39,8 @@ public class StockController {
 
     @Autowired
     private DarkStoreService darkStoreService;
+
+    private static final Logger logger = LogManager.getLogger();
 
     /**
      * <p>
@@ -48,11 +51,11 @@ public class StockController {
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addStock(@Valid @RequestBody StockRequestDto stockRequestDto) {
+    public ResponseEntity<APIResponse> addStock(
+            @Valid @RequestBody StockRequestDto stockRequestDto) {
         if ((itemService.verifyItemId(stockRequestDto.getItemId())) &&
                 (darkStoreService.verifyDarkStoreId(stockRequestDto.getDarkStoreId()))) {
             APIResponse apiResponse = stockService.addStock(stockRequestDto);
-            logger.info("Stock Created Successfully..");
             return ResponseEntity.status(apiResponse.getStatus())
                     .body(apiResponse);
         }
@@ -72,7 +75,6 @@ public class StockController {
     @GetMapping
     public ResponseEntity<APIResponse> getStocks() {
         APIResponse apiResponse = stockService.getStocks();
-        logger.info("Stock Retrieved Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -88,7 +90,6 @@ public class StockController {
     @GetMapping("/{stockId}")
     public ResponseEntity<APIResponse> getStockById(String stockId) {
         APIResponse apiResponse = stockService.getStockById(stockId);
-        logger.info("Stock Retrieved Successfully with Id : {}", stockId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -104,7 +105,6 @@ public class StockController {
     @DeleteMapping("/{stockId}")
     public ResponseEntity<APIResponse> deleteStock(String stockId) {
         APIResponse apiResponse = stockService.deleteStock(stockId);
-        logger.info("Stock deleted Successfully with Id : {}", stockId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -118,9 +118,9 @@ public class StockController {
      * @return - APIResponse Details like Status, Data.
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateStock(@Valid @RequestBody StockRequestDto stockRequestDto) {
+    public ResponseEntity<APIResponse> updateStock(
+            @Valid @RequestBody StockRequestDto stockRequestDto) {
         APIResponse apiResponse = stockService.updateStock(stockRequestDto);
-        logger.info("Stock Updated Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }

@@ -1,12 +1,16 @@
 package com.i2i.zing.controller;
 
-import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.DarkStoreDto;
@@ -25,13 +29,11 @@ import com.i2i.zing.service.OrderAssignService;
 @RequestMapping("zing/api/v1/admin/darkstores")
 public class DarkStoreController {
 
-    private static final Logger logger = LogManager.getLogger();
+    @Autowired
+    private DarkStoreService darkStoreService;
 
     @Autowired
-    DarkStoreService darkStoreService;
-
-    @Autowired
-    OrderAssignService orderAssignService;
+    private OrderAssignService orderAssignService;
 
     /**
      * <p>
@@ -42,9 +44,9 @@ public class DarkStoreController {
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addDarkStore(@Valid @RequestBody DarkStoreDto darkStoreDto) {
+    public ResponseEntity<APIResponse> addDarkStore(
+            @Valid @RequestBody DarkStoreDto darkStoreDto) {
         APIResponse apiResponse = darkStoreService.addDarkStore(darkStoreDto);
-        logger.info("Dark Store Added Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -59,7 +61,6 @@ public class DarkStoreController {
     @GetMapping
     public ResponseEntity<APIResponse> getDarkStores() {
         APIResponse apiResponse = darkStoreService.getDarkStores();
-        logger.info("Dark Stores Retrieved Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -75,7 +76,6 @@ public class DarkStoreController {
     @GetMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> getDarkStoreById(String darkStoreId) {
         APIResponse apiResponse = darkStoreService.getDarkStoreById(darkStoreId);
-        logger.info("DarkStore Retrieved Successfully with Id :{}", darkStoreId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -92,7 +92,6 @@ public class DarkStoreController {
     @DeleteMapping("/{darkStoreId}")
     public ResponseEntity<APIResponse> deleteDarkStore(String darkStoreId) {
         APIResponse apiResponse = darkStoreService.deleteDarkStore(darkStoreId);
-        logger.info("Dark Store Deleted Successfully with Id :{}", darkStoreId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -105,7 +104,8 @@ public class DarkStoreController {
      * @return APIResponse Details like Status, Data.
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateDarkStore(@Valid @RequestBody DarkStoreResponseDto darkStoreResponseDto) {
+    public ResponseEntity<APIResponse> updateDarkStore(
+            @Valid @RequestBody DarkStoreResponseDto darkStoreResponseDto) {
         APIResponse apiResponse = darkStoreService.updateDarkStore(darkStoreResponseDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
@@ -117,13 +117,13 @@ public class DarkStoreController {
      * ready to dispatch.
      * </>
      * @param updateOrderStatusDto - {@link UpdateOrderStatusDto} for verifying order.
-     * @return APIResponse for darkstore's acknowledgement.
+     * @return APIResponse for dark-stores acknowledgement.
      */
     @PostMapping("/orders/validate")
     public ResponseEntity<APIResponse> verifyOrder(
             @Valid @RequestBody UpdateOrderStatusDto updateOrderStatusDto) {
-        APIResponse updateResponse = orderAssignService.updateOrderStatus(updateOrderStatusDto.getOrderId()
-                                                 , updateOrderStatusDto.getStatus());
+        APIResponse updateResponse = orderAssignService.updateOrderStatus(
+                updateOrderStatusDto.getOrderId(), updateOrderStatusDto.getStatus());
         return ResponseEntity.status(updateResponse.getStatus())
                     .body(updateResponse);
     }

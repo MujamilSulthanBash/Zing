@@ -1,11 +1,10 @@
 package com.i2i.zing.controller;
 
-import jakarta.validation.Valid;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import jakarta.validation.Valid;
 
 import com.i2i.zing.dto.ItemRequestDto;
 import com.i2i.zing.dto.ItemUpdateDto;
@@ -21,9 +20,9 @@ import com.i2i.zing.service.ItemService;
 @RestController
 @RequestMapping("zing/api/v1/darkstores/items")
 public class ItemController {
-    private static final Logger logger = LogManager.getLogger();
+
     @Autowired
-    ItemService itemService;
+    private ItemService itemService;
 
     /**
      * <p>
@@ -34,9 +33,9 @@ public class ItemController {
      * @return APIResponse Details like Status, Data.
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addItem(@Valid @RequestBody ItemRequestDto itemRequestDto) {
+    public ResponseEntity<APIResponse> addItem(
+            @Valid @RequestBody ItemRequestDto itemRequestDto) {
         APIResponse apiResponse = itemService.addItem(itemRequestDto);
-        logger.info("Item Added Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -46,12 +45,13 @@ public class ItemController {
      * This method get all the Items in the database table
      * </p>
      *
+     * @param location- Location of the DarkStore
      * @return APIResponse Details like Status, Data.
      */
     @GetMapping("/show-items/{location}")
-    public ResponseEntity<APIResponse> getItemsByLocation(@PathVariable String location) {
+    public ResponseEntity<APIResponse> getItemsByLocation(
+            @PathVariable String location) {
         APIResponse apiResponse = itemService.getItemsByLocation(location);
-        logger.info("Items Retrieved by Successfully by this Location : {}", location);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -67,7 +67,6 @@ public class ItemController {
     @GetMapping("/{itemId}")
     public ResponseEntity<APIResponse> getItemById(@PathVariable String itemId) {
         APIResponse apiResponse = itemService.getItemById(itemId);
-        logger.info("Item Retrieved By Successfully with Id : {}", itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -83,16 +82,24 @@ public class ItemController {
     @DeleteMapping("/{itemId}")
     public ResponseEntity<APIResponse> deleteItem(String itemId) {
         APIResponse apiResponse = itemService.deleteItem(itemId);
-        logger.info("Item deleted Successfully with Id : {}", itemId);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
 
+    /**
+     * <p>
+     * This method update the Item Details like Item Name,
+     * price, Category
+     * </p>
+     * @param itemUpdateDto {@link ItemUpdateDto} - as Dto Object
+     * @return APIResponse Details like Status, Data
+     */
     @PutMapping
-    public ResponseEntity<APIResponse> updateItem(@RequestBody ItemUpdateDto itemUpdateDto) {
+    public ResponseEntity<APIResponse> updateItem(
+            @RequestBody ItemUpdateDto itemUpdateDto) {
         APIResponse apiResponse = itemService.updateItem(itemUpdateDto);
-        logger.info("Item Updated Successfully..");
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
+
 }

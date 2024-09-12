@@ -21,7 +21,7 @@ import com.i2i.zing.service.CartService;
 public class CartController {
 
     @Autowired
-    CartService cartService;
+    private CartService cartService;
 
     /**
      * <p>

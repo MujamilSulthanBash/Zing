@@ -18,6 +18,7 @@ import com.i2i.zing.configuration.JwtService;
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.dto.CartItemRequestDto;
 import com.i2i.zing.service.CartItemService;
+
 /**
  * <p>
  * This class is the Controller for CartItem Operations
@@ -29,10 +30,10 @@ import com.i2i.zing.service.CartItemService;
 public class CartItemController {
 
     @Autowired
-    CartItemService cartItemService;
+    private CartItemService cartItemService;
 
     @Autowired
-    JwtService jwtService;
+    private JwtService jwtService;
 
     /**
      * <p>
@@ -45,8 +46,11 @@ public class CartItemController {
      * @return - APIResponse (Status , Data)
      */
     @PostMapping
-    public ResponseEntity<APIResponse> addCartItem(@RequestHeader(value = "authorization", defaultValue = "") String token, @Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
-        APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto, jwtService.getSubjectFromToken(token));
+    public ResponseEntity<APIResponse> addCartItem(
+            @RequestHeader(value = "authorization", defaultValue = "") String token,
+            @Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
+        APIResponse apiResponse = cartItemService.addCartItem(cartItemRequestDto,
+                jwtService.getSubjectFromToken(token));
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -104,7 +108,8 @@ public class CartItemController {
      * @return - APIResponse (Status, Data)
      */
     @PutMapping
-    public ResponseEntity<APIResponse> updateCartItem(@Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
+    public ResponseEntity<APIResponse> updateCartItem(
+            @Valid @RequestBody CartItemRequestDto cartItemRequestDto) {
         APIResponse apiResponse = cartItemService.updateCartItem(cartItemRequestDto);
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);

@@ -1,11 +1,17 @@
 package com.i2i.zing.controller;
 
-import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.validation.Valid;
 
 import com.i2i.zing.common.APIResponse;
 import com.i2i.zing.configuration.JwtService;
@@ -50,8 +56,8 @@ public class DeliveryPersonController {
             @Valid @RequestBody VerifyOrderDto verifyOrderDto) {
         APIResponse apiResponse = orderService.updateOrderStatus(verifyOrderDto);
         if (apiResponse.getStatus() == HttpStatus.OK.value()) {
-            APIResponse updateResponse = orderAssignService.updateOrderStatus("DELIVERED",
-                    verifyOrderDto.getOrderId());
+            APIResponse updateResponse = orderAssignService.updateOrderStatus(
+                    "DELIVERED", verifyOrderDto.getOrderId());
             return ResponseEntity.status(updateResponse.getStatus())
                     .body(updateResponse);
         }
@@ -67,8 +73,11 @@ public class DeliveryPersonController {
      * @return APIResponse for deliveryPerson's acknowledgement.
      */
     @GetMapping("/me/order-assigns")
-    public ResponseEntity<APIResponse> getOrderAssignsOfDeliveryPerson(@RequestHeader(value = "authorization", defaultValue = "") String auth) {
-        APIResponse apiResponse = deliveryPersonService.getOrderAssignsOfDeliveryPerson(jwtService.getSubjectFromToken(auth));
+    public ResponseEntity<APIResponse> getOrderAssignsOfDeliveryPerson(
+            @RequestHeader(value = "authorization",
+            defaultValue = "") String auth) {
+        APIResponse apiResponse = deliveryPersonService.getOrderAssignsOfDeliveryPerson(
+                jwtService.getSubjectFromToken(auth));
         return ResponseEntity.status(apiResponse.getStatus())
                 .body(apiResponse);
     }
@@ -99,8 +108,10 @@ public class DeliveryPersonController {
     @PutMapping("/order-status")
     public ResponseEntity<APIResponse> updateAssignStatus(
             @Valid @RequestBody UpdateOrderStatusDto updateOrderStatusDto) {
-        APIResponse updateResponse = orderAssignService.updateOrderAssign(updateOrderStatusDto);
+        APIResponse updateResponse = orderAssignService.updateOrderAssign(
+                updateOrderStatusDto);
         return ResponseEntity.status(updateResponse.getStatus())
                 .body(updateResponse);
     }
+
 }

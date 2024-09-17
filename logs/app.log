@@ -1,0 +1,112 @@
+[INFO ] 2024-09-14 11:35:41.199 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 16972 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-14 11:35:41.227 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-14 11:35:41.230 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-14 11:35:51.238 [main] ZingApplication - Started ZingApplication in 10.916 seconds (process running for 12.751)
+[INFO ] 2024-09-14 11:37:37.174 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 17896 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-14 11:37:37.195 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-14 11:37:37.198 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-14 11:37:50.280 [main] ZingApplication - Started ZingApplication in 14.005 seconds (process running for 15.848)
+[INFO ] 2024-09-14 12:56:30.076 [background-preinit] Version - HV000001: Hibernate Validator 8.0.1.Final
+[INFO ] 2024-09-14 12:56:30.327 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 8700 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-14 12:56:30.333 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-14 12:56:30.335 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-14 12:56:32.282 [main] RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[INFO ] 2024-09-14 12:56:32.488 [main] RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 194 ms. Found 12 JPA repository interfaces.
+[INFO ] 2024-09-14 12:56:33.940 [main] TomcatWebServer - Tomcat initialized with port 8080 (http)
+[INFO ] 2024-09-14 12:56:33.974 [main] Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+[INFO ] 2024-09-14 12:56:33.986 [main] StandardService - Starting service [Tomcat]
+[INFO ] 2024-09-14 12:56:33.987 [main] StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.26]
+[INFO ] 2024-09-14 12:56:34.105 [main] [/] - Initializing Spring embedded WebApplicationContext
+[INFO ] 2024-09-14 12:56:34.109 [main] ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3680 ms
+[INFO ] 2024-09-14 12:56:34.465 [main] LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+[INFO ] 2024-09-14 12:56:34.631 [main] Version - HHH000412: Hibernate ORM core version 6.5.2.Final
+[INFO ] 2024-09-14 12:56:34.740 [main] RegionFactoryInitiator - HHH000026: Second-level cache disabled
+[INFO ] 2024-09-14 12:56:35.556 [main] SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+[INFO ] 2024-09-14 12:56:35.663 [main] HikariDataSource - HikariPool-1 - Starting...
+[INFO ] 2024-09-14 12:56:35.970 [main] HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7323dce7
+[INFO ] 2024-09-14 12:56:35.973 [main] HikariDataSource - HikariPool-1 - Start completed.
+[WARN ] 2024-09-14 12:56:36.032 [main] deprecation - HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+[INFO ] 2024-09-14 12:56:38.374 [main] JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[INFO ] 2024-09-14 12:56:38.737 [main] LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 2024-09-14 12:56:39.380 [main] QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+[WARN ] 2024-09-14 12:56:40.953 [main] JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+[INFO ] 2024-09-14 12:56:41.794 [main] Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+[INFO ] 2024-09-14 12:56:41.823 [main] TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+[INFO ] 2024-09-14 12:56:41.837 [main] ZingApplication - Started ZingApplication in 12.345 seconds (process running for 14.078)
+[INFO ] 2024-09-14 12:56:56.070 [SpringApplicationShutdownHook] LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+[INFO ] 2024-09-14 12:56:56.073 [SpringApplicationShutdownHook] HikariDataSource - HikariPool-1 - Shutdown initiated...
+[INFO ] 2024-09-14 12:56:56.080 [SpringApplicationShutdownHook] HikariDataSource - HikariPool-1 - Shutdown completed.
+[INFO ] 2024-09-14 12:57:00.429 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 18108 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-14 12:57:00.455 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-14 12:57:00.458 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-14 12:57:11.401 [main] ZingApplication - Started ZingApplication in 11.956 seconds (process running for 13.822)
+[INFO ] 2024-09-14 12:58:42.155 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 12116 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-14 12:58:42.190 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-14 12:58:42.192 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-14 12:58:53.201 [main] ZingApplication - Started ZingApplication in 11.95 seconds (process running for 13.767)
+[INFO ] 2024-09-14 13:14:35.128 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 9888 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-14 13:14:35.151 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-14 13:14:35.152 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-14 13:14:46.228 [main] ZingApplication - Started ZingApplication in 11.937 seconds (process running for 13.77)
+[WARN ] 2024-09-14 13:16:11.691 [http-nio-8080-exec-5] CartItemServiceImpl - Item with Id : 37911281-000c-499a-bc74-e6180f4e3234already exists in the cart with Id : ff6d5003-03a2-486c-a633-7c4e6febd97a
+[WARN ] 2024-09-14 13:16:11.696 [http-nio-8080-exec-5] GlobalExceptionHandler - Error: Item with Id : 37911281-000c-499a-bc74-e6180f4e3234already exists please update quantity, if you need.
+com.i2i.zing.exception.EntityAlreadyExistsException: Item with Id : 37911281-000c-499a-bc74-e6180f4e3234already exists please update quantity, if you need.
+	at com.i2i.zing.service.impl.CartItemServiceImpl.addCartItem(CartItemServiceImpl.java:57) ~[classes/:?]
+	at com.i2i.zing.controller.CartItemController.addCartItem(CartItemController.java:52) ~[classes/:?]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[?:?]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[?:?]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.11.jar:6.1.11]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.1.11.jar:6.1.11]
+	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:389) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:904) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.26.jar:10.1.26]
+	at java.base/java.lang.Thread.run(Thread.java:1570) [?:?]
+[INFO ] 2024-09-14 13:16:53.929 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 16640 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-14 13:16:53.951 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-14 13:16:53.952 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-14 13:17:03.245 [main] ZingApplication - Started ZingApplication in 9.94 seconds (process running for 11.605)
+[INFO ] 2024-09-17 14:26:38.988 [main] ZingApplication - Starting ZingApplication using Java 22.0.1 with PID 3316 (C:\Ideas2it\Zing\target\classes started by mujamil.sulthanbasha in C:\Ideas2it\Zing)
+[DEBUG] 2024-09-17 14:26:39.010 [main] ZingApplication - Running with Spring Boot v3.3.2, Spring v6.1.11
+[INFO ] 2024-09-17 14:26:39.011 [main] ZingApplication - No active profile set, falling back to 1 default profile: "default"
+[INFO ] 2024-09-17 14:26:51.270 [main] ZingApplication - Started ZingApplication in 13.344 seconds (process running for 15.397)
+[INFO ] 2024-09-17 14:27:58.501 [http-nio-8080-exec-2] EmailSenderService - Email Sent successfully to Id :sabarinathan682002@gmail.com
